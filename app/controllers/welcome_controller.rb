@@ -7,7 +7,5 @@ class WelcomeController < ApplicationController
       @github = current_user.identities.where(:provider => "github")
       @fitbit = current_user.identities.where(:provider => "fitbit")
     end
-    @identities = current_user.identities.all
-    @all_identities = Identity.all
   end
 end

@@ -34,16 +34,3 @@
 <%else%>
   <%= link_to "Facebook Login", user_omniauth_authorize_path(:facebook) %>
 <%end%>
-
-
-<hr>
-<p>User Providers</p>
-<% @identities.each do |identity| %>
-  <%= identity.provider %><br>
-  <%= identity.token %>
-<%end%>
-<hr>
-<p>All Providers</p>
-<% @all_identities.each do |identity| %>
-  <%= identity.provider %>
-<%end%>

@@ -7,8 +7,15 @@ Devise.setup do |config|
   config.secret_key = ENV["devise_secret_key"]
 
   config.omniauth :facebook, ENV["facebook_key"], ENV["facebook_secret"]
-  # config.omniauth :twitter, "KEY", "SECRET"
-  # config.omniauth :linked_in, "KEY", "SECRET"
+  config.omniauth :twitter, ENV["twitter_key"], ENV["twitter_secret"]
+  config.omniauth :foursquare, ENV["foursquare_key"], ENV["foursquare_secret"]
+  config.omniauth :github, ENV["github_key"], ENV["github_secret"]
+  config.omniauth :fitbit, ENV["fitbit_key"], ENV["fitbit_secret"]
+
+  # config.OmniAuth :linkedin, ENV["linkedin_key"], ENV["linkedin_secret"],
+  # config.omniauth :linkedin, ENV["linkedin_key"], ENV["linkedin_secret"],
+  #   :scope => 'r_fullprofile r_emailaddress r_network',
+  #   :fields => ["id", "email-address", "first-name", "last-name", "headline", "industry", "picture-url", "public-profile-url", "location", "connections"]
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,

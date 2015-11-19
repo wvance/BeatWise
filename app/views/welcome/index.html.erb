@@ -2,3 +2,48 @@
 <p>
   The time is now: <%= Time.now %>
 </p>
+
+<% if user_signed_in? %>
+  <%= current_user.email%><br>
+  <%= link_to "Sign out", destroy_user_session_path, :method => :delete %><br>
+
+  <% if !@twitter.present? %>
+    <%= link_to "Twitter Login", user_omniauth_authorize_path(:twitter) %><br>
+  <%else%>
+    Signed In With Twitter <br>
+  <%end%>
+
+  <% if !@foursquare.present? %>
+    <%= link_to "Foursquare Login", user_omniauth_authorize_path(:foursquare) %><br>
+  <%else%>
+    Signed In With Foursquare<br>
+  <%end%>
+
+  <% if !@github.present? %>
+    <%= link_to "Github Login", user_omniauth_authorize_path(:github) %><br>
+  <%else%>
+    Signed In With Github<br>
+  <%end%>
+
+  <% if !@fitbit.present? %>
+    <%= link_to "Fitbit Login", user_omniauth_authorize_path(:fitbit) %><br>
+  <%else%>
+    Signed In With Fitbit<br>
+  <%end%>
+
+<%else%>
+  <%= link_to "Facebook Login", user_omniauth_authorize_path(:facebook) %>
+<%end%>
+
+
+<hr>
+<p>User Providers</p>
+<% @identities.each do |identity| %>
+  <%= identity.provider %><br>
+  <%= identity.token %>
+<%end%>
+<hr>
+<p>All Providers</p>
+<% @all_identities.each do |identity| %>
+  <%= identity.provider %>
+<%end%>

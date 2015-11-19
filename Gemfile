@@ -1,15 +1,25 @@
 source 'https://rubygems.org'
 
 gem 'devise'
+gem 'figaro'                        # HIDE KEYS FROM REPO
+gem "twitter-bootstrap-rails"       # BOOTSTRAP GEM
 
+gem 'twitter'
+gem 'fitgem'                        # https://github.com/whazzmaster/fitgem
+
+
+# OMNIAUTH LOGIN: USED TO GET PERMISSION TO USER ACCOUNTS
+# https://github.com/intridea/omniauth/wiki/List-of-Strategies
 gem 'omniauth'                      # OMNIAUTH WITH DEVISE
 gem 'omniauth-twitter'
 gem 'omniauth-facebook'
-gem 'omniauth-linkedin'
-
-gem 'figaro'
-gem "twitter-bootstrap-rails"
-
+gem 'omniauth-github'
+gem 'omniauth-fitbit'
+gem "omniauth-google-oauth2"
+gem 'omniauth-foursquare'
+# gem 'omniauth-linkedin'
+# gem "linkedin-oauth2"
+# gem 'omniauth-linkedin-oauth2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.0'

@@ -12,7 +12,9 @@
   <%else%>
     Signed In With Twitter <hr>
     <% @userTweets.each do |tweet| %>
-      <%= tweet.id %>
+      <%= tweet.id %>:
+      <%= tweet.kind%>:
+      <%= tweet.title %>:
       <%= tweet.body %><br>
     <%end%>
     <hr>
@@ -22,6 +24,13 @@
     <%= link_to "Foursquare Login", user_omniauth_authorize_path(:foursquare) %><br>
   <%else%>
     Signed In With Foursquare<br>
+    <% @userCheckins.each do |checkin| %>
+      <%= checkin.id %>:
+      <%= checkin.kind %>:
+      <%= checkin.title%>:
+      <%= checkin.body %><br>
+    <%end%>
+    <hr>
   <%end%>
 
   <% if !@github.present? %>
@@ -34,6 +43,13 @@
     <%= link_to "Fitbit Login", user_omniauth_authorize_path(:fitbit) %><br>
   <%else%>
     Signed In With Fitbit<br>
+    <% @userActivities.each do |activity| %>
+      <%= activity.id %>:
+      <%= activity.kind %>:
+      <%= activity.title%>:
+      <%= activity.body %><br>
+    <%end%>
+    <hr>
   <%end%>
 
 <%else%>

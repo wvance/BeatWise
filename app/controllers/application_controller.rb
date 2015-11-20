@@ -4,6 +4,8 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :set_twitter_client
   before_action :set_foursquare_client
+  before_action :set_fitbit_client
+  # before_action :set_github_client
 
   def ensure_signup_complete
     # Ensure we don't go into an infinite loop
@@ -16,6 +18,49 @@ class ApplicationController < ActionController::Base
     end
   end
   private
+    # def set_github_client
+    #   if (user_signed_in? && current_user.identities.where(:provider => "github").present? )
+    #     @@github_client = Github.new :client_id => ENV["github_key"],
+    #       :client_secret => ENV["github_secret"]
+    #   end
+    # end
+    # def post_multiple_github_posts(user_client)
+    #   user_commits = user_client.repos.commits.all('wvance', 'WesleyVance')
+    #   # raise user_commits.inspect
+    # end
+
+
+    def set_fitbit_client
+      if (user_signed_in? && current_user.identities.where(:provider => "fitbit").present? )
+        @@fitbit_client = Fitgem::Client.new({
+          consumer_key: ENV["fitbit_key"],
+          consumer_secret: ENV["fitbit_secret"],
+          token: current_user.identities.where(:provider => "fitbit").first.token,
+          secret: current_user.identities.where(:provider => "fitbit").first.secret
+        })
+      end
+    end
+    def post_multiple_fitbit_activities(user_client)
+      user_activity = user_client.recent_activities
+      user_activity.each do |activity|
+        content = Content.new
+        content.user_id = current_user.id
+        # raise activity.inspect
+        content.external_id = activity["activityId"]
+        content.title = activity["name"]
+        content.body = activity["description"].to_s + " Calories:" + activity["calories"].to_s + " Duration:" + activity["duration"].to_s + " Distance:" + activity["distance"].to_s
+        content.active = true
+        content.external_link = "#"
+        content.provider = "fitbit"
+        content.kind = "activity"
+        content.created_at = DateTime.now
+
+        if (content.valid?)
+          content.save!
+        end
+      end
+    end
+
     def set_foursquare_client
       if (user_signed_in? && current_user.identities.where(:provider => "foursquare").present? )
         @@foursquare_client = Foursquare2::Client.new(:oauth_token => current_user.identities.where(:provider => "foursquare").first.token, :api_version => '20140806')
@@ -32,7 +77,6 @@ class ApplicationController < ActionController::Base
         content.user_id = current_user.id
 
         # raise checkin.inspect
-
         content.external_id = checkin.id
         content.body = checkin.text
         content.title = checkin.venue.name
@@ -44,11 +88,12 @@ class ApplicationController < ActionController::Base
         content.address = address
 
         content.active = true
-        content.external_link = ""
+        content.external_link = "#"
         # content.external_link = "http://foursquare.com/user/"+ user.id
 
         content.created_at = DateTime.now
-        content.kind = "foursquareCheckin"
+        content.provider = "foursquare"
+        content.kind = "checkin"
 
         if checkin.photos.items.first.present?
           content.image = checkin.photos.items.first
@@ -93,6 +138,7 @@ class ApplicationController < ActionController::Base
         content.external_link = tweet.url
 
         content.created_at = DateTime.now
+        content.provider = "twitter"
         content.kind = "tweet"
 
         if tweet.media.present?

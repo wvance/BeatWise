@@ -14,6 +14,7 @@ class CreateContents < ActiveRecord::Migration
       t.integer :number_likes
       t.string :image
       t.string :kind
+      t.string :provider
 
 
       t.boolean :active

@@ -14,7 +14,19 @@ class WelcomeController < ApplicationController
         # user_checkins(@@foursquare_client)
         post_multiple_foursquare_checkins(@@foursquare_client)
       end
-      @userTweets = current_user.contents
+
+      if current_user.identities.where(:provider => "fitbit").present?
+        post_multiple_fitbit_activities(@@fitbit_client)
+      end
+
+      # if current_user.identities.where(:provider =>"github").present?
+      #   # post_multiple_github_posts(@@github_client)
+      # end
+
+      @userTweets = current_user.contents.where(:provider => "twitter")
+      @userCheckins = current_user.contents.where(:provider=>"foursquare")
+      @userActivities = current_user.contents.where(:provider=>"fitbit")
+      @userCommits = current_user.contents.where(:provider=>"github")
     end
   end
 end

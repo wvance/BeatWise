@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 20151120004505) do
     t.integer  "number_likes"
     t.string   "image"
     t.string   "kind"
+    t.string   "provider"
     t.boolean  "active"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false

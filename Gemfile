@@ -4,9 +4,9 @@ gem 'devise'
 gem 'figaro'                        # HIDE KEYS FROM REPO
 gem "twitter-bootstrap-rails"       # BOOTSTRAP GEM
 
-gem 'twitter'
+gem 'twitter'                       # USED TO GET TWITTER INFO
 gem 'fitgem'                        # https://github.com/whazzmaster/fitgem
-
+gem 'foursquare2'
 
 # OMNIAUTH LOGIN: USED TO GET PERMISSION TO USER ACCOUNTS
 # https://github.com/intridea/omniauth/wiki/List-of-Strategies

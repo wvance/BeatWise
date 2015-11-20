@@ -10,7 +10,12 @@
   <% if !@twitter.present? %>
     <%= link_to "Twitter Login", user_omniauth_authorize_path(:twitter) %><br>
   <%else%>
-    Signed In With Twitter <br>
+    Signed In With Twitter <hr>
+    <% @userTweets.each do |tweet| %>
+      <%= tweet.id %>
+      <%= tweet.body %><br>
+    <%end%>
+    <hr>
   <%end%>
 
   <% if !@foursquare.present? %>
@@ -34,3 +39,4 @@
 <%else%>
   <%= link_to "Facebook Login", user_omniauth_authorize_path(:facebook) %>
 <%end%>
+

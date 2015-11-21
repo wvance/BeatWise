@@ -6,8 +6,11 @@ gem "twitter-bootstrap-rails"       # BOOTSTRAP GEM
 
 gem 'twitter'                       # USED TO GET TWITTER INFO
 gem 'fitgem'                        # https://github.com/whazzmaster/fitgem
-gem 'foursquare2'
-gem "github_api"
+gem 'foursquare2'                   # FOURSQUARE API
+
+# HAVING TROUBLE WITH THESE...
+gem "github_api"                    # GITHUB API
+gem "koala"                         # FACEBOOK API
 
 # OMNIAUTH LOGIN: USED TO GET PERMISSION TO USER ACCOUNTS
 # https://github.com/intridea/omniauth/wiki/List-of-Strategies

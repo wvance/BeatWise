@@ -8,7 +8,7 @@ class Identity < ActiveRecord::Base
   def self.find_for_oauth(auth)
     email_is_verified = auth.info.email
     email = auth.info.email if email_is_verified
-
+    # raise auth.inspect
     find_or_create_by(
       uid: auth.uid,
       provider: auth.provider,

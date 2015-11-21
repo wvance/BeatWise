@@ -8,6 +8,7 @@ class WelcomeController < ApplicationController
       @github = current_user.identities.where(:provider => "github")
       @fitbit = current_user.identities.where(:provider => "fitbit")
       @facebook = current_user.identities.where(:provider =>'facebook')
+
       if current_user.identities.where(:provider => "twitter").present?
         post_multiple_tweets(@@twitter_client, 5)
       end
@@ -20,9 +21,12 @@ class WelcomeController < ApplicationController
         post_multiple_fitbit_activities(@@fitbit_client)
       end
 
-      # if current_user.identities.where(:provider =>"github").present?
-      #   # post_multiple_github_posts(@@github_client)
-      # end
+      if current_user.identities.where(:provider => "facebook").present?
+        # post_multiple_facebook_posts(@@facebook_client)
+      end
+      if current_user.identities.where(:provider =>"github").present?
+        # post_multiple_github_posts(@@github_client)
+      end
 
       @userTweets = current_user.contents.where(:provider => "twitter")
       @userCheckins = current_user.contents.where(:provider=>"foursquare")

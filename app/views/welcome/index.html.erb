@@ -21,11 +21,11 @@
   <%else%>
     Signed In With Twitter <%=current_user.identities.where(:provider => "twitter").first.username %><hr>
     <% @userTweets.each do |tweet| %>
-      <%= tweet.id %>:
-      <%= tweet.kind%>:
-      <%= tweet.title %>:
-      <%= tweet.body %><br>
-      <%= tweet.log %><br>
+      ID <%= tweet.id %>:
+      Kind <%= tweet.kind%>:
+      Title <%= tweet.title %>:
+      Body <%= tweet.body %><br>
+      Log: <%= tweet.log %><br>
     <%end%>
     <hr>
   <%end%>
@@ -35,11 +35,11 @@
   <%else%>
     Signed In With Foursquare <%=current_user.identities.where(:provider => "foursquare").first.username %><br>
     <% @userCheckins.each do |checkin| %>
-      <%= checkin.id %>:
-      <%= checkin.kind %>:
-      <%= checkin.title%>:
-      <%= checkin.body %><br>
-      <%= checkin.log %><br>
+      ID <%= checkin.id %>:
+      Kind <%= checkin.kind%>:
+      Title <%= checkin.title %>:
+      Body <%= checkin.body %><br>
+      Log: <%= checkin.log %><br>
     <%end%>
     <hr>
   <%end%>
@@ -55,11 +55,11 @@
   <%else%>
     Signed In With Fitbit: <%=current_user.identities.where(:provider => "fitbit").first.username %><br>
     <% @userActivities.each do |activity| %>
-      <%= activity.id %>:
-      <%= activity.kind %>:
-      <%= activity.title%>:
-      <%= activity.body %><br>
-      <%= activity.log %><br>
+      ID <%= activity.id %>:
+      Kind <%= activity.kind %>:
+      Title <%= activity.title%>:
+      Body <%= activity.body %><br>
+      Log: <%= activity.log %><br>
     <%end%>
     <hr>
   <%end%>

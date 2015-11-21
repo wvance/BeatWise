@@ -5,7 +5,8 @@ class ApplicationController < ActionController::Base
   before_action :set_twitter_client
   before_action :set_foursquare_client
   before_action :set_fitbit_client
-  # before_action :set_github_client
+  before_action :set_facebook_client
+  before_action :set_github_client
 
   def ensure_signup_complete
     # Ensure we don't go into an infinite loop
@@ -18,17 +19,26 @@ class ApplicationController < ActionController::Base
     end
   end
   private
-    # def set_github_client
-    #   if (user_signed_in? && current_user.identities.where(:provider => "github").present? )
-    #     @@github_client = Github.new :client_id => ENV["github_key"],
-    #       :client_secret => ENV["github_secret"]
-    #   end
-    # end
+    def set_github_client
+      if (user_signed_in? && current_user.identities.where(:provider => "github").present? )
+        @@github_client = Github.new :client_id => ENV["github_key"], :client_secret => ENV["github_secret"]
+      end
+    end
     # def post_multiple_github_posts(user_client)
     #   user_commits = user_client.repos.commits.all('wvance', 'WesleyVance')
     #   # raise user_commits.inspect
     # end
 
+    def set_facebook_client
+      if (user_signed_in? && current_user.identities.where(:provider => "facebook").present? )
+        @@facebook_client = Koala::Facebook::API.new(token: current_user.identities.where(:provider => "facebook").first.token)
+      end
+    end
+    def post_multiple_facebook_posts(user_client)
+      user_posts = user_client.get_connection('me', 'feed')
+      @postid = user_posts.first['id']
+      @post_data = @post_graph.get_connections(@postid, 'likes', since: "2015-05-17", until: "2015-07-17")
+    end
 
     def set_fitbit_client
       if (user_signed_in? && current_user.identities.where(:provider => "fitbit").present? )

@@ -2,6 +2,7 @@
 <p>
   The time is now: <%= Time.now %>
 </p>
+
 <hr>
   <%=@all_users.count %> Account
 <hr>
@@ -64,6 +65,6 @@
   <%end%>
 
 <%else%>
-  <%= link_to "Sign In", new_user_session_path()%><br>
+  <%= link_to "Twitter Login", user_omniauth_authorize_path("twitter") %><br>
 <%end%>
 

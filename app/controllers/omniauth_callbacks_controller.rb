@@ -1,4 +1,6 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
+  skip_before_filter :authenticate
+
   def self.provides_callback_for(provider)
     class_eval %Q{
       def #{provider}

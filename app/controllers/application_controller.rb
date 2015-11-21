@@ -54,6 +54,7 @@ class ApplicationController < ActionController::Base
         content.provider = "fitbit"
         content.kind = "activity"
         content.created_at = DateTime.now
+        content.log = activity
 
         if (content.valid?)
           content.save!
@@ -95,6 +96,7 @@ class ApplicationController < ActionController::Base
         content.provider = "foursquare"
         content.kind = "checkin"
 
+        content.log = checkin
         if checkin.photos.items.first.present?
           content.image = checkin.photos.items.first
         end
@@ -141,6 +143,7 @@ class ApplicationController < ActionController::Base
         content.provider = "twitter"
         content.kind = "tweet"
 
+        content.log = tweet
         if tweet.media.present?
           content.image = tweet.media[0].media_url
         end

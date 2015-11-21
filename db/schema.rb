@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151120004505) do
+ActiveRecord::Schema.define(version: 20151120003619) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 20151120004505) do
     t.string   "image"
     t.string   "kind"
     t.string   "provider"
+    t.text     "log"
     t.boolean  "active"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
@@ -44,23 +45,13 @@ ActiveRecord::Schema.define(version: 20151120004505) do
     t.string   "uid"
     t.string   "token"
     t.string   "secret"
+    t.string   "username"
+    t.string   "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   add_index "identities", ["user_id"], name: "index_identities_on_user_id", using: :btree
-
-  create_table "twitter_tweets", force: :cascade do |t|
-    t.integer  "content_id"
-    t.string   "body"
-    t.integer  "number_retweets"
-    t.integer  "number_likes"
-    t.string   "image"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-  end
-
-  add_index "twitter_tweets", ["content_id"], name: "index_twitter_tweets_on_content_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -84,5 +75,4 @@ ActiveRecord::Schema.define(version: 20151120004505) do
 
   add_foreign_key "contents", "users"
   add_foreign_key "identities", "users"
-  add_foreign_key "twitter_tweets", "contents"
 end

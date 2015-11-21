@@ -7,6 +7,10 @@ class CreateIdentities < ActiveRecord::Migration
       t.string :token
       t.string :secret
 
+      t.string :username
+      t.string :email
+
+
       t.timestamps null: false
     end
     add_foreign_key :identities, :users

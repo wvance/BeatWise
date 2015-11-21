@@ -6,7 +6,7 @@ class WelcomeController < ApplicationController
       @foursquare = current_user.identities.where(:provider => "foursquare")
       @github = current_user.identities.where(:provider => "github")
       @fitbit = current_user.identities.where(:provider => "fitbit")
-
+      @facebook = current_user.identities.where(:provider =>'facebook')
       if current_user.identities.where(:provider => "twitter").present?
         post_multiple_tweets(@@twitter_client, 5)
       end
@@ -27,6 +27,7 @@ class WelcomeController < ApplicationController
       @userCheckins = current_user.contents.where(:provider=>"foursquare")
       @userActivities = current_user.contents.where(:provider=>"fitbit")
       @userCommits = current_user.contents.where(:provider=>"github")
+
     end
   end
 end

@@ -10,12 +10,15 @@ class CreateContents < ActiveRecord::Migration
       t.string :external_link
       t.string :title
       t.string :body
+
       t.integer :number_retweets
       t.integer :number_likes
+
       t.string :image
       t.string :kind
       t.string :provider
 
+      t.text :log
 
       t.boolean :active
       t.timestamps null: false

@@ -6,7 +6,8 @@ Devise.setup do |config|
   # confirmation, reset password and unlock tokens in the database.
   config.secret_key = ENV["devise_secret_key"]
 
-  config.omniauth :facebook, ENV["facebook_key"], ENV["facebook_secret"]
+  config.omniauth :facebook, ENV["facebook_key"], ENV["facebook_secret"],
+    scope: 'email,user_posts,user_friends,user_events', info_fields: 'email, name'
   config.omniauth :twitter, ENV["twitter_key"], ENV["twitter_secret"]
   config.omniauth :foursquare, ENV["foursquare_key"], ENV["foursquare_secret"]
   config.omniauth :github, ENV["github_key"], ENV["github_secret"]

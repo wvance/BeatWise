@@ -19,8 +19,13 @@ class ApplicationController < ActionController::Base
     end
   end
   private
+
+# ========================================================
+# ============= GITHUB ===================================
+# ========================================================
     def set_github_client
       if (user_signed_in? && current_user.identities.where(:provider => "github").present? )
+        Koala.config.api_version = "v2.0"
         @@github_client = Github.new :client_id => ENV["github_key"], :client_secret => ENV["github_secret"]
       end
     end
@@ -29,17 +34,59 @@ class ApplicationController < ActionController::Base
     #   # raise user_commits.inspect
     # end
 
+# ========================================================
+# ============= FACEBOOK =================================
+# ========================================================
     def set_facebook_client
       if (user_signed_in? && current_user.identities.where(:provider => "facebook").present? )
-        @@facebook_client = Koala::Facebook::API.new(token: current_user.identities.where(:provider => "facebook").first.token)
+        @@facebook_client = Koala::Facebook::API.new(current_user.identities.where(:provider => "facebook").first.token)
+
       end
     end
     def post_multiple_facebook_posts(user_client)
-      user_posts = user_client.get_connection('me', 'feed')
-      @postid = user_posts.first['id']
-      @post_data = @post_graph.get_connections(@postid, 'likes', since: "2015-05-17", until: "2015-07-17")
+      user_timeline = user_client.get_connections("me", "feed")
+
+      user_timeline.each do |post|
+        content = Content.new
+        content.user_id = current_user.id
+        content.external_id = post['id']
+        content.body = post['message']
+        content.provider = "facebook"
+        content.kind = "post"
+        content.external_link = "http://facebook.com/" + content.external_id
+
+        content.created_at = DateTime.now
+        content.active = true
+
+        content.log = post
+
+        if (content.valid?)
+          content.save!
+        end
+
+      end
+    end
+    def post_multiple_facebook_friends(user_client)
+      user_friends = user_client.get_connections("me", "friends", api_version: 'v2.0')
+
+      # raise user_friends.inspect
+      user_friends.each do |friend|
+        content = Content.new
+        content.user_id = current_user.id
+
+        # GRAB FRIEND NAME
+        # content.body = friend.?
+
+        content.provider = "facebook"
+        content.kind = "friend"
+        content.created_at = DateTime.now
+        content.log = friend
+      end
     end
 
+# ========================================================
+# ============= FITBIT ===================================
+# ========================================================
     def set_fitbit_client
       if (user_signed_in? && current_user.identities.where(:provider => "fitbit").present? )
         @@fitbit_client = Fitgem::Client.new({
@@ -72,6 +119,9 @@ class ApplicationController < ActionController::Base
       end
     end
 
+# ========================================================
+# ============= FOURSQUARE ===============================
+# ========================================================
     def set_foursquare_client
       if (user_signed_in? && current_user.identities.where(:provider => "foursquare").present? )
         @@foursquare_client = Foursquare2::Client.new(:oauth_token => current_user.identities.where(:provider => "foursquare").first.token, :api_version => '20140806')
@@ -117,7 +167,9 @@ class ApplicationController < ActionController::Base
       end
     end
 
-
+# ========================================================
+# ============= TWITTER =================================
+# ========================================================
     def set_twitter_client
       if (user_signed_in? && current_user.identities.where(:provider => "twitter").present? )
         @@twitter_client ||= Twitter::REST::Client.new do |config|

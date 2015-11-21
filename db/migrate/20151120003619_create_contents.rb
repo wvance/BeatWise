@@ -6,7 +6,7 @@ class CreateContents < ActiveRecord::Migration
       t.string :address
       t.string :latitude
       t.string :longitude
-      t.integer :external_id, :limit => 8
+      t.string :external_id
       t.string :external_link
       t.string :title
       t.string :body

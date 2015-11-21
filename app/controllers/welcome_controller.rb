@@ -22,7 +22,8 @@ class WelcomeController < ApplicationController
       end
 
       if current_user.identities.where(:provider => "facebook").present?
-        # post_multiple_facebook_posts(@@facebook_client)
+        post_multiple_facebook_posts(@@facebook_client)
+        # post_multiple_facebook_friends(@@facebook_client)
       end
       if current_user.identities.where(:provider =>"github").present?
         # post_multiple_github_posts(@@github_client)
@@ -32,6 +33,7 @@ class WelcomeController < ApplicationController
       @userCheckins = current_user.contents.where(:provider=>"foursquare")
       @userActivities = current_user.contents.where(:provider=>"fitbit")
       @userCommits = current_user.contents.where(:provider=>"github")
+      @userPosts = current_user.contents.where(:provider => "facebook")
 
     end
   end

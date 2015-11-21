@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 20151120003619) do
     t.string   "address"
     t.string   "latitude"
     t.string   "longitude"
-    t.integer  "external_id",     limit: 8
+    t.string   "external_id"
     t.string   "external_link"
     t.string   "title"
     t.string   "body"
@@ -33,8 +33,8 @@ ActiveRecord::Schema.define(version: 20151120003619) do
     t.string   "provider"
     t.text     "log"
     t.boolean  "active"
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
   add_index "contents", ["user_id"], name: "index_contents_on_user_id", using: :btree

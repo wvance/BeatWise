@@ -11,6 +11,7 @@ gem 'foursquare2'                   # FOURSQUARE API
 # HAVING TROUBLE WITH THESE...
 gem "github_api"                    # GITHUB API
 gem "koala"                         # FACEBOOK API
+                                    # http://www.gotealeaf.com/blog/facebook-graph-api-using-omniauth-facebook-and-koala
 
 # OMNIAUTH LOGIN: USED TO GET PERMISSION TO USER ACCOUNTS
 # https://github.com/intridea/omniauth/wiki/List-of-Strategies

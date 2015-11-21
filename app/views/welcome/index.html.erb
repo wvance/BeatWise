@@ -8,18 +8,26 @@
 <hr>
 
 <% if user_signed_in? %>
-  <%= current_user.email%><br>
+  <h3>Signed Into BlackBox as <%= current_user.email%></h3><br>
   <%= link_to "Sign out", destroy_user_session_path, :method => :delete %><br>
-
+  <hr>
   <% if !@facebook.present? %>
     <%= link_to "Facebook Login", user_omniauth_authorize_path(:facebook) %><br>
   <%else%>
-    Signed In With Facebook <%=current_user.identities.where(:provider => "facebook").first.username %><hr>
+    <h3>Signed In With Facebook as <%=current_user.identities.where(:provider => "facebook").first.username %></h3><br>
+    <% @userPosts.each do |post| %>
+      ID <%= post.id %>:
+      Kind <%= post.kind%>:
+      Title <%= post.title %>:
+      Body <%= post.body %><br>
+      Log: <%= post.log %><br>
+    <%end%>
   <%end%>
+  <hr>
   <% if !@twitter.present? %>
     <%= link_to "Twitter Login", user_omniauth_authorize_path(:twitter) %><br>
   <%else%>
-    Signed In With Twitter <%=current_user.identities.where(:provider => "twitter").first.username %><hr>
+    <h3>Signed In With Twitter as <%=current_user.identities.where(:provider => "twitter").first.username %></h3><br>
     <% @userTweets.each do |tweet| %>
       ID <%= tweet.id %>:
       Kind <%= tweet.kind%>:
@@ -29,11 +37,11 @@
     <%end%>
     <hr>
   <%end%>
-
+  <hr>
   <% if !@foursquare.present? %>
     <%= link_to "Foursquare Login", user_omniauth_authorize_path(:foursquare) %><br>
   <%else%>
-    Signed In With Foursquare <%=current_user.identities.where(:provider => "foursquare").first.username %><br>
+    <h3>Signed In With Foursquare as <%=current_user.identities.where(:provider => "foursquare").first.username %></h3><br>
     <% @userCheckins.each do |checkin| %>
       ID <%= checkin.id %>:
       Kind <%= checkin.kind%>:
@@ -41,19 +49,18 @@
       Body <%= checkin.body %><br>
       Log: <%= checkin.log %><br>
     <%end%>
-    <hr>
   <%end%>
-
+  <hr>
   <% if !@github.present? %>
     <%= link_to "Github Login", user_omniauth_authorize_path(:github) %><br>
   <%else%>
-    Signed In With Github <%=current_user.identities.where(:provider => "github").first.username %><br>
+    <h3>Signed In With Github as <%=current_user.identities.where(:provider => "github").first.username %></h3><br>
   <%end%>
-
+  <hr>
   <% if !@fitbit.present? %>
     <%= link_to "Fitbit Login", user_omniauth_authorize_path(:fitbit) %><br>
   <%else%>
-    Signed In With Fitbit: <%=current_user.identities.where(:provider => "fitbit").first.username %><br>
+    <h3>Signed In With Fitbit as <%=current_user.identities.where(:provider => "fitbit").first.username %></h3><br>
     <% @userActivities.each do |activity| %>
       ID <%= activity.id %>:
       Kind <%= activity.kind %>:
@@ -63,7 +70,7 @@
     <%end%>
     <hr>
   <%end%>
-
+  <hr>
 <%else%>
   <%= link_to "Twitter Login", user_omniauth_authorize_path("twitter") %><br>
 <%end%>

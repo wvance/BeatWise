@@ -1,6 +1,7 @@
 class WelcomeController < ApplicationController
   def index
     @all_users = User.all
+    @all_providers = Identity.all
     # @facebook = current_user.identities.where(:provider => "facebook")
     if user_signed_in?
       @twitter = current_user.identities.where(:provider => "twitter")

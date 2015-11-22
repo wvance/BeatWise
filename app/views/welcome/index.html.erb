@@ -1,10 +1,18 @@
-<h2>Hello World</h2>
-<p>
-  The time is now: <%= Time.now %>
-</p>
+<div class="row">
+  <div class="col-xs-12 center">
+    <div id="welcomeWrapper">
+      <h2 class="verticalCenter">
+        <%= link_to user_omniauth_authorize_path("twitter") do%>
+        <i class="fa fa-twitter"></i> Twitter Sign In
+        <%end%>
+      </h2>
+    </div>
+  </div>
+</div>
 
 <hr>
-  <%=@all_users.count %> Account
+  <%=@all_users.count %> Account<br>
+  <%=@all_providers.count %> Identities<br>
 <hr>
 
 <% if user_signed_in? %>
@@ -20,6 +28,7 @@
       Kind <%= post.kind%>:
       Title <%= post.title %>:
       Body <%= post.body %><br>
+      DateTime <%= post.created_at %><br>
       Log: <%= post.log %><br>
     <%end%>
   <%end%>
@@ -33,6 +42,7 @@
       Kind <%= tweet.kind%>:
       Title <%= tweet.title %>:
       Body <%= tweet.body %><br>
+      DateTime <%= tweet.created_at %><br>
       Log: <%= tweet.log %><br>
     <%end%>
     <hr>
@@ -47,6 +57,7 @@
       Kind <%= checkin.kind%>:
       Title <%= checkin.title %>:
       Body <%= checkin.body %><br>
+      DateTime <%= checkin.created_at %><br>
       Log: <%= checkin.log %><br>
     <%end%>
   <%end%>
@@ -66,9 +77,9 @@
       Kind <%= activity.kind %>:
       Title <%= activity.title%>:
       Body <%= activity.body %><br>
+      DateTime <%= activity.created_at %><br>
       Log: <%= activity.log %><br>
     <%end%>
-    <hr>
   <%end%>
   <hr>
 <%else%>

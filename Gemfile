@@ -7,8 +7,6 @@ gem "twitter-bootstrap-rails"       # BOOTSTRAP GEM
 gem 'twitter'                       # USED TO GET TWITTER INFO
 gem 'fitgem'                        # https://github.com/whazzmaster/fitgem
 gem 'foursquare2'                   # FOURSQUARE API
-
-# HAVING TROUBLE WITH THESE...
 gem "github_api"                    # GITHUB API
 gem "koala"                         # FACEBOOK API
                                     # http://www.gotealeaf.com/blog/facebook-graph-api-using-omniauth-facebook-and-koala

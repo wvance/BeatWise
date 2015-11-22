@@ -2,6 +2,8 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
+
+  # THESE ARE USED TO SET UP THE CLIENTS, ONLY IF A PROVIDER IS PRESENT!
   before_action :set_twitter_client
   before_action :set_foursquare_client
   before_action :set_fitbit_client
@@ -55,7 +57,7 @@ class ApplicationController < ActionController::Base
         content.kind = "post"
         content.external_link = "http://facebook.com/" + content.external_id
 
-        content.created_at = DateTime.now
+        content.created_at = post['created_time'] || DateTime.now
         content.active = true
 
         content.log = post
@@ -100,9 +102,9 @@ class ApplicationController < ActionController::Base
     def post_multiple_fitbit_activities(user_client)
       user_activity = user_client.recent_activities
       user_activity.each do |activity|
+        # raise activity.inspect
         content = Content.new
         content.user_id = current_user.id
-        # raise activity.inspect
         content.external_id = activity["activityId"]
         content.title = activity["name"]
         content.body = activity["description"].to_s + " Calories:" + activity["calories"].to_s + " Duration:" + activity["duration"].to_s + " Distance:" + activity["distance"].to_s
@@ -152,7 +154,7 @@ class ApplicationController < ActionController::Base
         content.external_link = "#"
         # content.external_link = "http://foursquare.com/user/"+ user.id
 
-        content.created_at = DateTime.now
+        content.created_at = checkin.createdAt || DateTime.now
         content.provider = "foursquare"
         content.kind = "checkin"
 
@@ -188,7 +190,7 @@ class ApplicationController < ActionController::Base
     def post_multiple_tweets(user_client, count)
       # GET A USER'S TIMELINE GOING BACK AS FAR AS COUNT
       user_tweets = user_client.user_timeline(count: count)
-
+      # raise user_tweets.inspect
       # LOOP THROUGH EACH TWEET IN USER TIMELINE AND CREATE 'NEW CONTENT'
       user_tweets.each do |tweet|
         content = Content.new
@@ -201,7 +203,7 @@ class ApplicationController < ActionController::Base
         content.active = true
         content.external_link = tweet.url
 
-        content.created_at = DateTime.now
+        content.created_at = tweet.created_at || DateTime.now
         content.provider = "twitter"
         content.kind = "tweet"
 

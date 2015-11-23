@@ -52,7 +52,6 @@ class ApplicationController < ActionController::Base
         # HOW TO CHECK IF THIS IS EMPTY???
         # raise user_client.repos.commits.list(repo.owner.login, repo.name).inspect
         if user_client.repos.commits.list(repo.owner.login, repo.name)
-        else
           repo_commits = user_client.repos.commits.list(repo.owner.login, repo.name)
           post_multiple_github_commits(repo_commits, content.id)
         end
@@ -64,7 +63,6 @@ class ApplicationController < ActionController::Base
     end
     def post_multiple_github_commits(repo_commits, parent_repo_id)
       repo_commits.each do |commit|
-        # raise commit.commit.author.name
         puts "COMMIT ID: " + commit.sha
         commit_content = Content.new
         commit_content.user_id = current_user.id

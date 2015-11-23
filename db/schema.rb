@@ -18,23 +18,22 @@ ActiveRecord::Schema.define(version: 20151120003619) do
 
   create_table "contents", force: :cascade do |t|
     t.integer  "user_id"
+    t.string   "title"
+    t.string   "body"
+    t.string   "parent"
     t.string   "location"
     t.string   "address"
     t.string   "latitude"
     t.string   "longitude"
     t.string   "external_id"
     t.string   "external_link"
-    t.string   "title"
-    t.string   "body"
-    t.integer  "number_retweets"
-    t.integer  "number_likes"
     t.string   "image"
     t.string   "kind"
     t.string   "provider"
     t.text     "log"
     t.boolean  "active"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   add_index "contents", ["user_id"], name: "index_contents_on_user_id", using: :btree

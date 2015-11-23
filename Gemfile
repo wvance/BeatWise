@@ -4,11 +4,11 @@ gem 'devise'
 gem 'figaro'                        # HIDE KEYS FROM REPO
 gem "twitter-bootstrap-rails"       # BOOTSTRAP GEM
 
-gem 'twitter'                       # USED TO GET TWITTER INFO
-gem 'fitgem'                        # https://github.com/whazzmaster/fitgem
+gem 'twitter'                       # TWITTER API
+gem 'fitgem'                        # FITBIT API https://github.com/whazzmaster/fitgem
 gem 'foursquare2'                   # FOURSQUARE API
-gem "github_api"                    # GITHUB API
-gem "koala"                         # FACEBOOK API
+gem 'github_api'                    # GITHUB API
+gem 'koala'                         # FACEBOOK API
                                     # http://www.gotealeaf.com/blog/facebook-graph-api-using-omniauth-facebook-and-koala
 
 # OMNIAUTH LOGIN: USED TO GET PERMISSION TO USER ACCOUNTS

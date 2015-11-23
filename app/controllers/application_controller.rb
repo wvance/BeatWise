@@ -27,20 +27,72 @@ class ApplicationController < ActionController::Base
 # ========================================================
     def set_github_client
       if (user_signed_in? && current_user.identities.where(:provider => "github").present? )
-        Koala.config.api_version = "v2.0"
-        @@github_client = Github.new :client_id => ENV["github_key"], :client_secret => ENV["github_secret"]
+        @@github_client = Github.new :oauth_token => current_user.identities.where(:provider => "github").first.token
       end
     end
-    # def post_multiple_github_posts(user_client)
-    #   user_commits = user_client.repos.commits.all('wvance', 'WesleyVance')
-    #   # raise user_commits.inspect
-    # end
+    def post_multiple_github_repos(user_client)
+      user_repos = user_client.repos.list
+      user_repos.each do |repo|
+        content = Content.new
+        content.user_id = current_user.id
+        content.external_id = repo.id
 
+        content.title = repo.full_name
+        content.body = repo.description
+        content.external_link = repo.html_url
+
+        content.provider = "github"
+        content.kind = "repo"
+
+        content.created_at = repo.created_at || DateTime.now
+        content.active = true
+        content.log = repo.to_hash
+
+        # GET REPO COMMITS FROM THE CURRENT REPO: CALL FUNCTION TO SAVE THOSE
+        # HOW TO CHECK IF THIS IS EMPTY???
+        # raise user_client.repos.commits.list(repo.owner.login, repo.name).inspect
+        if user_client.repos.commits.list(repo.owner.login, repo.name)
+        else
+          repo_commits = user_client.repos.commits.list(repo.owner.login, repo.name)
+          post_multiple_github_commits(repo_commits, content.id)
+        end
+
+        if (content.valid?)
+          content.save!
+        end
+      end
+    end
+    def post_multiple_github_commits(repo_commits, parent_repo_id)
+      repo_commits.each do |commit|
+        # raise commit.commit.author.name
+        puts "COMMIT ID: " + commit.sha
+        commit_content = Content.new
+        commit_content.user_id = current_user.id
+        commit_content.external_id = commit.sha
+
+        commit_content.title = commit.commit.author.name
+        commit_content.body = commit.commit.message
+        commit_content.external_link = commit.html_url
+
+        commit_content.provider = "github"
+        commit_content.kind = "commit"
+        commit_content.active = true
+
+        commit_content.created_at = commit.commit.author.date || DateTime.now
+        commit_content.parent = parent_repo_id
+        commit_content.log = commit.to_hash
+
+        if (commit_content.valid?)
+          commit_content.save!
+        end
+      end
+    end
 # ========================================================
 # ============= FACEBOOK =================================
 # ========================================================
     def set_facebook_client
       if (user_signed_in? && current_user.identities.where(:provider => "facebook").present? )
+        Koala.config.api_version = "v2.0"
         @@facebook_client = Koala::Facebook::API.new(current_user.identities.where(:provider => "facebook").first.token)
 
       end
@@ -60,29 +112,12 @@ class ApplicationController < ActionController::Base
         content.created_at = post['created_time'] || DateTime.now
         content.active = true
 
-        content.log = post
+        content.log = post.to_hash
 
         if (content.valid?)
           content.save!
         end
 
-      end
-    end
-    def post_multiple_facebook_friends(user_client)
-      user_friends = user_client.get_connections("me", "friends", api_version: 'v2.0')
-
-      # raise user_friends.inspect
-      user_friends.each do |friend|
-        content = Content.new
-        content.user_id = current_user.id
-
-        # GRAB FRIEND NAME
-        # content.body = friend.?
-
-        content.provider = "facebook"
-        content.kind = "friend"
-        content.created_at = DateTime.now
-        content.log = friend
       end
     end
 
@@ -99,6 +134,18 @@ class ApplicationController < ActionController::Base
         })
       end
     end
+    def post_multiple_fitbit_favorite_activities(user_client)
+      favorite_activities = user_client.favorite_activities
+      favorite_activities.each do |activity|
+        content = Content.new
+        content.user_id = current_user.id
+
+        content.provider = "fitbit"
+        content.kind = "activity"
+        content.created_at = DateTime.now
+        content.log = activity.to_hash
+      end
+    end
     def post_multiple_fitbit_activities(user_client)
       user_activity = user_client.recent_activities
       user_activity.each do |activity|
@@ -113,7 +160,7 @@ class ApplicationController < ActionController::Base
         content.provider = "fitbit"
         content.kind = "activity"
         content.created_at = DateTime.now
-        content.log = activity
+        content.log = activity.to_hash
 
         if (content.valid?)
           content.save!
@@ -129,12 +176,8 @@ class ApplicationController < ActionController::Base
         @@foursquare_client = Foursquare2::Client.new(:oauth_token => current_user.identities.where(:provider => "foursquare").first.token, :api_version => '20140806')
       end
     end
-    def user_checkins(user_client)
-      raise user_client.user_checkins.items.inspect
-    end
     def post_multiple_foursquare_checkins(user_client)
       user_checkins = user_client.user_checkins.items
-
       user_checkins.each do |checkin|
         content = Content.new
         content.user_id = current_user.id
@@ -158,7 +201,7 @@ class ApplicationController < ActionController::Base
         content.provider = "foursquare"
         content.kind = "checkin"
 
-        content.log = checkin
+        content.log = checkin.to_hash
         if checkin.photos.items.first.present?
           content.image = checkin.photos.items.first
         end
@@ -190,10 +233,10 @@ class ApplicationController < ActionController::Base
     def post_multiple_tweets(user_client, count)
       # GET A USER'S TIMELINE GOING BACK AS FAR AS COUNT
       user_tweets = user_client.user_timeline(count: count)
-      # raise user_tweets.inspect
       # LOOP THROUGH EACH TWEET IN USER TIMELINE AND CREATE 'NEW CONTENT'
       user_tweets.each do |tweet|
         content = Content.new
+
         content.user_id = current_user.id
         content.external_id = tweet.id
         content.body = tweet.text
@@ -207,7 +250,7 @@ class ApplicationController < ActionController::Base
         content.provider = "twitter"
         content.kind = "tweet"
 
-        content.log = tweet
+        content.log = tweet.to_hash
         if tweet.media.present?
           content.image = tweet.media[0].media_url
         end

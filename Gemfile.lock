@@ -1,5 +1,6 @@
 GEM
   remote: https://rubygems.org/
+  remote: https://rails-assets.org/
   specs:
     actionmailer (4.2.0)
       actionpack (= 4.2.0)
@@ -38,9 +39,15 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.3.8)
     arel (6.0.3)
+    autoprefixer-rails (6.1.1)
+      execjs
+      json
     bcrypt (3.1.10)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
+    bootstrap (4.0.0.alpha2)
+      autoprefixer-rails (>= 6.0.3)
+      sass (>= 3.4.19)
     buftok (0.2.0)
     builder (3.2.2)
     byebug (8.2.0)
@@ -74,6 +81,8 @@ GEM
       thor (~> 0.14)
     fitgem (0.12.1)
       oauth
+    font-awesome-rails (4.3.0.0)
+      railties (>= 3.2, < 5.0)
     foursquare2 (2.0.2)
       faraday (~> 0.8)
       faraday_middleware (>= 0.8)
@@ -179,6 +188,7 @@ GEM
       bundler (>= 1.3.0, < 2.0)
       railties (= 4.2.0)
       sprockets-rails
+    rails-assets-tether (1.1.1)
     rails-deprecated_sanitizer (1.0.3)
       activesupport (>= 4.2.0.alpha)
     rails-dom-testing (1.0.7)
@@ -234,11 +244,6 @@ GEM
       memoizable (~> 0.4.0)
       naught (~> 1.0)
       simple_oauth (~> 0.3.0)
-    twitter-bootstrap-rails (3.2.0)
-      actionpack (~> 4.1)
-      execjs (~> 2.2)
-      rails (~> 4.1)
-      railties (~> 4.1)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     uglifier (2.7.2)
@@ -259,11 +264,13 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bootstrap (~> 4.0.0.alpha1)
   byebug
   coffee-rails (~> 4.1.0)
   devise
   figaro
   fitgem
+  font-awesome-rails
   foursquare2
   github_api
   jbuilder (~> 2.0)
@@ -278,11 +285,11 @@ DEPENDENCIES
   omniauth-twitter
   pg
   rails (= 4.2.0)
+  rails-assets-tether (>= 1.1.0)!
   rails_12factor
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
   turbolinks
   twitter
-  twitter-bootstrap-rails
   uglifier (>= 1.3.0)
   web-console (~> 2.0)

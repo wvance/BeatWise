@@ -2,7 +2,9 @@ source 'https://rubygems.org'
 
 gem 'devise'
 gem 'figaro'                        # HIDE KEYS FROM REPO
-gem "twitter-bootstrap-rails"       # BOOTSTRAP GEM
+# gem "twitter-bootstrap-rails"       # BOOTSTRAP GEM
+gem 'bootstrap', '~> 4.0.0.alpha1'  # BOOTSTRAP ALPHA
+gem "font-awesome-rails"
 
 gem 'twitter'                       # TWITTER API
 gem 'fitgem'                        # FITBIT API https://github.com/whazzmaster/fitgem
@@ -57,6 +59,10 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+
+source 'https://rails-assets.org' do
+  gem 'rails-assets-tether', '>= 1.1.0'
+end
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

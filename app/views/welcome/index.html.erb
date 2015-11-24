@@ -14,6 +14,7 @@
 
 <% if user_signed_in? %>
   <h3>Signed Into BlackBox as <%= current_user.email%></h3><br>
+  <%= link_to "Export Timeline", root_path(:format => :csv ), :class=>"btn btn-primary" %>
   <%= link_to "Sign out", destroy_user_session_path, :method => :delete, :class=>"btn btn-primary btn-lg" %><br>
   <hr>
 

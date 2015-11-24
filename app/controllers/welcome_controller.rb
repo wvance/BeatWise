@@ -28,11 +28,13 @@ class WelcomeController < ApplicationController
         post_multiple_github_repos(@@github_client)
       end
 
-      @userTweets = current_user.contents.where(:provider => "twitter")
-      @userCheckins = current_user.contents.where(:provider=>"foursquare")
-      @userActivities = current_user.contents.where(:provider=>"fitbit")
-      @userGithub = current_user.contents.where(:provider=>"github")
-      @userPosts = current_user.contents.where(:provider => "facebook")
+      # @timeline = current_user.contents.order('created_at DESC')
+
+      @userTweets = current_user.contents.order('created_at DESC').where(:provider => "twitter")
+      @userCheckins = current_user.contents.order('created_at DESC').where(:provider=>"foursquare")
+      @userActivities = current_user.contents.order('created_at DESC').where(:provider=>"fitbit")
+      @userGithub = current_user.contents.order('created_at DESC').where(:provider=>"github")
+      @userPosts = current_user.contents.order('created_at DESC').where(:provider => "facebook")
 
     end
   end

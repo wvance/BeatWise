@@ -12,155 +12,154 @@
   </div>
 </div>
 
-<hr>
-  <%=@all_users.count %> Account<br>
-  <%=@all_providers.count %> Identities<br>
-<hr>
-
 <% if user_signed_in? %>
   <h3>Signed Into BlackBox as <%= current_user.email%></h3><br>
-  <%= link_to "Sign out", destroy_user_session_path, :method => :delete %><br>
+  <%= link_to "Sign out", destroy_user_session_path, :method => :delete, :class=>"btn btn-primary btn-lg" %><br>
   <hr>
+
   <% if !@facebook.present? %>
-    <%= link_to "Facebook Login", user_omniauth_authorize_path(:facebook) %><br>
+    <%= link_to "Facebook Login", user_omniauth_authorize_path(:facebook), :class=>"btn btn-primary btn-lg"  %><br>
   <%else%>
     <h3>Signed In With Facebook as <%=current_user.identities.where(:provider => "facebook").first.username %></h3><br>
-    <table class="table table-striped">
-      <tr>
-        <td>ID</td>
-        <td>Kind</td>
-        <td>Title</td>
-        <td>Body</td>
-        <td>Date/Time</td>
-        <td>Log</td>
-      </tr>
-      <% @userPosts.each do |post| %>
+    <div class="table-responsive">
+      <table class="table table-sm table-striped">
         <tr>
-          <td><%= post.id %></td>
-          <td><%= post.kind%></td>
-          <td><%= post.title%></td>
-          <td><%= post.body%></td>
-          <td><%= post.created_at%></td>
-          <td><%= truncate(post.log, length:100)%></td>
-
+          <td>ID</td>
+          <td>Kind</td>
+          <td>Title</td>
+          <td>Body</td>
+          <td>Date/Time</td>
+          <td>Log</td>
         </tr>
-      <%end%>
-    </table>
-    <!-- <% @userPosts.each do |post| %>
-      ID <%= post.id %>:
-      Kind <%= post.kind%>:
-      Title <%= post.title %>:
-      Body <%= post.body %><br>
-      DateTime <%= post.created_at %><br>
-      Log: <%= post.log %><br>
-    <%end%> -->
+        <% @userPosts.each do |post| %>
+          <tr>
+            <td><%= post.id %></td>
+            <td><%= post.kind%></td>
+            <td><%= post.title%></td>
+            <td><%= post.body%></td>
+            <td><%= post.created_at%></td>
+            <td><%= truncate(post.log, length:100)%></td>
+
+          </tr>
+        <%end%>
+      </table>
+    </div>
   <%end%>
   <hr>
   <% if !@twitter.present? %>
-    <%= link_to "Twitter Login", user_omniauth_authorize_path(:twitter) %><br>
+    <%= link_to "Twitter Login", user_omniauth_authorize_path(:twitter), :class=>"btn btn-primary btn-lg" %><br>
   <%else%>
     <h3>Signed In With Twitter as <%=current_user.identities.where(:provider => "twitter").first.username %></h3><br>
-    <table class="table table-striped">
-      <tr>
-        <td>ID</td>
-        <td>Kind</td>
-        <td>Title</td>
-        <td>Body</td>
-        <td>Date/Time</td>
-        <td>Log</td>
-      </tr>
-      <% @userTweets.each do |tweet| %>
+    <div class="table-responsive">
+      <table class="table table-sm table-striped">
         <tr>
-          <td><%= tweet.id %></td>
-          <td><%= tweet.kind%></td>
-          <td><%= tweet.title%></td>
-          <td><%= tweet.body%></td>
-          <td><%= tweet.created_at%></td>
-          <td><%= truncate(tweet.log, length:100)%></td>
+          <td>ID</td>
+          <td>Kind</td>
+          <td>Title</td>
+          <td>Body</td>
+          <td>Date/Time</td>
+          <td>Log</td>
         </tr>
-      <%end%>
-    </table>
+        <% @userTweets.each do |tweet| %>
+          <tr>
+            <td><%= tweet.id %></td>
+            <td><%= tweet.kind%></td>
+            <td><%= tweet.title%></td>
+            <td><%= tweet.body%></td>
+            <td><%= tweet.created_at%></td>
+            <td><%= truncate(tweet.log, length:100)%></td>
+          </tr>
+        <%end%>
+      </table>
+    </div>
     <hr>
   <%end%>
   <hr>
   <% if !@foursquare.present? %>
-    <%= link_to "Foursquare Login", user_omniauth_authorize_path(:foursquare) %><br>
+    <%= link_to "Foursquare Login", user_omniauth_authorize_path(:foursquare), :class=>"btn btn-primary btn-lg" %><br>
   <%else%>
     <h3>Signed In With Foursquare as <%=current_user.identities.where(:provider => "foursquare").first.username %></h3><br>
-    <table class="table table-striped">
-      <tr>
-        <td>ID</td>
-        <td>Kind</td>
-        <td>Title</td>
-        <td>Body</td>
-        <td>Date/Time</td>
-        <td>Log</td>
-      </tr>
-      <% @userCheckins.each do |checkin| %>
+    <div class="table-responsive">
+      <table class="table table-sm table-striped">
         <tr>
-          <td><%= checkin.id %></td>
-          <td><%= checkin.kind%></td>
-          <td><%= checkin.title%></td>
-          <td><%= checkin.body%></td>
-          <td><%= checkin.created_at%></td>
-          <td><%= truncate(checkin.log, length:100)%></td>
+          <td>ID</td>
+          <td>Kind</td>
+          <td>Title</td>
+          <td>Body</td>
+          <td>Date/Time</td>
+          <td>Log</td>
         </tr>
-      <%end%>
-    </table>
+        <% @userCheckins.each do |checkin| %>
+          <tr>
+            <td><%= checkin.id %></td>
+            <td><%= checkin.kind%></td>
+            <td><%= checkin.title%></td>
+            <td><%= checkin.body%></td>
+            <td><%= checkin.created_at%></td>
+            <td><%= truncate(checkin.log, length:100)%></td>
+          </tr>
+        <%end%>
+      </table>
+    </div>
   <%end%>
   <hr>
   <% if !@github.present? %>
-    <%= link_to "Github Login", user_omniauth_authorize_path(:github) %><br>
+    <%= link_to "Github Login", user_omniauth_authorize_path(:github), :class=>"btn btn-primary btn-lg" %><br>
   <%else%>
     <h3>Signed In With Github as <%=current_user.identities.where(:provider => "github").first.username %></h3><br>
-    <table class="table table-striped">
-      <tr>
-        <td>ID</td>
-        <td>Kind</td>
-        <td>Title</td>
-        <td>Body</td>
-        <td>Date/Time</td>
-        <td>Log</td>
-      </tr>
-      <% @userGithub.each do |git| %>
+    <div class="table-responsive">
+      <table class="table table-sm table-striped">
         <tr>
-          <td><%= git.id %></td>
-          <td><%= git.kind%></td>
-          <td><%= git.title%></td>
-          <td><%= git.body%></td>
-          <td><%= git.created_at%></td>
-          <td><%= truncate(git.log, length:100)%></td>
+          <td>ID</td>
+          <td>Kind</td>
+          <td>Title</td>
+          <td>Body</td>
+          <td>Date/Time</td>
+          <td>Log</td>
         </tr>
-      <%end%>
-    </table>
+        <% @userGithub.each do |git| %>
+          <tr>
+            <td><%= git.id %></td>
+            <td><%= git.kind%></td>
+            <td><%= git.title%></td>
+            <td><%= git.body%></td>
+            <td><%= git.created_at%></td>
+            <td><%= truncate(git.log, length:100)%></td>
+          </tr>
+        <%end%>
+      </table>
+    </div>
   <%end%>
   <hr>
   <% if !@fitbit.present? %>
-    <%= link_to "Fitbit Login", user_omniauth_authorize_path(:fitbit) %><br>
+    <%= link_to "Fitbit Login", user_omniauth_authorize_path(:fitbit), :class=>"btn btn-primary btn-lg" %><br>
   <%else%>
     <h3>Signed In With Fitbit as <%=current_user.identities.where(:provider => "fitbit").first.username %></h3><br>
-    <table class="table table-striped">
-      <tr>
-        <td>ID</td>
-        <td>Kind</td>
-        <td>Title</td>
-        <td>Body</td>
-        <td>Date/Time</td>
-        <td>Log</td>
-      </tr>
-      <% @userActivities.each do |activity| %>
+    <div class="table-responsive">
+      <table class="table table-sm table-striped">
         <tr>
-          <td><%= activity.id %></td>
-          <td><%= activity.kind%></td>
-          <td><%= activity.title%></td>
-          <td><%= activity.body%></td>
-          <td><%= activity.created_at%></td>
-          <td><%= truncate(activity.log, length:100)%></td>
+          <td>ID</td>
+          <td>Kind</td>
+          <td>Title</td>
+          <td>Body</td>
+          <td>Date/Time</td>
+          <td>Log</td>
         </tr>
-      <%end%>
-    </table>
+        <% @userActivities.each do |activity| %>
+          <tr>
+            <td><%= activity.id %></td>
+            <td><%= activity.kind%></td>
+            <td><%= activity.title%></td>
+            <td><%= activity.body%></td>
+            <td><%= activity.created_at%></td>
+            <td><%= truncate(activity.log, length:100)%></td>
+          </tr>
+        <%end%>
+      </table>
+    </div>
   <%end%>
   <hr>
 <%else%>
+
 <%end%>
 

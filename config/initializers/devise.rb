@@ -7,7 +7,9 @@ Devise.setup do |config|
   config.secret_key = ENV["devise_secret_key"]
 
   config.omniauth :facebook, ENV["facebook_key"], ENV["facebook_secret"],
-    scope: 'email,user_posts,user_friends,user_events', info_fields: 'email, name'
+    scope: 'email,user_posts,user_friends,user_events,user_likes,user_events,user_photos,user_relationships',
+    info_fields: 'email, name'
+    # https://developers.facebook.com/docs/facebook-login/permissions/v2.5
   config.omniauth :twitter, ENV["twitter_key"], ENV["twitter_secret"]
   config.omniauth :foursquare, ENV["foursquare_key"], ENV["foursquare_secret"]
   config.omniauth :github, ENV["github_key"], ENV["github_secret"]

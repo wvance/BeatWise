@@ -96,8 +96,7 @@ class ApplicationController < ActionController::Base
       end
     end
     def post_multiple_facebook_posts(user_client)
-      user_timeline = user_client.get_connections("me", "feed")
-
+      user_timeline = user_client.get_connections("me", "feed", {limit: 500})
       user_timeline.each do |post|
         content = Content.new
         content.user_id = current_user.id
@@ -116,6 +115,120 @@ class ApplicationController < ActionController::Base
           content.save!
         end
 
+      end
+    end
+    def post_multiple_facebook_user_likes(user_client)
+      user_likes = user_client.get_connections("me", "likes")
+
+      user_likes.each do |like|
+        content = Content.new
+        content.user_id = current_user.id
+        content.external_id = like['id']
+        content.body = like['name']
+
+        content.external_link = "http://facebook.com/" + content.external_id
+        content.provider = "facebook"
+        content.kind = "like"
+
+        content.created_at = like['created_time'] || DateTime.now
+        content.active = true
+
+        content.log = like.to_hash
+
+        if (content.valid?)
+          content.save!
+        end
+      end
+    end
+    def post_multiple_facebook_user_events(user_client)
+      user_events = user_client.get_connections("me", "events")
+
+      user_events.each do |event|
+        content = Content.new
+        content.user_id = current_user.id
+        content.external_id = event['id']
+
+        content.body = event['description']
+        content.title = event['name']
+        content.external_link = "http://facebook.com/"+content.external_id
+        # raise event.inspect
+        if event['place'].present?
+          content.location = event['place']['name'] || ""
+
+          street = event['place']['location']['street']
+          city = event['place']['location']['city']
+          state = event['place']['location']['state']
+          zip = event['place']['location']['zip']
+          full_address = street + " " + city + " " + state + " " + zip
+
+          content.address = full_address
+
+          content.longitude = event['place']['location']['longitude']
+          content.latitude = event['place']['location']['latitude']
+        end
+
+        content.provider = "facebook"
+        content.kind = "event"
+
+        content.created_at = event['start_time'] || DateTime.now
+        content.active = true
+
+        content.log = event.to_hash
+
+        if (content.valid?)
+          content.save!
+        end
+      end
+    end
+
+    def post_multiple_facebook_user_photos(user_client)
+      user_photos = user_client.get_connections("me", "photos", {limit: 500})
+      user_photos.each do |photo|
+        content = Content.new
+        content.user_id = current_user.id
+        content.external_id = photo['id']
+
+        content.body = photo['name']
+
+        content.provider = "facebook"
+        content.kind = "photo"
+
+        content.external_link = "http://facebook.com/" + content.external_id
+
+        content.created_at = photo['created_time'] || DateTime.now
+        content.active = true
+
+        content.log = photo.to_hash
+
+        if (content.valid?)
+          content.save!
+        end
+      end
+    end
+
+    def post_multiple_facebook_user_family(user_client)
+      user_family = user_client.get_connections("me", "family")
+
+      user_family.each do |member|
+        content = Content.new
+        content.user_id = current_user.id
+        content.external_id = member['id']
+
+        content.title = member['relationship']
+        content.body = member['name']
+
+        content.provider = "facebook"
+        content.kind = "relationship"
+
+        content.external_link = "http://facebook.com/" + content.external_id
+
+        content.created_at = DateTime.now
+
+        content.log = member.to_hash
+
+        if (content.valid?)
+          content.save!
+        end
       end
     end
 
@@ -195,7 +308,8 @@ class ApplicationController < ActionController::Base
         content.external_link = "#"
         # content.external_link = "http://foursquare.com/user/"+ user.id
 
-        content.created_at = checkin.createdAt || DateTime.now
+        created_at = Time.at(checkin.createdAt).utc.to_datetime
+        content.created_at = created_at
         content.provider = "foursquare"
         content.kind = "checkin"
 
@@ -203,6 +317,29 @@ class ApplicationController < ActionController::Base
         if checkin.photos.items.first.present?
           content.image = checkin.photos.items.first
         end
+
+        if (content.valid?)
+          content.save!
+        end
+      end
+    end
+    def post_multiple_foursquare_user_friends(user_client)
+      user_friends = user_client.user_friends('self').items
+      # raise user_friends.inspect
+      user_friends.each do |friend|
+        content = Content.new
+
+        content.user_id = current_user.id
+        content.external_id = friend.id
+
+        content.title = friend.relationship
+        content.body = friend.firstName + " " + friend.lastName
+        content.location = friend.homeCity
+
+        content.created_at = DateTime.now
+        content.provider = "foursquare"
+        content.kind = "friend"
+        content.log = friend.to_hash
 
         if (content.valid?)
           content.save!

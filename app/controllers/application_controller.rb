@@ -96,7 +96,7 @@ class ApplicationController < ActionController::Base
       end
     end
     def post_multiple_facebook_posts(user_client)
-      user_timeline = user_client.get_connections("me", "feed", {limit: 500})
+      user_timeline = user_client.get_connections("me", "feed", {limit: 100})
       user_timeline.each do |post|
         content = Content.new
         content.user_id = current_user.id
@@ -182,7 +182,7 @@ class ApplicationController < ActionController::Base
     end
 
     def post_multiple_facebook_user_photos(user_client)
-      user_photos = user_client.get_connections("me", "photos", {limit: 500})
+      user_photos = user_client.get_connections("me", "photos", {limit: 100})
       user_photos.each do |photo|
         content = Content.new
         content.user_id = current_user.id

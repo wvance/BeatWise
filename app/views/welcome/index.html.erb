@@ -18,6 +18,7 @@
   <%= link_to "Sign out", destroy_user_session_path, :method => :delete, :class=>"btn btn-primary btn-lg" %><br>
   <hr>
 
+  <h1> Timeline</h1>
   <% if !@facebook.present? %>
     <%= link_to "Facebook Login", user_omniauth_authorize_path(:facebook), :class=>"btn btn-primary btn-lg"  %><br>
   <%else%>

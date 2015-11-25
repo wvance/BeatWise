@@ -295,7 +295,7 @@ class ApplicationController < ActionController::Base
 
         # raise checkin.inspect
         content.external_id = checkin.id
-        content.body = checkin.text
+        content.body = checkin.shout
         content.title = checkin.venue.name
 
         content.longitude = checkin.venue.location.lng

@@ -43,7 +43,7 @@ html{
     }
 
     #bodyWrapper{
-      padding-bottom: 50px;
+      padding-bottom: 90px;
       #flashWrapper{
         // position:fixed;
         // top:15px;
@@ -53,7 +53,14 @@ html{
         // z-index: 9999;
       }
       #mainWrapper{
-
+        .card-icon{
+          width:100%;
+          text-align: center;
+          font-size: 50px;
+        }
+        .card-link{
+          text-align:center;
+        }
       }
     }
     #footerWrapper{

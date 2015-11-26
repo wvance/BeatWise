@@ -1,21 +1,31 @@
 <div class="row">
   <div class="col-xs-12 center">
     <div id="welcomeWrapper">
-      <h2 class="verticalCenter">
-        <% unless user_signed_in? %>
-          <%= link_to user_omniauth_authorize_path("twitter") do%>
-            <i class="fa fa-twitter"></i> Twitter Sign In
-          <%end%>
-        <%end%>
-      </h2>
+      <% unless user_signed_in? %>
+        <div class="jumbotron">
+          <h1 class="display-3">Welcome to BlackBox</h1>
+          <p class="lead">BlackBox is a data aggregation platform for you!</p>
+          <hr class="m-y-md">
+          <p class="lead">
+            <%= link_to user_omniauth_authorize_path("twitter"), :class=>"btn btn-primary btn-lg" do%>
+              <i class="fa fa-twitter"></i> Twitter Sign In
+            <%end%>
+          </p>
+        </div>
+      <%end%>
     </div>
   </div>
 </div>
 
 <% if user_signed_in? %>
-  <h3>Signed Into BlackBox as <%= current_user.email%></h3><br>
-  <%= link_to "Sign out", destroy_user_session_path, :method => :delete, :class=>"btn btn-primary btn-lg" %><br>
-  <hr>
+  <div class="jumbotron">
+    <h1 class="display-3 center">Welcome to BlackBox</h1>
+    <p class="lead center">BlackBox is a data aggregation platform for you! Currently signed on as <%= current_user.email%></p>
+    <hr class="m-y-md">
+    <p class="lead right">
+      <%= link_to "Sign out", destroy_user_session_path, :method => :delete, :class=>"btn btn-primary btn-lg" %><br>
+    </p>
+  </div>
 
   <div class="card-deck-wrapper">
     <div class="card-deck">

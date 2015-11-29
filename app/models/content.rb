@@ -19,99 +19,6 @@ class Content < ActiveRecord::Base
   end
 
 # ========================================================
-# ============= TWITTER ==================================
-# ========================================================
-  def post_multiple_tweets(user_client,user, count)
-    # GET A USER'S TIMELINE GOING BACK AS FAR AS COUNT
-    user_tweets = user_client.user_timeline(count: count)
-    # LOOP THROUGH EACH TWEET IN USER TIMELINE AND CREATE 'NEW CONTENT'
-    user_tweets.each do |tweet|
-      content = Content.new
-
-      content.user_id = user
-      content.external_id = tweet.id
-      content.body = tweet.text
-
-      content.longitude = tweet.place.bounding_box.coordinates[0][0][0]
-      content.latitude = tweet.place.bounding_box.coordinates[0][0][1]
-      content.active = true
-      content.external_link = tweet.url
-
-      content.created_at = tweet.created_at || DateTime.now
-      content.provider = "twitter"
-      content.kind = "tweet"
-
-      content.log = tweet.to_hash
-      if tweet.media.present?
-        content.image = tweet.media[0].media_url
-      end
-
-      if (content.valid?)
-        content.save!
-      end
-    end
-  end
-
-# ========================================================
-# ============= GITHUB ===================================
-# ========================================================
-  def post_multiple_github_repos(user_client, user)
-    user_repos = user_client.repos.list
-    user_repos.each do |repo|
-      content = Content.new
-      content.user_id = user
-      content.external_id = repo.id
-
-      content.title = repo.full_name
-      content.body = repo.description
-      content.external_link = repo.html_url
-
-      content.provider = "github"
-      content.kind = "repo"
-
-      content.created_at = repo.created_at || DateTime.now
-      content.active = true
-      content.log = repo.to_hash
-
-      # GET REPO COMMITS FROM THE CURRENT REPO: CALL FUNCTION TO SAVE THOSE
-      # HOW TO CHECK IF THIS IS EMPTY???
-      # raise user_client.repos.commits.list(repo.owner.login, repo.name).inspect
-      if user_client.repos.commits.list(repo.owner.login, repo.name)
-        repo_commits = user_client.repos.commits.list(repo.owner.login, repo.name)
-        post_multiple_github_commits(repo_commits, content.id, user)
-      end
-
-      if (content.valid?)
-        content.save!
-      end
-    end
-  end
-  def post_multiple_github_commits(repo_commits, parent_repo_id, user)
-    repo_commits.each do |commit|
-      puts "COMMIT ID: " + commit.sha
-      commit_content = Content.new
-      commit_content.user_id = user
-      commit_content.external_id = commit.sha
-
-      commit_content.title = commit.commit.author.name
-      commit_content.body = commit.commit.message
-      commit_content.external_link = commit.html_url
-
-      commit_content.provider = "github"
-      commit_content.kind = "commit"
-      commit_content.active = true
-
-      commit_content.created_at = commit.commit.author.date || DateTime.now
-      commit_content.parent = parent_repo_id
-      commit_content.log = commit.to_hash
-
-      if (commit_content.valid?)
-        commit_content.save!
-      end
-    end
-  end
-
-# ========================================================
 # ============= FACEBOOK =================================
 # ========================================================
   def post_multiple_facebook_posts(user_client, user)
@@ -251,6 +158,42 @@ class Content < ActiveRecord::Base
     end
   end
 
+# ========================================================
+# ============= FITBIT ===================================
+# ========================================================
+  def post_multiple_fitbit_favorite_activities(user_client, user)
+    favorite_activities = user_client.favorite_activities
+    favorite_activities.each do |activity|
+      content = Content.new
+      content.user_id = user
+
+      content.provider = "fitbit"
+      content.kind = "activity"
+      content.created_at = DateTime.now
+      content.log = activity.to_hash
+    end
+  end
+  def post_multiple_fitbit_activities(user_client, user)
+    user_activity = user_client.recent_activities
+    user_activity.each do |activity|
+      # raise activity.inspect
+      content = Content.new
+      content.user_id = user
+      content.external_id = activity["activityId"]
+      content.title = activity["name"]
+      content.body = activity["description"].to_s + " Calories:" + activity["calories"].to_s + " Duration:" + activity["duration"].to_s + " Distance:" + activity["distance"].to_s
+      content.active = true
+      content.external_link = "#"
+      content.provider = "fitbit"
+      content.kind = "activity"
+      content.created_at = DateTime.now
+      content.log = activity.to_hash
+
+      if (content.valid?)
+        content.save!
+      end
+    end
+  end
 
 # ========================================================
 # ============= FOURSQUARE ===============================
@@ -316,39 +259,97 @@ class Content < ActiveRecord::Base
   end
 
 # ========================================================
-# ============= FITBIT ===================================
+# ============= GITHUB ===================================
 # ========================================================
-  def post_multiple_fitbit_favorite_activities(user_client, user)
-    favorite_activities = user_client.favorite_activities
-    favorite_activities.each do |activity|
+  def post_multiple_github_repos(user_client, user)
+    user_repos = user_client.repos.list
+    user_repos.each do |repo|
       content = Content.new
       content.user_id = user
+      content.external_id = repo.id
 
-      content.provider = "fitbit"
-      content.kind = "activity"
-      content.created_at = DateTime.now
-      content.log = activity.to_hash
-    end
-  end
-  def post_multiple_fitbit_activities(user_client, user)
-    user_activity = user_client.recent_activities
-    user_activity.each do |activity|
-      # raise activity.inspect
-      content = Content.new
-      content.user_id = user
-      content.external_id = activity["activityId"]
-      content.title = activity["name"]
-      content.body = activity["description"].to_s + " Calories:" + activity["calories"].to_s + " Duration:" + activity["duration"].to_s + " Distance:" + activity["distance"].to_s
+      content.title = repo.full_name
+      content.body = repo.description
+      content.external_link = repo.html_url
+
+      content.provider = "github"
+      content.kind = "repo"
+
+      content.created_at = repo.created_at || DateTime.now
       content.active = true
-      content.external_link = "#"
-      content.provider = "fitbit"
-      content.kind = "activity"
-      content.created_at = DateTime.now
-      content.log = activity.to_hash
+      content.log = repo.to_hash
+
+      # GET REPO COMMITS FROM THE CURRENT REPO: CALL FUNCTION TO SAVE THOSE
+      # HOW TO CHECK IF THIS IS EMPTY???
+      # raise user_client.repos.commits.list(repo.owner.login, repo.name).inspect
+      if user_client.repos.commits.list(repo.owner.login, repo.name)
+        repo_commits = user_client.repos.commits.list(repo.owner.login, repo.name)
+        post_multiple_github_commits(repo_commits, content.id, user)
+      end
 
       if (content.valid?)
         content.save!
       end
     end
   end
+  def post_multiple_github_commits(repo_commits, parent_repo_id, user)
+    repo_commits.each do |commit|
+      puts "COMMIT ID: " + commit.sha
+      commit_content = Content.new
+      commit_content.user_id = user
+      commit_content.external_id = commit.sha
+
+      commit_content.title = commit.commit.author.name
+      commit_content.body = commit.commit.message
+      commit_content.external_link = commit.html_url
+
+      commit_content.provider = "github"
+      commit_content.kind = "commit"
+      commit_content.active = true
+
+      commit_content.created_at = commit.commit.author.date || DateTime.now
+      commit_content.parent = parent_repo_id
+      commit_content.log = commit.to_hash
+
+      if (commit_content.valid?)
+        commit_content.save!
+      end
+    end
+  end
+
+
+# ========================================================
+# ============= TWITTER ==================================
+# ========================================================
+  def post_multiple_tweets(user_client,user, count)
+    # GET A USER'S TIMELINE GOING BACK AS FAR AS COUNT
+    user_tweets = user_client.user_timeline(count: count)
+    # LOOP THROUGH EACH TWEET IN USER TIMELINE AND CREATE 'NEW CONTENT'
+    user_tweets.each do |tweet|
+      content = Content.new
+
+      content.user_id = user
+      content.external_id = tweet.id
+      content.body = tweet.text
+
+      content.longitude = tweet.place.bounding_box.coordinates[0][0][0]
+      content.latitude = tweet.place.bounding_box.coordinates[0][0][1]
+      content.active = true
+      content.external_link = tweet.url
+
+      content.created_at = tweet.created_at || DateTime.now
+      content.provider = "twitter"
+      content.kind = "tweet"
+
+      content.log = tweet.to_hash
+      if tweet.media.present?
+        content.image = tweet.media[0].media_url
+      end
+
+      if (content.valid?)
+        content.save!
+      end
+    end
+  end
+
 end

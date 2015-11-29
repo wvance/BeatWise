@@ -1,10 +1,10 @@
 class ContentController < ApplicationController
   # THESE ARE USED TO SET UP THE CLIENTS, ONLY IF A PROVIDER IS PRESENT!
-  before_action :set_twitter_client
-  before_action :set_foursquare_client
-  before_action :set_fitbit_client
   before_action :set_facebook_client
+  before_action :set_fitbit_client
+  before_action :set_foursquare_client
   before_action :set_github_client
+  before_action :set_twitter_client
 
   # before_action :new_content #, only: []
 

@@ -5,9 +5,12 @@ Rails.application.routes.draw do
   devise_for :users, :controllers => { omniauth_callbacks: 'omniauth_callbacks' }
   match '/users/:id/finish_signup' => 'users#finish_signup', via: [:get, :patch], :as => :finish_signup
 
-  get 'content/get_twitter_tweets'
-  get 'content/get_foursquare_checkins'
-  get 'content/get_facebook_all'
+
+  get '/all_facebook',              to: 'content#get_facebook_all',             as: :all_facebook
+  get '/recent_fitbit_activities',  to: 'content#get_fitbit_recent_activities', as: :recent_fitbit_activities
+  get '/foursquare_checkins',       to: 'content#get_foursquare_checkins',      as: :foursquare_checkins
+  get '/github_repo_commits',       to: 'content#get_github_repos_commits',     as: :github_repo_commits
+  get '/twitter_tweets',            to: 'content#get_twitter_tweets',           as: :twitter_tweets
 
   get 'welcome/index'
   # You can have the root of your site routed with "root"

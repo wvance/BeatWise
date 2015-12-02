@@ -22,22 +22,16 @@ class ContentController < ApplicationController
     end
   end
 
-  # def get_twitter_all
-  #   @content = Content.new
-  #   @content.post_multiple_tweets(@@twitter_client, current_user.id, 100)
-
-  #   respond_to do |format|
-  #     format.html { redirect_to root_url }
-  #     format.json { head :no_content }
-  #   end
-  # end
-
   def get_twitter_tweets
-    @content = Content.new
-    @content.post_multiple_tweets(@@twitter_client, current_user.id, 100)
+    user_tweets = @@twitter_client.user_timeline(count: 100)
+
+    user_tweets.each do |tweet|
+      @content = Content.new
+      @content.post_tweet(tweet, current_user.id)
+    end
 
     respond_to do |format|
-      format.html { redirect_to root_url }
+      format.html { redirect_to root_url, notice:"Updated Twitter Tweets" }
       format.json { head :no_content }
     end
   end
@@ -51,12 +45,16 @@ class ContentController < ApplicationController
     end
   end
 
-  def get_github_repos_commits
-    @content = Content.new
-    @content.post_multiple_github_repos(@@github_client, current_user.id)
+  def get_github_repos
+    user_repos = @@github_client.repos.list
+
+    user_repos.each do |repo|
+      @content = Content.new
+      @content.post_github_repo(repo, current_user.id)
+    end
 
     respond_to do |format|
-      format.html { redirect_to root_url }
+      format.html { redirect_to root_url, notice:"Updated All Github" }
       format.json { head :no_content }
     end
   end
@@ -73,66 +71,105 @@ class ContentController < ApplicationController
   end
 
   def get_facebook_all
-    @content = Content.new
-    @content.post_multiple_facebook_posts(@@facebook_client, current_user.id)
-    @content.post_multiple_facebook_user_likes(@@facebook_client, current_user.id)
-    @content.post_multiple_facebook_user_events(@@facebook_client, current_user.id)
-    @content.post_multiple_facebook_user_photos(@@facebook_client, current_user.id)
-    @content.post_multiple_facebook_user_family(@@facebook_client, current_user.id)
+    user_timeline = @@facebook_client.get_connections("me", "feed", {limit: 100})
+    user_timeline.each do |post|
+      @content = Content.new
+      @content.post_facebook_post(post, current_user.id)
+    end
+
+    user_likes = @@facebook_client.get_connections("me", "likes")
+    user_likes.each do |like|
+      @content = Content.new
+      @content.post_facebook_user_like(like, current_user.id)
+    end
+
+    user_events = @@facebook_client.get_connections("me", "events")
+    user_events.each do |event|
+      @content = Content.new
+      @content.post_facebook_user_event(event, current_user.id)
+    end
+
+    user_photos = @@facebook_client.get_connections("me", "photos", {limit: 100})
+    user_photos.each do |photo|
+      @content = Content.new
+      @content.post_facebook_user_photo(photo, current_user.id)
+    end
+
+    user_family = @@facebook_client.get_connections("me", "family")
+    user_family.each do |member|
+      @content = Content.new
+      @content.post_facebook_user_family(member, current_user.id)
+    end
+
 
     respond_to do |format|
-      format.html { redirect_to root_url }
+      format.html { redirect_to root_url, notice:"Updated All Facebook" }
       format.json { head :no_content }
     end
   end
 
   def get_facebook_posts
-    @content = Content.new
-    @content.post_multiple_facebook_posts(@@facebook_client, current_user.id)
+    user_timeline = @@facebook_client.get_connections("me", "feed", {limit: 100})
+    user_timeline.each do |post|
+      @content = Content.new
+      @content.post_facebook_post(post, current_user.id)
+    end
 
     respond_to do |format|
-      format.html { redirect_to root_url }
-      format.json { head :no_content }
+      format.html { redirect_to root_url, notice:"Updated Facebook Posts"}
+      format.json { head :no_content}
     end
   end
 
   def get_facebook_likes
-    @content = Content.new
-    @content.post_multiple_facebook_user_likes(@@facebook_client, current_user.id)
+    user_likes = @@facebook_client.get_connections("me", "likes")
+    user_likes.each do |like|
+      @content = Content.new
+      @content.post_facebook_user_like(like, current_user.id)
+    end
 
     respond_to do |format|
-      format.html { redirect_to root_url }
-      format.json { head :no_content }
+      format.html { redirect_to root_url, notice:"Updated Facebook Likes"}
+      format.json { head :no_content}
     end
   end
 
   def get_facebook_events
-    @content = Content.new
-    @content.post_multiple_facebook_user_events(@@facebook_client, current_user.id)
+    user_events = @@facebook_client.get_connections("me", "events")
+    user_events.each do |event|
+      @content = Content.new
+      @content.post_facebook_user_event(event, current_user.id)
+    end
 
     respond_to do |format|
-      format.html { redirect_to root_url }
-      format.json { head :no_content }
+      format.html { redirect_to root_url, notice:"Updated Facebook Events" }
+      format.json { head :no_content}
     end
   end
 
   def get_facebook_photos
-    @content = Content.new
-    @content.post_multiple_facebook_user_photos(@@facebook_client, current_user.id)
+    user_photos = @@facebook_client.get_connections("me", "photos", {limit: 100})
+    user_photos.each do |photo|
+      @content = Content.new
+      @content.post_facebook_user_photo(photo, current_user.id)
+    end
 
     respond_to do |format|
-      format.html { redirect_to root_url }
-      format.json { head :no_content }
+      format.html { redirect_to root_url, notice:"Updated Facebook Photos" }
+      format.json { head :no_content}
     end
   end
 
   def get_facebook_family
-    @content = Content.new
-    @content.post_multiple_facebook_user_family(@@facebook_client, current_user.id)
+    user_family = @@facebook_client.get_connections("me", "family")
+    user_family.each do |member|
+      @content = Content.new
+      @content.post_facebook_user_family(member, current_user.id)
+    end
 
     respond_to do |format|
-      format.html { redirect_to root_url }
-      format.json { head :no_content }
+      format.html { redirect_to root_url, notice:"Updated Facebook Family"}
+      format.json { head :no_content}
     end
   end
 
@@ -146,32 +183,48 @@ class ContentController < ApplicationController
   end
 
   def get_foursquare_all
-    @content = Content.new
-    @content.post_multiple_foursquare_checkins(@@foursquare_client, current_user.id)
-    @content.post_multiple_foursquare_user_friends(@@foursquare_client, current_user.id)
+    user_checkins = @@foursquare_client.user_checkins.items
+    user_checkins.each do |checkin|
+      @content = Content.new
+      @content.post_foursquare_checkin(checkin, current_user.id)
+    end
+
+    user_friends = @@foursquare_client.user_friends('self').items
+    user_friends.each do |friend|
+      @content = Content.new
+      @content.post_foursquare_user_friend(friend, current_user.id)
+    end
 
     respond_to do |format|
-      format.html { redirect_to root_url }
+      format.html { redirect_to root_url, notice:"Updated All Foursquare" }
       format.json { head :no_content }
     end
   end
 
   def get_foursquare_checkins
-    @content = Content.new
-    @content.post_multiple_foursquare_checkins(@@foursquare_client, current_user.id)
+    user_checkins = @@foursquare_client.user_checkins.items
+
+    user_checkins.each do |checkin|
+      @content = Content.new
+      @content.post_foursquare_checkin(checkin, current_user.id)
+    end
 
     respond_to do |format|
-      format.html { redirect_to root_url }
-      format.json { head :no_content }
+      format.html { redirect_to root_url, notice:"Updated Foursquare Checkins"}
+      format.json { head :no_content}
     end
   end
   def get_foursquare_friends
-    @content = Content.new
-    @content.post_multiple_foursquare_user_friends(@@foursquare_client, current_user.id)
+    user_friends = @@foursquare_client.user_friends('self').items
+
+    user_friends.each do |friend|
+      @content = Content.new
+      @content.post_foursquare_user_friend(friend, current_user.id)
+    end
 
     respond_to do |format|
-      format.html { redirect_to root_url }
-      format.json { head :no_content }
+      format.html { redirect_to root_url, notice:"Updated Foursquare Friends" }
+      format.json { head :no_content}
     end
   end
 
@@ -189,23 +242,30 @@ class ContentController < ApplicationController
     end
   end
 
-  def get_fitbit_favorite_activities
-    @content = Content.new
-    @content.post_multiple_fitbit_favorite_activities(@@fitbit_client, current_user.id)
+  def get_fitbit_recent_activitity
+    user_activity = @@fitbit_client.recent_activities
+    user_activity.each do |activity|
+      @content = Content.new
+      @content.post_fitbit_recent_activity(activity, current_user.id)
+    end
 
     respond_to do |format|
-      format.html { redirect_to root_url }
-      format.json { head :no_content }
+      format.html { redirect_to root_url, notice:"Updated Fitbit Recent Activity"}
+      format.json { head :no_content}
     end
   end
 
-  def get_fitbit_recent_activities
-    @content = Content.new
-    @content.post_multiple_fitbit_activities(@@fitbit_client, current_user.id)
+  def get_fitbit_favorite_activities
+    favorite_activities = @@fitbit_client.favorite_activities
+
+    favorite_activities.each do |activity|
+      @content = Content.new
+      @content.post_fitbit_favorite_activity(activity, current_user.id)
+    end
 
     respond_to do |format|
-      format.html { redirect_to root_url }
-      format.json { head :no_content }
+      format.html { redirect_to root_url, notice:"Updated Fitbit Favorite Activities" }
+      format.json { head :no_content}
     end
   end
 end

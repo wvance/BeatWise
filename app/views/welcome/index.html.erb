@@ -82,7 +82,7 @@
               <%= link_to "#", :class=>"btn btn-primary disabled" do%>
                 Foursquare
               <%end%>
-              <%= link_to foursquare_checkins_path, :class=>"btn btn-primary" do%>
+              <%= link_to all_foursquare_path, :class=>"btn btn-primary" do%>
                 <i class="fa fa-refresh"></i>
               <%end%>
               <p class="card-text left"><small class="text-muted">Signed in as: <%= @foursquare.first.username %></small></p>
@@ -102,7 +102,7 @@
               <%= link_to "#", :class=>"btn btn-primary disabled" do%>
                 Github
               <%end%>
-              <%= link_to github_repo_commits_path, :class=>"btn btn-primary" do%>
+              <%= link_to get_github_repos_path(), :class=>"btn btn-primary" do%>
                 <i class="fa fa-refresh"></i>
               <%end%>
               <p class="card-text left"><small class="text-muted">Signed in as: <%= @github.first.username %></small></p>
@@ -122,7 +122,7 @@
               <%= link_to "#", :class=>"btn btn-primary disabled" do%>
                 Fitbit
               <%end%>
-              <%= link_to recent_fitbit_activities, :class=>"btn btn-primary" do%>
+              <%= link_to recent_fitbit_activities_path, :class=>"btn btn-primary" do%>
                 <i class="fa fa-refresh"></i>
               <%end%>
               <p class="card-text left"><small class="text-muted">Signed in as: <%= @fitbit.first.username %></small></p>

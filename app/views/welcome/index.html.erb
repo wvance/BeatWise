@@ -135,6 +135,7 @@
 
   <% if @timeline.present? %>
     <hr>
+    <%= link_to "Export Timeline", root_path(:format => :csv ), :class=>"btn btn-primary pull-right" %>
     <h1> Timeline</h1>
     <div class="table-responsive">
       <table class="table table-sm table-striped">
@@ -164,7 +165,6 @@
         <%end%>
       </table>
     </div>
-    <%= link_to "Export Timeline", root_path(:format => :csv ), :class=>"btn btn-primary pull-right" %>
   <%end%>
 <%else%>
 

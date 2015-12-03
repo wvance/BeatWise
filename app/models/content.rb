@@ -7,7 +7,7 @@ class Content < ActiveRecord::Base
 
   def self.to_csv
     # CREATES AN ARRAY OF STRINGS "ID", "TITLE"..
-    attributes = %w{id created_at title body provider kind log}
+    attributes = %w{id provider kind created_at title body longitude latitude external_link log}
     CSV.generate(headers:true) do |csv|
       # PUSHES ATTRIBUTES INTO FIRST ROW
       csv << attributes
@@ -233,7 +233,6 @@ class Content < ActiveRecord::Base
       # raise self.errors.inspect
     end
   end
-
 # ========================================================
 # ============= GITHUB ===================================
 # ========================================================

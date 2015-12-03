@@ -30,7 +30,6 @@
   <div class="card-deck-wrapper">
     <div class="card-deck">
       <div class="card">
-
         <div class="car-img-top card-icon"><i class="fa fa-facebook"></i></div>
         <div class="card-block">
           <h4 class="card-title">Facebook</h4>
@@ -126,6 +125,97 @@
                 <i class="fa fa-refresh"></i>
               <%end%>
               <p class="card-text left"><small class="text-muted">Signed in as: <%= @fitbit.first.username %></small></p>
+            <%end%>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <!-- FUTURE CARDS -->
+  <div class="card-deck-wrapper">
+    <div class="card-deck">
+      <div class="card">
+        <div class="card-header">
+          Coming Soon
+        </div>
+        <div class="car-img-top card-icon"><i class="fa fa-car"></i></div>
+        <div class="card-block">
+          <h4 class="card-title">Automatic</h4>
+          <p class="card-text">Sign onto Automatic to save your car's data to BlackBox!</p>
+          <div class="card-link">
+            <% unless false %>
+              <%= link_to "Automatic Login", "#", :class=>"btn btn-primary disabled" %><br>
+            <%else%>
+
+            <%end%>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          Coming Soon
+        </div>
+        <div class="car-img-top card-icon"><i class="fa fa-dropbox"></i></div>
+        <div class="card-block">
+          <h4 class="card-title">DropBox</h4>
+          <p class="card-text">Sign onto DropBox to track your files and save events to BlackBox!</p>
+          <div class="card-link">
+            <% unless false %>
+              <%= link_to "DropBox Login", "#", :class=>"btn btn-primary disabled" %><br>
+            <%else%>
+
+            <%end%>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          Coming Soon
+        </div>
+        <div class="car-img-top card-icon"><i class="fa fa-instagram"></i></div>
+        <div class="card-block">
+          <h4 class="card-title">Instagram</h4>
+          <p class="card-text">Sign onto Instagram to collect your pictures to BlackBox!</p>
+          <div class="card-link">
+            <% unless false %>
+              <%= link_to "Instagram Login", "#", :class=>"btn btn-primary disabled" %><br>
+            <%else%>
+
+            <%end%>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          Coming Soon
+        </div>
+        <div class="car-img-top card-icon"><i class="fa fa-file-text"></i></div>
+        <div class="card-block">
+          <h4 class="card-title">Evernote</h4>
+          <p class="card-text">Sign onto Evernote to save all your documents to BlackBox!</p>
+          <div class="card-link">
+            <% unless false %>
+              <%= link_to "Evernote Login", "#", :class=>"btn btn-primary disabled" %><br>
+            <%else%>
+
+            <%end%>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          Coming Soon
+        </div>
+        <div class="car-img-top card-icon"><i class="fa fa-spotify"></i></div>
+        <div class="card-block">
+          <h4 class="card-title">Spotify</h4>
+          <p class="card-text">Sign onto Spotify to drop each song you care about into BlackBox!</p>
+          <div class="card-link">
+            <% unless false %>
+              <%= link_to "Spotify Login", "#", :class=>"btn btn-primary disabled" %><br>
+            <%else%>
+
             <%end%>
           </div>
         </div>

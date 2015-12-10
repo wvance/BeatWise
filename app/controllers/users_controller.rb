@@ -40,6 +40,17 @@ class UsersController < ApplicationController
     end
   end
 
+  def sign_out_provider
+    provider = params[:provider]
+    @identity = current_user.identities.where(:provider => provider).first
+    @identity.destroy
+
+    respond_to do |format|
+      format.html { redirect_to root_url, notice: 'You were successfully signed out!'}
+      format.json { head :no_content }
+    end
+  end
+
   # DELETE /users/:id.:format
   def destroy
     # authorize! :delete, @user
@@ -56,7 +67,7 @@ class UsersController < ApplicationController
     end
 
     def user_params
-      accessible = [ :name, :email ] # extend with your own params
+      accessible = [ :name, :email] # extend with your own params
       accessible << [ :password, :password_confirmation ] unless params[:user][:password].blank?
       params.require(:user).permit(accessible)
     end

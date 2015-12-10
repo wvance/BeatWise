@@ -325,4 +325,13 @@ class Content < ActiveRecord::Base
     else
     end
   end
+  def post_fitbit_heart_rate(heart_rate, user)
+    raise heart_rate.inspect
+    self.user_id = user
+    if (self.valid?)
+      self.save!
+    else
+    end
+  end
+
 end

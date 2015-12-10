@@ -13,7 +13,8 @@ Devise.setup do |config|
   config.omniauth :twitter, ENV["twitter_key"], ENV["twitter_secret"]
   config.omniauth :foursquare, ENV["foursquare_key"], ENV["foursquare_secret"]
   config.omniauth :github, ENV["github_key"], ENV["github_secret"]
-  config.omniauth :fitbit, ENV["fitbit_key"], ENV["fitbit_secret"]
+  config.omniauth :fitbit_oauth2, ENV["fitbit_client_id"], ENV["fitbit_secret"],
+    scope: 'activity heartrate location nutrition profile sleep settings social weight'
 
   # config.OmniAuth :linkedin, ENV["linkedin_key"], ENV["linkedin_secret"],
   # config.omniauth :linkedin, ENV["linkedin_key"], ENV["linkedin_secret"],

@@ -1,3 +1,95 @@
+<!-- <div class="row">
+  <div class="col-xs-12">
+    <div id="welcomeIcons">
+
+      <div id="top-icon-row">
+        <div class="col-xs-2 col-sm-2 center">
+          <i class="fa fa-camera"></i>
+        </div>
+        <div class="col-xs-2 col-sm-2 center">
+          <i class="fa fa-dropbox"></i>
+        </div>
+        <div class="col-xs-2 col-sm-2 center">
+          <i class="fa fa-vine"></i>
+        </div>
+        <div class="col-xs-2 col-sm-2 center">
+          <i class="fa fa-android"></i>
+        </div>
+        <div class="col-xs-2 col-sm-2 center">
+          <i class="fa fa-google-wallet"></i>
+        </div>
+        <div class="col-xs-2 col-sm-2 center">
+          <i class="fa fa-trello"></i>
+        </div>
+      </div>
+
+      <div id="middle-top-icon-row">
+        <div class="col-xs-2 col-sm-2 center">
+          <i class="fa fa-spotify"></i>
+        </div>
+        <div class="col-xs-2 col-sm-2 center">
+          <i class="fa fa-skype"></i>
+        </div>
+        <div class="col-xs-4 col-sm-4">
+          <%= link_to user_omniauth_authorize_path("twitter"), :class=>"" do%>
+            <span class="center mainlogo">
+              <span class="black">Black</span><span class="yellow">Box</span><br>
+              <span class="mainSignin">
+                  Sign In
+              </span>
+            </span>
+          <%end%>
+        </div>
+        <div class="col-xs-2 col-sm-2 center">
+          <i class="fa fa-facebook"></i>
+        </div>
+        <div class="col-xs-2 col-sm-2 center">
+          <i class="fa fa-medium"></i>
+        </div>
+      </div>
+
+      <div id="middle-bottom-icon-row">
+        <div class="col-xs-2 col-sm-2 center">
+          <i class="fa fa-youtube"></i>
+        </div>
+        <div class="col-xs-2 col-sm-2 center">
+          <i class="fa fa-tumblr"></i>
+        </div>
+        <div class="col-xs-2 col-sm-2 center">
+        </div>
+        <div class="col-xs-2 col-sm-2 center">
+        </div>
+        <div class="col-xs-2 col-sm-2 center">
+          <i class="fa fa-soundcloud"></i>
+        </div>
+        <div class="col-xs-2 col-sm-2 center">
+          <i class="fa fa-reddit"></i>
+        </div>
+      </div>
+      <div id="top-icon-row">
+        <div class="col-xs-2 col-sm-2 center">
+          <i class="fa fa-slack"></i>
+        </div>
+        <div class="col-xs-2 col-sm-2 center">
+          <i class="fa fa-linkedin"></i>
+        </div>
+        <div class="col-xs-2 col-sm-2 center">
+          <i class="fa fa-twitter"></i>
+        </div>
+        <div class="col-xs-2 col-sm-2 center">
+          <i class="fa fa-foursquare"></i>
+        </div>
+        <div class="col-xs-2 col-sm-2 center">
+          <i class="fa fa-instagram"></i>
+        </div>
+        <div class="col-xs-2 col-sm-2 center">
+          <i class="fa fa-github"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+ -->
 <div class="row">
   <div class="col-xs-12 center">
     <div id="welcomeWrapper">
@@ -46,6 +138,7 @@
                 <i class="fa fa-refresh"></i>
               <%end%>
               <p class="card-text left"><small class="text-muted">Signed in as: <%= @facebook.first.username %></small></p>
+              <%= link_to "Facebook Signout", sign_out_provider_path(:provider => "facebook"), :class=>"btn btn-primary" %>
             <%end%>
           </div>
         </div>
@@ -66,6 +159,7 @@
                 <i class="fa fa-refresh"></i>
               <%end%>
               <p class="card-text left"><small class="text-muted">Signed in as: <%= @twitter.first.username %></small></p>
+              <%= link_to "Twitter Signout", sign_out_provider_path(:provider => "twitter"), :class=>"btn btn-primary disabled" %>
             <%end%>
           </div>
         </div>
@@ -86,6 +180,7 @@
                 <i class="fa fa-refresh"></i>
               <%end%>
               <p class="card-text left"><small class="text-muted">Signed in as: <%= @foursquare.first.username %></small></p>
+              <%= link_to "Foursquare Signout", sign_out_provider_path(:provider => "foursquare"), :class=>"btn btn-primary" %>
             <%end%>
           </div>
         </div>
@@ -106,6 +201,7 @@
                 <i class="fa fa-refresh"></i>
               <%end%>
               <p class="card-text left"><small class="text-muted">Signed in as: <%= @github.first.username %></small></p>
+              <%= link_to "Github Signout", sign_out_provider_path(:provider => "github"), :class=>"btn btn-primary" %>
             <%end%>
           </div>
         </div>
@@ -117,15 +213,19 @@
           <p class="card-text">Sign onto Fitbit to track activities, and workouts to your BlackBox!</p>
           <div class="card-link">
             <% unless @fitbit.present? %>
-              <%= link_to "Fitbit Login", user_omniauth_authorize_path(:fitbit), :class=>"btn btn-primary" %><br>
+              <%= link_to "Fitbit Login", user_omniauth_authorize_path(:fitbit_oauth2), :class=>"btn btn-primary" %><br>
             <%else%>
               <%= link_to "#", :class=>"btn btn-primary disabled" do%>
                 Fitbit
               <%end%>
-              <%= link_to recent_fitbit_activities_path, :class=>"btn btn-primary" do%>
+              <%= link_to recent_fitbit_activities_path, :class=>"btn btn-primary disabled" do%>
+                <i class="fa fa-refresh"></i>
+              <%end%>
+              <%= link_to fitbit_heart_path, :class=>"btn btn-secondary disabled" do%>
                 <i class="fa fa-refresh"></i>
               <%end%>
               <p class="card-text left"><small class="text-muted">Signed in as: <%= @fitbit.first.username %></small></p>
+              <%= link_to "Fitbit Signout", sign_out_provider_path(:provider => "fitbit"), :class=>"btn btn-primary" %>
             <%end%>
           </div>
         </div>

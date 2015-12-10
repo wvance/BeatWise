@@ -7,8 +7,13 @@ gem 'delayed_job_active_record'     # MOVES JOBS INTO BACKGROUND TASKS
 gem 'bootstrap', '~> 4.0.0.alpha1'  # BOOTSTRAP ALPHA
 gem "font-awesome-rails"
 
+gem 'httparty'
+
 gem 'twitter'                       # TWITTER API
-gem 'fitgem'                        # FITBIT API https://github.com/whazzmaster/fitgem
+# gem 'fitgem'                        # FITBIT API https://github.com/whazzmaster/fitgem
+# gem 'fitgem', :git => 'https://github.com/wvance/fitgem'
+gem 'fitbit-api-client', require: 'fitbit'
+
 gem 'foursquare2'                   # FOURSQUARE API
 gem 'github_api'                    # GITHUB API
 gem 'koala'                         # FACEBOOK API
@@ -20,7 +25,8 @@ gem 'omniauth'                      # OMNIAUTH WITH DEVISE
 gem 'omniauth-twitter'
 gem 'omniauth-facebook'
 gem 'omniauth-github'
-gem 'omniauth-fitbit'
+# gem 'omniauth-fitbit'
+gem 'omniauth-fitbit-oauth2'
 gem "omniauth-google-oauth2"
 gem 'omniauth-foursquare'
 # gem 'omniauth-linkedin'

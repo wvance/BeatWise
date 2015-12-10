@@ -242,6 +242,7 @@ class ContentController < ApplicationController
     end
   end
 
+
   def get_fitbit_recent_activitity
     user_activity = @@fitbit_client.recent_activities
     user_activity.each do |activity|
@@ -267,5 +268,10 @@ class ContentController < ApplicationController
       format.html { redirect_to root_url, notice:"Updated Fitbit Favorite Activities" }
       format.json { head :no_content}
     end
+  end
+
+  def get_fitbit_heart_rates
+    heart_rates = @@fitbit_client.heart_rate_on_date('today', "1m")
+    raise heart_rates.inspect
   end
 end

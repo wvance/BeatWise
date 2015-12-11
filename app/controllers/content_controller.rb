@@ -95,11 +95,11 @@ class ContentController < ApplicationController
       @content.post_facebook_user_photo(photo, current_user.id)
     end
 
-    user_family = @@facebook_client.get_connections("me", "family")
-    user_family.each do |member|
-      @content = Content.new
-      @content.post_facebook_user_family(member, current_user.id)
-    end
+    # user_family = @@facebook_client.get_connections("me", "family")
+    # user_family.each do |member|
+    #   @content = Content.new
+    #   @content.post_facebook_user_family(member, current_user.id)
+    # end
 
 
     respond_to do |format|
@@ -189,11 +189,11 @@ class ContentController < ApplicationController
       @content.post_foursquare_checkin(checkin, current_user.id)
     end
 
-    user_friends = @@foursquare_client.user_friends('self').items
-    user_friends.each do |friend|
-      @content = Content.new
-      @content.post_foursquare_user_friend(friend, current_user.id)
-    end
+    # user_friends = @@foursquare_client.user_friends('self').items
+    # user_friends.each do |friend|
+    #   @content = Content.new
+    #   @content.post_foursquare_user_friend(friend, current_user.id)
+    # end
 
     respond_to do |format|
       format.html { redirect_to root_url, notice:"Updated All Foursquare" }
@@ -232,13 +232,24 @@ class ContentController < ApplicationController
 # ============= FITBIT ===================================
 # ========================================================
   def set_fitbit_client
-    if (user_signed_in? && current_user.identities.where(:provider => "fitbit").present? )
-      @@fitbit_client = Fitgem::Client.new({
-        consumer_key: ENV["fitbit_key"],
-        consumer_secret: ENV["fitbit_secret"],
-        token: current_user.identities.where(:provider => "fitbit").first.token,
-        secret: current_user.identities.where(:provider => "fitbit").first.secret
-      })
+    if (user_signed_in? && current_user.identities.where(:provider => "fitbit_oauth2").present? )
+      # @@fitbit_client = Fitgem::Client.new({
+      #   consumer_key: ENV["fitbit_key"],
+      #   consumer_secret: ENV["fitbit_secret"],
+      #   token: current_user.identities.where(:provider => "fitbit").first.token,
+      #   secret: current_user.identities.where(:provider => "fitbit").first.secret
+      # })
+      # @@fitbit_client = OAuth2::Client.new(
+      #   current_user.identities.where(:provider => "fitbit_oauth2").first.token,
+      #   site: 'https://www.fitbit.com/',
+      #   authorize_url: '/oauth2/authorize',
+      #   token_url: '/oauth2/token'
+      # )
+      @@fitbit_client = Fitbit::Client.new(
+        ENV["fitbit_client_id"],
+        ENV["fitbit_secret"],
+        current_user.identities.where(:provider => "fitbit_oauth2").first.token
+      )
     end
   end
 
@@ -270,8 +281,22 @@ class ContentController < ApplicationController
     end
   end
 
-  def get_fitbit_heart_rates
-    heart_rates = @@fitbit_client.heart_rate_on_date('today', "1m")
-    raise heart_rates.inspect
+  def get_fitbit_daily_heart_rate
+    today = DateTime.current.strftime("%F")
+    yesterday = DateTime.yesterday.strftime("%F")
+    lastmonth = 1.month.ago.strftime("%F")
+
+    heart_rates = @@fitbit_client.heart_rate_time_series(base_date: lastmonth, end_date: today)
+    heart_rates = heart_rates['activities-heart']
+
+    heart_rates.each do |day|
+      @content = Content.new
+      @content.post_fitbit_daily_heart_rate(day, current_user.id)
+    end
+
+    respond_to do |format|
+      format.html { redirect_to root_url, notice:"Updated Fitbit Heart Rates" }
+      format.json { head :no_content}
+    end
   end
 end

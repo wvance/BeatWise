@@ -11,9 +11,8 @@ gem 'httparty'
 
 gem 'twitter'                       # TWITTER API
 # gem 'fitgem'                        # FITBIT API https://github.com/whazzmaster/fitgem
-# gem 'fitgem', :git => 'https://github.com/wvance/fitgem'
 gem 'fitbit-api-client', require: 'fitbit'
-
+gem 'instagram'
 gem 'foursquare2'                   # FOURSQUARE API
 gem 'github_api'                    # GITHUB API
 gem 'koala'                         # FACEBOOK API
@@ -27,8 +26,9 @@ gem 'omniauth-facebook'
 gem 'omniauth-github'
 # gem 'omniauth-fitbit'
 gem 'omniauth-fitbit-oauth2'
-gem "omniauth-google-oauth2"
+gem 'omniauth-google-oauth2'
 gem 'omniauth-foursquare'
+gem 'omniauth-instagram'
 # gem 'omniauth-linkedin'
 # gem "linkedin-oauth2"
 # gem 'omniauth-linkedin-oauth2'

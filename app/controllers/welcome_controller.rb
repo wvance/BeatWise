@@ -6,8 +6,9 @@ class WelcomeController < ApplicationController
       @twitter = current_user.identities.where(:provider => "twitter")
       @foursquare = current_user.identities.where(:provider => "foursquare")
       @github = current_user.identities.where(:provider => "github")
-      @fitbit = current_user.identities.where(:provider => "fitbit")
+      @fitbit = current_user.identities.where(:provider => "fitbit_oauth2")
       @facebook = current_user.identities.where(:provider =>'facebook')
+      @instagram = current_user.identities.where(:provider => 'instagram')
 
       @timeline = current_user.contents.order('created_at DESC').all
 

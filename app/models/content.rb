@@ -325,9 +325,19 @@ class Content < ActiveRecord::Base
     else
     end
   end
-  def post_fitbit_heart_rate(heart_rate, user)
-    raise heart_rate.inspect
+
+  def post_fitbit_daily_heart_rate(day, user)
     self.user_id = user
+    self.external_id = day['dateTime']
+    self.body = day['value']
+    self.active = true
+    self.external_link = "#"
+    self.provider = "fitbit"
+    self.kind = "heartrate"
+
+    self.created_at = day['dateTime']
+    self.log = day.to_hash
+
     if (self.valid?)
       self.save!
     else

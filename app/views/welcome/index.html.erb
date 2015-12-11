@@ -221,11 +221,11 @@
               <%= link_to recent_fitbit_activities_path, :class=>"btn btn-primary disabled" do%>
                 <i class="fa fa-refresh"></i>
               <%end%>
-              <%= link_to fitbit_heart_path, :class=>"btn btn-secondary disabled" do%>
+              <%= link_to fitbit_heart_path, :class=>"btn btn-secondary" do%>
                 <i class="fa fa-refresh"></i>
               <%end%>
               <p class="card-text left"><small class="text-muted">Signed in as: <%= @fitbit.first.username %></small></p>
-              <%= link_to "Fitbit Signout", sign_out_provider_path(:provider => "fitbit"), :class=>"btn btn-primary" %>
+              <%= link_to "Fitbit Signout", sign_out_provider_path(:provider => "fitbit_oauth2"), :class=>"btn btn-primary" %>
             <%end%>
           </div>
         </div>
@@ -271,18 +271,22 @@
         </div>
       </div>
       <div class="card">
-        <div class="card-header">
-          Coming Soon
-        </div>
         <div class="car-img-top card-icon"><i class="fa fa-instagram"></i></div>
         <div class="card-block">
           <h4 class="card-title">Instagram</h4>
           <p class="card-text">Sign onto Instagram to collect your pictures to BlackBox!</p>
           <div class="card-link">
-            <% unless false %>
-              <%= link_to "Instagram Login", "#", :class=>"btn btn-primary disabled" %><br>
+            <% unless @instagram.present? %>
+              <%= link_to "Instagram Login", user_omniauth_authorize_path(:instagram), :class=>"btn btn-primary" %><br>
             <%else%>
-
+              <%= link_to "#", :class=>"btn btn-primary disabled" do%>
+                Instagram
+              <%end%>
+              <%= link_to "#", :class=>"btn btn-primary" do%>
+                <i class="fa fa-refresh"></i>
+              <%end%>
+              <p class="card-text left"><small class="text-muted">Signed in as: <%= @instagram.first.username %></small></p>
+              <%= link_to "Instagram Signout", sign_out_provider_path(:provider => "instagram"), :class=>"btn btn-primary" %>
             <%end%>
           </div>
         </div>

@@ -13,7 +13,9 @@ Rails.application.routes.draw do
   get '/all_foursquare',            to: 'content#get_foursquare_all',           as: :all_foursquare
   get '/get_github_repos',          to: 'content#get_github_repos',             as: :get_github_repos
   get '/twitter_tweets',            to: 'content#get_twitter_tweets',           as: :twitter_tweets
-  get '/fitbit_heart',              to: 'content#get_fitbit_heart_rates',       as: :fitbit_heart
+  get '/fitbit_heart',              to: 'content#get_fitbit_daily_heart_rate',  as: :fitbit_heart
+
+
 
   get 'welcome/index'
   # You can have the root of your site routed with "root"

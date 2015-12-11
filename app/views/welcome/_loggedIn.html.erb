@@ -1,0 +1,254 @@
+<div class="jumbotron">
+  <h1 class="display-3 center">Welcome to BlackBox</h1>
+  <p class="lead center">BlackBox is a data aggregation platform for you! Currently signed on as <%= current_user.email%></p>
+  <hr class="m-y-md">
+  <p class="lead right">
+    <%= link_to "Sign out", destroy_user_session_path, :method => :delete, :class=>"btn btn-primary btn-lg" %><br>
+  </p>
+</div>
+
+<h1>Channels</h1>
+<div class="card-deck-wrapper">
+  <div class="card-deck">
+    <div class="card">
+      <div class="car-img-top card-icon"><i class="fa fa-facebook"></i></div>
+      <div class="card-block">
+        <h4 class="card-title">Facebook</h4>
+        <p class="card-text">Sign into Facebook to add your posts, family members, and pictures to your BlackBox!</p>
+        <div class="card-link">
+          <% unless @facebook.present? %>
+            <%= link_to "Facebook Login", user_omniauth_authorize_path(:facebook), :class=>"btn btn-primary"  %>
+          <%else%>
+            <%= link_to "#", :class=>"btn btn-primary disabled" do%>
+              Facebook
+            <%end%>
+            <%= link_to all_facebook_path, :class=>"btn btn-primary" do%>
+              <i class="fa fa-refresh"></i>
+            <%end%>
+            <p class="card-text left"><small class="text-muted">Signed in as: <%= @facebook.first.username %></small></p>
+            <%= link_to "Facebook Signout", sign_out_provider_path(:provider => "facebook"), :class=>"btn btn-primary" %>
+          <%end%>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="car-img-top card-icon"><i class="fa fa-twitter"></i></div>
+      <div class="card-block">
+        <h4 class="card-title">Twitter</h4>
+        <p class="card-text">Sign into Twitter to add your tweets to your BlackBox!</p>
+        <div class="card-link">
+          <% unless @twitter.present? %>
+            <%= link_to "Twitter Login", user_omniauth_authorize_path(:twitter), :class=>"btn btn-primary" %><br>
+          <%else%>
+            <%= link_to "#", :class=>"btn btn-primary disabled" do%>
+              Twitter
+            <%end%>
+            <%= link_to twitter_tweets_path, :class=>"btn btn-primary" do%>
+              <i class="fa fa-refresh"></i>
+            <%end%>
+            <p class="card-text left"><small class="text-muted">Signed in as: <%= @twitter.first.username %></small></p>
+            <%= link_to "Twitter Signout", sign_out_provider_path(:provider => "twitter"), :class=>"btn btn-primary disabled" %>
+          <%end%>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="car-img-top card-icon"><i class="fa fa-foursquare"></i></div>
+      <div class="card-block">
+        <h4 class="card-title">Foursquare</h4>
+        <p class="card-text">Sign into Foursquare to add your checkins and photos to your BlackBox!</p>
+        <div class="card-link">
+          <% unless @foursquare.present? %>
+            <%= link_to "Foursquare Login", user_omniauth_authorize_path(:foursquare), :class=>"btn btn-primary" %><br>
+          <%else%>
+            <%= link_to "#", :class=>"btn btn-primary disabled" do%>
+              Foursquare
+            <%end%>
+            <%= link_to all_foursquare_path, :class=>"btn btn-primary" do%>
+              <i class="fa fa-refresh"></i>
+            <%end%>
+            <p class="card-text left"><small class="text-muted">Signed in as: <%= @foursquare.first.username %></small></p>
+            <%= link_to "Foursquare Signout", sign_out_provider_path(:provider => "foursquare"), :class=>"btn btn-primary" %>
+          <%end%>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="car-img-top card-icon"><i class="fa fa-github"></i></div>
+      <div class="card-block">
+        <h4 class="card-title">Github</h4>
+        <p class="card-text">Add your github commits and public projects to your BlackBox!</p>
+        <div class="card-link">
+          <% unless @github.present? %>
+            <%= link_to "Github Login", user_omniauth_authorize_path(:github), :class=>"btn btn-primary" %><br>
+          <%else%>
+            <%= link_to "#", :class=>"btn btn-primary disabled" do%>
+              Github
+            <%end%>
+            <%= link_to get_github_repos_path(), :class=>"btn btn-primary" do%>
+              <i class="fa fa-refresh"></i>
+            <%end%>
+            <p class="card-text left"><small class="text-muted">Signed in as: <%= @github.first.username %></small></p>
+            <%= link_to "Github Signout", sign_out_provider_path(:provider => "github"), :class=>"btn btn-primary" %>
+          <%end%>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="car-img-top card-icon"><i class="fa fa-bicycle"></i></div>
+      <div class="card-block">
+        <h4 class="card-title">Fitbit</h4>
+        <p class="card-text">Sign onto Fitbit to track activities, and workouts to your BlackBox!</p>
+        <div class="card-link">
+          <% unless @fitbit.present? %>
+            <%= link_to "Fitbit Login", user_omniauth_authorize_path(:fitbit_oauth2), :class=>"btn btn-primary" %><br>
+          <%else%>
+            <%= link_to "#", :class=>"btn btn-primary disabled" do%>
+              Fitbit
+            <%end%>
+            <%= link_to recent_fitbit_activities_path, :class=>"btn btn-primary disabled" do%>
+              <i class="fa fa-refresh"></i>Activity
+            <%end%>
+            <%= link_to fitbit_heart_path, :class=>"btn btn-secondary" do%>
+              <i class="fa fa-refresh"></i>Heart
+            <%end%>
+            <%= link_to fitbit_sleep_path, :class=>"btn btn-secondary" do%>
+              <i class="fa fa-refresh"></i>Sleep
+            <%end%>
+            <p class="card-text left"><small class="text-muted">Signed in as: <%= @fitbit.first.username %></small></p>
+            <%= link_to "Fitbit Signout", sign_out_provider_path(:provider => "fitbit_oauth2"), :class=>"btn btn-primary" %>
+          <%end%>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+<!-- FUTURE CARDS -->
+<div class="card-deck-wrapper">
+  <div class="card-deck">
+    <div class="card">
+      <div class="card-header">
+        Coming Soon
+      </div>
+      <div class="car-img-top card-icon"><i class="fa fa-car"></i></div>
+      <div class="card-block">
+        <h4 class="card-title">Automatic</h4>
+        <p class="card-text">Sign onto Automatic to save your car's data to BlackBox!</p>
+        <div class="card-link">
+          <% unless false %>
+            <%= link_to "Automatic Login", "#", :class=>"btn btn-primary disabled" %><br>
+          <%else%>
+
+          <%end%>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        Coming Soon
+      </div>
+      <div class="car-img-top card-icon"><i class="fa fa-dropbox"></i></div>
+      <div class="card-block">
+        <h4 class="card-title">DropBox</h4>
+        <p class="card-text">Sign onto DropBox to track your files and save events to BlackBox!</p>
+        <div class="card-link">
+          <% unless false %>
+            <%= link_to "DropBox Login", "#", :class=>"btn btn-primary disabled" %><br>
+          <%else%>
+
+          <%end%>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="car-img-top card-icon"><i class="fa fa-instagram"></i></div>
+      <div class="card-block">
+        <h4 class="card-title">Instagram</h4>
+        <p class="card-text">Sign onto Instagram to collect your pictures to BlackBox!</p>
+        <div class="card-link">
+          <% unless @instagram.present? %>
+            <%= link_to "Instagram Login", user_omniauth_authorize_path(:instagram), :class=>"btn btn-primary" %><br>
+          <%else%>
+            <%= link_to "#", :class=>"btn btn-primary disabled" do%>
+              Instagram
+            <%end%>
+            <%= link_to instagram_photos_path(), :class=>"btn btn-primary disabled" do%>
+              <i class="fa fa-refresh"></i>
+            <%end%>
+            <p class="card-text left"><small class="text-muted">Signed in as: <%= @instagram.first.username %></small></p>
+            <%= link_to "Instagram Signout", sign_out_provider_path(:provider => "instagram"), :class=>"btn btn-primary" %>
+          <%end%>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        Coming Soon
+      </div>
+      <div class="car-img-top card-icon"><i class="fa fa-file-text"></i></div>
+      <div class="card-block">
+        <h4 class="card-title">Evernote</h4>
+        <p class="card-text">Sign onto Evernote to save all your documents to BlackBox!</p>
+        <div class="card-link">
+          <% unless false %>
+            <%= link_to "Evernote Login", "#", :class=>"btn btn-primary disabled" %><br>
+          <%else%>
+
+          <%end%>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        Coming Soon
+      </div>
+      <div class="car-img-top card-icon"><i class="fa fa-spotify"></i></div>
+      <div class="card-block">
+        <h4 class="card-title">Spotify</h4>
+        <p class="card-text">Sign onto Spotify to drop each song you care about into BlackBox!</p>
+        <div class="card-link">
+          <% unless false %>
+            <%= link_to "Spotify Login", "#", :class=>"btn btn-primary disabled" %><br>
+          <%else%>
+
+          <%end%>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% if @timeline.present? %>
+  <hr>
+  <%= link_to "Export Timeline", root_path(:format => :csv ), :class=>"btn btn-primary pull-right" %>
+  <h1> Timeline</h1>
+  <div class="table-responsive">
+    <table class="table table-sm table-striped">
+      <tr>
+        <td>ID</td>
+        <td>Provider</td>
+        <td>Kind</td>
+        <td>Title</td>
+        <td>Body</td>
+        <td>Date/Time</td>
+        <td>Log</td>
+      </tr>
+      <% @timeline.each do |post| %>
+        <tr>
+          <td>
+            <%= link_to post.external_link do %>
+              <%= post.id %>
+            <%end%>
+          </td>
+          <td><%= post.provider%></td>
+          <td><%= post.kind%></td>
+          <td><%= post.title%></td>
+          <td><%= post.body%></td>
+          <td><%= post.created_at%></td>
+          <td><%= truncate(post.log, length:100)%></td>
+        </tr>
+      <%end%>
+    </table>
+  </div>
+<%end%>

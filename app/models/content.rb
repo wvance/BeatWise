@@ -326,9 +326,45 @@ class Content < ActiveRecord::Base
     end
   end
 
+  def post_fitbit_daily_sleep_log(day, user)
+    self.user_id = user
+    self.external_id = day['logId']
+    self.body = day['timeInBed']
+    self.active = true
+    self.external_link = "#"
+    self.provider = "fitbit"
+    self.kind = "sleep_log"
+
+    self.created_at = day['startTime']
+    self.log = day.to_hash
+
+    if (self.valid?)
+      self.save!
+    else
+    end
+  end
+
+  def post_fitbit_daily_sleep(day, user)
+    self.user_id = user
+    self.external_id = "daily_sleep" + day['dateTime']
+    self.body = day['value']
+    self.active = true
+    self.external_link = "#"
+    self.provider = "fitbit"
+    self.kind = "sleep_time"
+
+    self.created_at = day['dateTime']
+    self.log = day.to_hash
+
+    if (self.valid?)
+      self.save!
+    else
+    end
+  end
+
   def post_fitbit_daily_heart_rate(day, user)
     self.user_id = user
-    self.external_id = day['dateTime']
+    self.external_id = "daily_heart_overview" + day['dateTime']
     self.body = day['value']
     self.active = true
     self.external_link = "#"
@@ -343,5 +379,4 @@ class Content < ActiveRecord::Base
     else
     end
   end
-
 end

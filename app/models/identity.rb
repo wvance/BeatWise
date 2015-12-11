@@ -13,6 +13,8 @@ class Identity < ActiveRecord::Base
       uid: auth.uid,
       provider: auth.provider,
       token: auth.credentials.token,
+      refresh_token: auth.credentials.refresh_token,
+      expires_at: auth.credentials.expires_at,
       secret: auth.credentials.secret,
       username: auth.info.nickname || auth.info.full_name || auth.info.name || auth.uid,
       email: email ? email : "#{auth.uid}-#{auth.provider}.com")

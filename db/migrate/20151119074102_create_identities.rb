@@ -5,6 +5,8 @@ class CreateIdentities < ActiveRecord::Migration
       t.string :provider
       t.string :uid
       t.string :token
+      t.string :refresh_token
+      t.string :expires_at
       t.string :secret
 
       t.string :username

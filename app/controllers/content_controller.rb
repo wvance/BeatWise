@@ -5,8 +5,22 @@ class ContentController < ApplicationController
   before_action :set_foursquare_client
   before_action :set_github_client
   before_action :set_twitter_client
+  # before_action :set_instagram_client
 
   # before_action :new_content #, only: []
+# ========================================================
+# ============= INSTAGRAM ================================
+# ========================================================
+  def set_instagram_client
+    if (user_signed_in? && current_user.identities.where(:provider => "instagram").present? )
+      # @@instagram_client = Instagram.client(:access_token => current_user.identities.where(:provider => "instagram").first.token)
+    end
+  end
+
+  def get_instagram_photos
+    user_photos = @@instagram_client
+    raise user_photos.inspect
+  end
 
 # ========================================================
 # ============= TWITTER ==================================
@@ -233,18 +247,6 @@ class ContentController < ApplicationController
 # ========================================================
   def set_fitbit_client
     if (user_signed_in? && current_user.identities.where(:provider => "fitbit_oauth2").present? )
-      # @@fitbit_client = Fitgem::Client.new({
-      #   consumer_key: ENV["fitbit_key"],
-      #   consumer_secret: ENV["fitbit_secret"],
-      #   token: current_user.identities.where(:provider => "fitbit").first.token,
-      #   secret: current_user.identities.where(:provider => "fitbit").first.secret
-      # })
-      # @@fitbit_client = OAuth2::Client.new(
-      #   current_user.identities.where(:provider => "fitbit_oauth2").first.token,
-      #   site: 'https://www.fitbit.com/',
-      #   authorize_url: '/oauth2/authorize',
-      #   token_url: '/oauth2/token'
-      # )
       @@fitbit_client = Fitbit::Client.new(
         ENV["fitbit_client_id"],
         ENV["fitbit_secret"],
@@ -277,6 +279,31 @@ class ContentController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to root_url, notice:"Updated Fitbit Favorite Activities" }
+      format.json { head :no_content}
+    end
+  end
+
+  def get_fitbit_daily_min_sleep
+    today = DateTime.current.strftime("%F")
+    yesterday = DateTime.yesterday.strftime("%F")
+    lastmonth = 1.month.ago.strftime("%F")
+
+    sleep = @@fitbit_client.sleep_time_series(resource_path: 'sleep/minutesAsleep', date: today, period: '1y')
+    sleep = sleep['sleep-minutesAsleep']
+
+    sleep.each do |day|
+      if (day['value'] != "0")
+        date = day['dateTime']
+        sleep_log = @@fitbit_client.sleep_logs(date: date)
+        sleep_log = sleep_log['sleep'].first
+
+        @content = Content.new
+        @content.post_fitbit_daily_sleep_log(sleep_log, current_user.id)
+      end
+    end
+
+    respond_to do |format|
+      format.html { redirect_to root_url, notice:"Updated Fitbit Heart Rates" }
       format.json { head :no_content}
     end
   end

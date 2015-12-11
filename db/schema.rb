@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151129064731) do
+ActiveRecord::Schema.define(version: 20151120003619) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,32 +38,18 @@ ActiveRecord::Schema.define(version: 20151129064731) do
 
   add_index "contents", ["user_id"], name: "index_contents_on_user_id", using: :btree
 
-  create_table "delayed_jobs", force: :cascade do |t|
-    t.integer  "priority",   default: 0, null: false
-    t.integer  "attempts",   default: 0, null: false
-    t.text     "handler",                null: false
-    t.text     "last_error"
-    t.datetime "run_at"
-    t.datetime "locked_at"
-    t.datetime "failed_at"
-    t.string   "locked_by"
-    t.string   "queue"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
-
   create_table "identities", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "provider"
     t.string   "uid"
     t.string   "token"
+    t.string   "refresh_token"
+    t.string   "expires_at"
     t.string   "secret"
     t.string   "username"
     t.string   "email"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   add_index "identities", ["user_id"], name: "index_identities_on_user_id", using: :btree

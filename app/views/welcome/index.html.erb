@@ -219,10 +219,13 @@
                 Fitbit
               <%end%>
               <%= link_to recent_fitbit_activities_path, :class=>"btn btn-primary disabled" do%>
-                <i class="fa fa-refresh"></i>
+                <i class="fa fa-refresh"></i>Activity
               <%end%>
               <%= link_to fitbit_heart_path, :class=>"btn btn-secondary" do%>
-                <i class="fa fa-refresh"></i>
+                <i class="fa fa-refresh"></i>Heart
+              <%end%>
+              <%= link_to fitbit_sleep_path, :class=>"btn btn-secondary" do%>
+                <i class="fa fa-refresh"></i>Sleep
               <%end%>
               <p class="card-text left"><small class="text-muted">Signed in as: <%= @fitbit.first.username %></small></p>
               <%= link_to "Fitbit Signout", sign_out_provider_path(:provider => "fitbit_oauth2"), :class=>"btn btn-primary" %>
@@ -282,7 +285,7 @@
               <%= link_to "#", :class=>"btn btn-primary disabled" do%>
                 Instagram
               <%end%>
-              <%= link_to "#", :class=>"btn btn-primary" do%>
+              <%= link_to instagram_photos_path(), :class=>"btn btn-primary disabled" do%>
                 <i class="fa fa-refresh"></i>
               <%end%>
               <p class="card-text left"><small class="text-muted">Signed in as: <%= @instagram.first.username %></small></p>

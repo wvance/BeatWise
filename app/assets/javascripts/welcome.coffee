@@ -173,3 +173,10 @@ ready = ->
 
 $(document).ready ready
 $(document).on 'page:load', ready
+
+$('document').ready ->
+  $('#myTab a').click (e) ->
+  e.preventDefault()
+  $(this).tab 'show'
+  return
+

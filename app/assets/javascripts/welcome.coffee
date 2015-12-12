@@ -1,4 +1,4 @@
-$(document).on 'page:load', ->
+ready = ->
   #set animation timing
   animationDelay = 2500
   barAnimationDelay = 3800
@@ -157,7 +157,7 @@ $(document).on 'page:load', ->
     return
 
   takeNext = ($word) ->
-    if !$word.is(':last-child') then $word.next() else $word.parent().children().eq(0);
+    if !$word.is(':last-child') then $word.next() else $word.parent().children().last($newWord);
 
   takePrev = ($word) ->
     if !$word.is(':first-child') then $word.prev() else $word.parent().children().last()
@@ -169,3 +169,6 @@ $(document).on 'page:load', ->
 
   initHeadline()
   return
+
+$(document).ready ready
+$(document).on 'page:load', ready

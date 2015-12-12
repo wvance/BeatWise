@@ -1,37 +1,33 @@
 // Place all the styles related to the welcome controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-@import url(https://fonts.googleapis.com/css?family=Raleway:100);
-
-#landingPage{
-  position:relative;
-}
-#welcomeIcons{
-  padding-top: 3vh;
-  font-family: 'Raleway', sans-serif;
-  font-weight: 100;
+#landingPageWrapper{
+  #welcomeIcons{
+    padding-top: 3vh;
+    font-weight: 100;
+  }
   .black{
     color:black;
   }
   .yellow{
     color:#FFBA00;
   }
-}
-.mainlogo{
-  position:relative;
-  top: 5vw;
-  font-size: 6.5vw;
-  z-index: 999;
-}
-.mainSignin{
-  position:relative;
-  right:auto;
-  left:auto;
-  font-size: 2vw;
-}
-#welcomeIcons{
-  i{
-    font-size: 10vw;
+
+  .mainlogo{
+    position:relative;
+    top: 5vw;
+    font-size: 6.5vw;
+    z-index: 999;
+  }
+  .mainSignin{
+    position:relative;
+    right:auto;
+    left:auto;
+    font-size: 2vw;
+  }
+  #welcomeIcons{
+    i{
+      font-size: 10vw;
+    }
   }
 }
-

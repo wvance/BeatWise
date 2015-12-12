@@ -1,6 +1,6 @@
 <% unless user_signed_in? %>
-  <div id ="landingPage">
-  <%= render partial: "landingPage" %>
+  <div id = "landingPageWrapper">
+    <%= render partial: "landingPage" %>
   </div>
 <%else%>
   <%= render partial: "loggedIn" %>

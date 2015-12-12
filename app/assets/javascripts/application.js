@@ -25,10 +25,10 @@ $(function() {
   });
 });
 
-$('document').ready ->
-  $('#myTab a').click (e) ->
-  e.preventDefault()
-  $(this).tab 'show'
-  return
+$('document').ready(function() {
+  $('#myTab a').click(function(e) {});
+  e.preventDefault();
+  $(this).tab('show');
+});
 
 

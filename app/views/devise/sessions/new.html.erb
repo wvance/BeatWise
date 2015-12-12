@@ -1,24 +1,2 @@
-<div class="container">
-  <form class="form-signin">
-    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-
-      <h2 class="form-signin-heading">
-        Please sign in
-      </h2>
-      <%= f.label :email, class: "sr-only"%><br />
-      <%= f.email_field :email, autofocus: true, id: "inputEmail", class: "form-control", placeholder: "Email address", required: "", autofocus: ""%>
-      <%= f.label :password, :class => "sr-only"%><br />
-      <%= f.password_field :password, autocomplete: "off", id: "inputPassword", class: "form-control",placeholder: "Password", required: ""%>
-
-      <% if devise_mapping.rememberable? -%>
-        <%= f.check_box :remember_me, type:"checkbox", value:"remember-me"%>
-        <%= f.label :remember_me %>
-      <%end%>
-
-      <%= f.submit "Log in", class: "btn btn-lg btn-primary btn-block"%>
-    <%end%>
-    <%= link_to "Twitter LogIn", user_omniauth_authorize_path("twitter") %><br>
-    <%= render "devise/shared/links" %>
-  </form>
-</div>
-
+<h1 id="signInHeader" class="center"> Log In or Sign Up</h1>
+<%= render partial: "layouts/login" %>

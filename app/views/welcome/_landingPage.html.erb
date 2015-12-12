@@ -30,7 +30,7 @@
           <i class="fa fa-skype"></i>
         </div>
         <div class="col-xs-4 col-sm-4 center">
-          <%= link_to user_omniauth_authorize_path("twitter"), :class=>"" do%>
+          <%= link_to "#", data: {toggle: "modal", target: "#userSignIn"} do%>
             <span class="mainlogo"><span class="black">Black</span><span class="yellow heavy">Box</span></span>
           <%end%>
         </div>
@@ -128,5 +128,21 @@
       Joe is a productivity powerhouse, he gets sh*t done... Although he is majoring in pure mathematics, Joe has been a project manager, front end developer, and data scientist! Here at Black<span class="yellow">Box</span> Joe is creating ways to enable you to visualize your data!
       <hr>
     </h5>
+  </div>
+</div>
+
+<div class="modal fade" id="userSignIn" tabindex="-1" role="dialog" aria-labelledby="userSignIn" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="userSignIn">Sign In or Sign Up</h4>
+      </div>
+      <div class="modal-body">
+        <%= render partial: "layouts/login" %>
+      </div>
+    </div>
   </div>
 </div>

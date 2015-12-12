@@ -1,6 +1,6 @@
 <div id="logInSignUp">
   <!-- Nav tabs -->
-  <h1 class="center">LogIn or Sign Up</h1><br>
+  <!-- <h1 class="center">Log In or Sign Up</h1><br> -->
   <div id="logInSignUpNav">
     <ul class="nav nav-tabs" role="tablist">
       <li class="nav-item">
@@ -16,52 +16,48 @@
   <div class="tab-content">
     <div class="tab-pane active fade in active" id="logIn" role="tabpanel">
       <div id = "signInForm">
-        <form class="form-signin">
-          <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |form| %>
-            <%= devise_error_messages! %>
+        <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |form| %>
+          <%= devise_error_messages! %>
 
-            <%= form.label :email, class: "sr-only"%><br />
-            <%= form.email_field :email, autofocus: true, id: "inputEmail", class: "form-control", placeholder: "Email address", required: "", autofocus: ""%>
-            <%= form.label :password, :class => "sr-only"%><br />
-            <%= form.password_field :password, autocomplete: "off", id: "inputPassword", class: "form-control",placeholder: "Password", required: ""%>
+          <%= form.label :email, class: "sr-only"%><br />
+          <%= form.email_field :email, autofocus: true, id: "inputEmail", class: "form-control", placeholder: "Email address", required: "", autofocus: ""%>
+          <%= form.label :password, :class => "sr-only"%><br />
+          <%= form.password_field :password, autocomplete: "off", id: "inputPassword", class: "form-control",placeholder: "Password", required: ""%>
 
-            <% if devise_mapping.rememberable? -%>
-              <%= form.check_box :remember_me, type:"checkbox", value:"remember-me"%>
-              <%= form.label :remember_me %>
-            <%end%>
-
-            <%= form.submit "Log in", class: "btn btn-lg btn-primary btn-block"%>
+          <% if devise_mapping.rememberable? -%>
+            <%= form.check_box :remember_me, type:"checkbox", value:"remember-me"%>
+            <%= form.label :remember_me %>
           <%end%>
-        </form>
+
+          <%= form.submit "Log in", class: "btn btn-lg btn-primary btn-block"%>
+        <%end%>
       </div>
     </div>
 
     <div class="tab-pane fade" id="signUp" role="tabpanel">
       <div id ="signUpForm">
-        <form class="form-signup">
-          <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+        <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
 
-            <%= devise_error_messages! %>
+          <%= devise_error_messages! %>
 
-            <%= f.label :email, class: "sr-only"%><br />
-            <%= f.email_field :email, autofocus: true, id: "inputEmail", class: "form-control", placeholder: "Email address", required: "", autofocus: ""%>
+          <%= f.label :email, class: "sr-only"%><br />
+          <%= f.email_field :email, autofocus: true, id: "inputEmail", class: "form-control", placeholder: "Email address", required: "", autofocus: ""%>
 
-            <%= f.label :password, :class => "sr-only"%>
-            <% if @validatable %>
-            <em>(<%= @minimum_password_length %> characters minimum)</em>
-            <% end %><br />
+          <%= f.label :password, :class => "sr-only"%>
+          <% if @validatable %>
+          <em>(<%= @minimum_password_length %> characters minimum)</em>
+          <% end %><br />
 
-            <%= f.password_field :password, autocomplete: "off", id: "inputPassword", class: "form-control",placeholder: "Password", required: ""%>
+          <%= f.password_field :password, autocomplete: "off", id: "inputPassword", class: "form-control",placeholder: "Password", required: ""%>
 
 
-            <%= f.label :password_confirmation, :class => "sr-only"%><br />
-            <%= f.password_field :password_confirmation, autocomplete: "off", id: "inputConfirmPassword", class: "form-control",placeholder: "Confirm Password", required: ""%><br>
+          <%= f.label :password_confirmation, :class => "sr-only"%><br />
+          <%= f.password_field :password_confirmation, autocomplete: "off", id: "inputConfirmPassword", class: "form-control",placeholder: "Confirm Password", required: ""%><br>
 
-            <div class="actions">
-              <%= f.submit "Sign Up", class: "btn btn-lg btn-primary btn-block"%>
-            </div>
-          <% end %>
-        </form>
+          <div class="actions">
+            <%= f.submit "Sign Up", class: "btn btn-lg btn-primary btn-block"%>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>

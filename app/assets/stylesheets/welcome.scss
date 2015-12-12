@@ -1,6 +1,5 @@
-// Place all the styles related to the welcome controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+@import 'variables';
+
 #landingPageWrapper{
   #welcomeIcons{
     padding-top: 3vh;
@@ -18,8 +17,8 @@
 
   .mainlogo{
     position:relative;
-    top: 5vw;
-    font-size: 6.5vw;
+    top: 3vw;
+    font-size: 5vw;
     z-index: 999;
   }
   .mainSignin{
@@ -30,7 +29,8 @@
   }
   #welcomeIcons{
     i{
-      font-size: 10vw;
+      font-size: 8vw;
+      color:$grey;
     }
   }
 }
@@ -38,7 +38,6 @@
 // THIS IS FOR THE ANNIMATION
 #annimation{
   text-align: center;
-
   .cd-title {
     position: relative;
     height: 160px;
@@ -118,6 +117,15 @@
         opacity: 1;
       }
     }
+  }
+}
+
+#aboutTeam{
+  margin: 3em auto;
+  .teamBio{
+    width:80%;
+    margin-right: auto;
+    margin-left: auto;
   }
 }
 

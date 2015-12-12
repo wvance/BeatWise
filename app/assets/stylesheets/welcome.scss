@@ -1,6 +1,12 @@
 @import 'variables';
 
 #landingPageWrapper{
+  .homeLogin{
+    outline-width: 0;
+  }
+  .homeLogin:focus{
+    outline: none;
+  }
   #welcomeIcons{
     padding-top: 3vh;
     font-weight: 100;
@@ -128,5 +134,4 @@
     margin-left: auto;
   }
 }
-
 

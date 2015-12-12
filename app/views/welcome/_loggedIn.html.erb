@@ -3,7 +3,8 @@
   <p class="lead center">BlackBox is a data aggregation platform for you! Currently signed on as <%= current_user.email%></p>
   <hr class="m-y-md">
   <p class="lead right">
-    <%= link_to "Sign out", destroy_user_session_path, :method => :delete, :class=>"btn btn-primary btn-lg" %><br>
+    <%= link_to "Sign out", destroy_user_session_path, :method => :delete, :class=>"btn btn-primary btn-lg" %>
+    <%= link_to "Channels", channels_path(), :class=> "btn btn-secondary btn-lg"%><br>
   </p>
 </div>
 

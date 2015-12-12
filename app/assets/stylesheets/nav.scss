@@ -1,0 +1,62 @@
+@import 'variables';
+
+#mainNav{
+  font-family: 'Raleway', sans-serif;
+  font-weight: 300;
+
+  position:absolute;
+  top:0px;
+  left:0px;
+  width:100%;
+  height:60px;
+
+  background-color:$grey;
+  .yellow{
+    color:$yellow;
+  }
+  .white{
+    color:$white;
+  }
+
+  #navLogo{
+    position:relative;
+    left:30px;
+    top:5px;
+    font-size: 30px;
+  }
+  #navLinks{
+    position:absolute;
+    top:15px;
+    right:70px;
+    color:$white;
+    font-size: 20px;
+    .homeLogin{
+      outline-width: 0;
+    }
+    .homeLogin:focus{
+      outline: none;
+    }
+
+    li{
+      margin: 0 5px;
+      display: inline;
+    }
+    a{
+      color:$white;
+      text-decoration: none !important;
+      -webkit-transition: all 500ms ease-out;
+      -moz-transition: all 500ms ease-out;
+      -ms-transition: all 500ms ease-out;
+      -o-transition: all 500ms ease-out;
+      transition: all 500ms ease-out;
+    }
+    a:hover{
+      color:$yellow;
+      -webkit-transition: all 500ms ease;
+      -moz-transition: all 500ms ease;
+      -ms-transition: all 500ms ease;
+      -o-transition: all 500ms ease;
+      transition: all 500ms ease;
+    }
+  }
+}

@@ -1,0 +1,25 @@
+<nav id="mainNav">
+  <div id="navLogo">
+    <%= link_to root_path() do %>
+      <span class="white">Black</span><span class="yellow">Box</span>
+    <%end%>
+  </div>
+  <div id="navLinks">
+    <ul>
+      <% if user_signed_in? %>
+        <li>
+          <%= link_to "Channels", channels_path()%>
+        </li>
+        <li>
+          <%= link_to "Sign out", destroy_user_session_path, :method => :delete%>
+        </li>
+      <%else%>
+        <li>
+          <%= link_to "#", data: {toggle: "modal", target: "#userSignIn"}, :class=>"homeLogin" do%>
+            Sign In
+          <%end%>
+        </li>
+      <%end%>
+    </ul>
+  </div>
+</nav>

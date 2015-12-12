@@ -7,11 +7,13 @@
     <%= csrf_meta_tags %>
   </head>
   <body>
-    <% flash.each do |key, value| %>
+    <%= render partial: "layouts/navbar" %>
+    <!-- <% flash.each do |key, value| %>
       <div id="flashWrapper">
         <div class="alert alert-<%= key %> center"><%= value %></div>
       </div>
-    <% end %>
+    <% end %> -->
+
     <div class="container-fluid">
       <div id="bodyWrapper">
         <div id="mainWrapper">

@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
   get '/all_facebook',              to: 'content#get_facebook_all',             as: :all_facebook
   get '/recent_fitbit_activities',  to: 'content#get_fitbit_recent_activitity', as: :recent_fitbit_activities
+  get '/channels',                  to: 'channel#index',                        as: :channels
 
   get '/all_foursquare',            to: 'content#get_foursquare_all',           as: :all_foursquare
   get '/get_github_repos',          to: 'content#get_github_repos',             as: :get_github_repos

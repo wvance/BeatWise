@@ -4,6 +4,7 @@ html{
   max-width:100%;
   overflow-x: hidden;
   overflow-y: scroll;
+  padding-top:80px;
   body{
     height:100vh;
     -webkit-overflow-scrolling: touch;
@@ -53,7 +54,7 @@ html{
       outline-color: $black;
     }
     a{
-      color:black;
+      color:$grey;
       text-decoration: none !important;
       -webkit-transition: all 500ms ease-out;
       -moz-transition: all 500ms ease-out;
@@ -62,7 +63,7 @@ html{
       transition: all 500ms ease-out;
     }
     a:hover{
-      // color:yellow;
+      color:$yellow;
       -webkit-transition: all 500ms ease;
       -moz-transition: all 500ms ease;
       -ms-transition: all 500ms ease;
@@ -80,14 +81,11 @@ html{
       }
     }
     #flashWrapper{
-      position:static;
+      position:fixed;
       top:0px;
-      width:100%;
-      height:50px;
-      margin-right: auto;
-      margin-left: auto;
+      width:300px;
+      height:70px;
       z-index: 9999;
-      background-color:$grey;
       color:$yellow;
     }
     #bodyWrapper{

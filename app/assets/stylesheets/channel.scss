@@ -1,0 +1,14 @@
+// Place all the styles related to the Channel controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+@import 'variables';
+
+#channelsList{
+  i.fa{
+    font-size: 60px;
+    margin: .2em .4em;
+  }
+  .yellow{
+    color:$yellow;
+  }
+}

@@ -1,0 +1,62 @@
+<div id ="twitterChannel" class="row">
+  <div class="row">
+    <div class="col-xs-12">
+      <h1><i class="fa fa-twitter"></i> Twitter</h1>
+    </div>
+  </div>
+  <div class="row">
+    <% if @twitter.present? %>
+      <%= link_to twitter_tweets_path do%>
+        <i class="fa fa-refresh"></i> Update
+      <%end%>
+      <h3>Raw Data</h3>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Body</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
+            <th>Created</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @userTweets.each do |tweet| %>
+            <tr>
+              <td>
+                <%= link_to tweet.external_link do %>
+                <%= tweet.body %>
+                <%end%>
+              </td>
+
+              <td><%= tweet.latitude %></td>
+              <td><%= tweet.longitude %></td>
+              <td><%= tweet.created_at.strftime("%F") %></td>
+            </tr>
+          <%end%>
+        </tbody>
+      </table>
+
+    <%else%>
+      <div class="col-xs-12 center">
+        <%= link_to user_omniauth_authorize_path(:twitter) do%>
+          <h1> Sign On </h1>
+        <%end%>
+        <hr>
+        <div class="col-xs-6">
+          This channel requests
+          <ul>
+            <li>Profile Information</li>
+            <li>Tweet Timeline</li>
+          </ul>
+        </div>
+        <div class="col-xs-6">
+          With this data you can
+          <ul>
+            <li>Track your tweet history</li>
+            <li>Add twitter to your BlackBox timeline</li>
+          </ul>
+        </div>
+      </div>
+    <%end%>
+  </div>
+</div>

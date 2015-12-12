@@ -42,6 +42,16 @@ html{
       margin-left: 0px;
       margin-right: 0px
     }
+    .btn-primary{
+      background-color:$yellow;
+      color:$black;
+      outline-color: $black
+    }
+    .btn-primary:hover{
+      background-color:$darkYellow;
+      color:$black;
+      outline-color: $black;
+    }
     a{
       color:black;
       text-decoration: none !important;
@@ -59,14 +69,6 @@ html{
       -o-transition: all 500ms ease;
       transition: all 500ms ease;
     }
-    .flashNotices{
-      position:fixed;
-      top:15px;
-      width:100%;
-      margin-right: auto;
-      margin-left: auto;
-      z-index: 9999;
-    }
     blockquote {
       border-left: 4px solid #FFCC00;
       color: #FFCC00;
@@ -77,17 +79,19 @@ html{
         -webkit-margin-before: 0em;
       }
     }
-
+    #flashWrapper{
+      position:static;
+      top:0px;
+      width:100%;
+      height:50px;
+      margin-right: auto;
+      margin-left: auto;
+      z-index: 9999;
+      background-color:$grey;
+      color:$yellow;
+    }
     #bodyWrapper{
       padding-bottom: 90px;
-      #flashWrapper{
-        // position:fixed;
-        // top:15px;
-        // width:100%;
-        // margin-right: auto;
-        // margin-left: auto;
-        // z-index: 9999;
-      }
       #mainWrapper{
         .card-icon{
           width:100%;
@@ -107,7 +111,7 @@ html{
   position: relative;
   bottom:0px;
   left:0px;
-  height:250px;
+  height:290px;
   width:100%;
 
   a{
@@ -152,11 +156,25 @@ html{
       width:50%;
     }
   }
+  #footerFoot{
+    position:absolute;
+    width:100%;
+    height:40px;
+    bottom:0px;
+    left:0px;
+    background-color:$darkGrey;
+    #copywright{
+      position:absolute;
+      left:60px;
+      bottom:3px;
+    }
+  }
   #topButton{
     position: absolute;
-    right:30px;
-    bottom:20px;
+    right:60px;
+    bottom:2px;
     font-size: 30px;
   }
-
 }
+
+

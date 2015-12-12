@@ -1,4 +1,4 @@
-jQuery(document).ready ($) ->
+$(document).on 'page:load', ->
   #set animation timing
   animationDelay = 2500
   barAnimationDelay = 3800

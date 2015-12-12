@@ -31,7 +31,7 @@
         </div>
         <div class="col-xs-4 col-sm-4 center">
           <%= link_to user_omniauth_authorize_path("twitter"), :class=>"" do%>
-            <span class="mainlogo"><span class="black">Black</span><span class="yellow">Box</span></span>
+            <span class="mainlogo"><span class="black">Black</span><span class="yellow heavy">Box</span></span>
           <%end%>
         </div>
         <div class="col-xs-2 col-sm-2 center">
@@ -89,5 +89,53 @@
     </div>
   </div>
 </div>
-<h1 class="center">Your Life <span class="yellow"> Improved </span></h1>
 
+<div id="annimation">
+  <section class="cd-intro">
+    <h1 class="cd-headline clip is-full-width">
+      <span>Your Life</span>
+      <span class="cd-words-wrapper">
+        <b class="is-visible">Connected</b>
+        <b class="is-hidden">Visualized</b>
+        <b class="is-hidden">Understood</b>
+        <b class="is-hidden yellow heavy">Improved</b>
+      </span>
+    </h1>
+  </section>
+</div>
+
+<!-- <div id="annimation">
+  <section class="cd-intro">
+    <h1 class="cd-headline rotate-1">
+      <span>Your Life</span>
+      <span class="cd-words-wrapper">
+        <b class="is-visible">Connected</b>
+        <b>Visualized</b>
+        <b>Understood</b>
+        <b class="yellow heavy">Improved</b>
+      </span>
+    </h1>
+  </section>
+</div> -->
+
+<div class="row">
+  <!-- <h1 class="center">The Team</h1> -->
+  <div class="col-xs-12 col-md-4 center aboutTeam">
+    <%= image_tag "charlie_profile.jpg", class: "img-circle", width: 125, height:125%><br>
+    <h2>Charlie <span class="yellow">Zhang</span></h2>
+    <h5><i class="fa fa-twitter"></i> Cyinwei</h5><hr>
+    <h5>Charlie loves to learn, anything and everything... Here at Black<span class="yellow">Box</span> Charlie programs and does customer development. If you have any suggestions to improve BlackBox or want to tell us your lifelogging story, shoot a message over to Charlie!</h5><hr>
+  </div>
+  <div class="col-xs-12 col-md-4 center">
+    <%= image_tag "wesley_profile.jpg", class: "img-circle", width: 125, height:125%><br>
+    <h2>Wesley <span class="yellow">Vance</span></h2>
+    <h5><i class="fa fa-twitter"></i> WesAdvance</h5><hr>
+    <h5>Wes loves spending his time mentoring student startups at Texas A&M University. He loves solving problems and creating new products! Here at Black<span class="yellow">Box</span> Wes is the lead Rails developer, so if you have a bug or feature request, shoot it over to him!</h5><hr>
+  </div>
+  <div class="col-xs-12 col-md-4 center">
+    <%= image_tag "joe_profile.jpg", class: "img-circle", width: 125, height:125%><br>
+    <h2>Joe <span class="yellow">Mercer</span></h2>
+    <h5><i class="fa fa-twitter"></i> Jomrcr</h5><hr>
+    <h5>Joe is a productivity powerhouse, he gets sh*t done... Although he is majoring in pure mathematics, Joe has been a project manager, front end developer, and data scientist! Here at Black<span class="yellow">Box</span> Joe is creating ways to enable you to visualize your data!</h5><hr>
+  </div>
+</div>

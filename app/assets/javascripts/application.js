@@ -17,8 +17,6 @@
 //= require turbolinks
 //= require_tree .
 
-
-
 // FUNCTION FOR SMOOTH SCROLLING
 $(function() {
   // CHECK IF LINK

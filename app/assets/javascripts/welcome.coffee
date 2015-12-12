@@ -157,7 +157,8 @@ ready = ->
     return
 
   takeNext = ($word) ->
-    if !$word.is(':last-child') then $word.next() else $word.parent().children().last($newWord);
+    if !$word.is(':last-child') then $word.next() else $word.parent().children().eq(1);
+    # .last($newWord);
 
   takePrev = ($word) ->
     if !$word.is(':first-child') then $word.prev() else $word.parent().children().last()

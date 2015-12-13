@@ -3,6 +3,7 @@
 //= require jquery_ujs
 //= require tether
 //= require flash
+//= require chartkick
 //= require bootstrap-sprockets
 //= require turbolinks
 //= require_tree .

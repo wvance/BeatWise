@@ -6,16 +6,14 @@
   </div>
   <div class="row">
     <% if @foursquare.present? %>
-      <%= link_to sign_out_provider_path(:provider => "foursquare") do%>
-        <h3 class="pull-right">Sign Out Foursquare</h3>
-      <%end%>
-      <h2><%= @userFoursquare.count%> Checkins</h2>
       <div class="row">
         <div class="col-sm-6">
-          <!-- SHOW GRAPH HERE -->
+          <h5 class="center">Checkins / Month</h5>
+          <%= line_chart @allUserFoursquare.group_by_month(:created_at).count %>
         </div>
         <div class="col-sm-6">
-          <!-- SHOW GRAPH HERE -->
+          <h5 class="center">Checkin Locations</h5>
+          <%= geo_chart @allUserFoursquare.group(:country).count %>
         </div>
       </div>
       <h5 class="pull-right">
@@ -27,11 +25,12 @@
         <%end%>
       </h5>
       <% if @userFoursquare.present? %>
-        <h3>Raw Data</h3>
+        <h3>Raw Data: <%= @userFoursquare.total_count%> Checkins</h3>
         <table class="table table-hover">
           <thead>
             <tr>
               <th>Kind</th>
+              <th>Title</th>
               <th>Body</th>
               <th>Latitude</th>
               <th>Longitude</th>
@@ -44,9 +43,10 @@
                 <td><%= foursquare.kind%></td>
                 <td>
                   <%= link_to foursquare.external_link do %>
-                  <%= foursquare.body %>
+                    <%= foursquare.title%>
                   <%end%>
                 </td>
+                <td><%= foursquare.body %></td>
 
                 <td><%= foursquare.latitude %></td>
                 <td><%= foursquare.longitude %></td>
@@ -57,6 +57,9 @@
         </table>
       <%end%>
       <%= paginate @userFoursquare %>
+      <%= link_to sign_out_provider_path(:provider => "foursquare") do%>
+        <h3 class="pull-right">Sign Out</h3>
+      <%end%>
     <%else%>
       <div id = "signedOutChannel">
         <div class="channelHeader center">

@@ -197,7 +197,8 @@ class ContentController < ApplicationController
   end
 
   def get_foursquare_all
-    user_checkins = @@foursquare_client.user_checkins.items
+    user_checkins = @@foursquare_client.user_checkins(:limit=>200).items
+    # raise user_checkins.inspect
     user_checkins.each do |checkin|
       @content = Content.new
       @content.post_foursquare_checkin(checkin, current_user.id)
@@ -313,7 +314,7 @@ class ContentController < ApplicationController
     yesterday = DateTime.yesterday.strftime("%F")
     lastmonth = 1.month.ago.strftime("%F")
 
-    heart_rates = @@fitbit_client.heart_rate_time_series(base_date: lastmonth, end_date: today)
+    heart_rates = @@fitbit_client.heart_rate_time_series(date: today, period: '1d')
     heart_rates = heart_rates['activities-heart']
 
     heart_rates.each do |day|

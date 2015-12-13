@@ -14,7 +14,8 @@ class ChannelController < ApplicationController
   def twitter
     @twitter = @identities.where(:provider => "twitter")
     if @twitter.present?
-      @userTwitter = current_user.contents.order('created_at DESC').where(:provider => "twitter").page(params[:page]).per(10)
+      @allUserTwitter = current_user.contents.where(:provider => "twitter")
+      @userTwitter = @allUserTwitter.order('created_at DESC').where(:provider => "twitter").page(params[:page]).per(10)
     end
     respond_to do |format|
       format.html
@@ -26,7 +27,20 @@ class ChannelController < ApplicationController
   def fitbit
     @fitbit = @identities.where(:provider => "fitbit_oauth2")
     if @fitbit.present?
-      @userFitbit = current_user.contents.order('created_at DESC').where(:provider => "fitbit").page(params[:page]).per(10)
+      @allUserFitbit = current_user.contents.where(:provider => "fitbit")
+      @userFitbit = @allUserFitbit.order('created_at DESC').page(params[:page]).per(10)
+
+      sleepHash = {"" => 0}
+
+      @allUserFitbit.each do |day|
+        unless day.body.to_i == 0
+          date = day.created_at.strftime("%b %e, %Y")
+          sleep = day.body.to_i
+          sleepHash[date] = (sleep / 60.0).round(2)
+        end
+      end
+      @fitbitSleepChart = sleepHash
+
     end
     respond_to do |format|
       format.html
@@ -37,7 +51,8 @@ class ChannelController < ApplicationController
   def github
     @github = @identities.where(:provider => "github")
     if @github.present?
-      @userGithub = current_user.contents.order('created_at DESC').where(:provider => "github").page(params[:page]).per(10)
+      @allUserGithub = current_user.contents.where(:provider => "github")
+      @userGithub = @allUserGithub.order('created_at DESC').page(params[:page]).per(10)
     end
     respond_to do |format|
       format.html
@@ -59,7 +74,8 @@ class ChannelController < ApplicationController
   def foursquare
     @foursquare = @identities.where(:provider => "foursquare")
     if @foursquare.present?
-      @userFoursquare = current_user.contents.order('created_at DESC').where(:provider => "foursquare").page(params[:page]).per(10)
+      @allUserFoursquare = current_user.contents.where(:provider => "foursquare")
+      @userFoursquare = @allUserFoursquare.order('created_at DESC').page(params[:page]).per(10)
     end
     respond_to do |format|
       format.html
@@ -70,7 +86,8 @@ class ChannelController < ApplicationController
   def facebook
     @facebook = @identities.where(:provider => "facebook")
     if @facebook.present?
-      @userFacebook = current_user.contents.order('created_at DESC').where(:provider => "facebook").page(params[:page]).per(10)
+      @allUserFacebook = current_user.contents.where(:provider => "facebook")
+      @userFacebook = @allUserFacebook.order('created_at DESC').page(params[:page]).per(10)
     end
     respond_to do |format|
       format.html

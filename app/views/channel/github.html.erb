@@ -12,10 +12,10 @@
       <h2><%= @userGithub.total_count%> Github Data</h2>
       <div class="row">
         <div class="col-sm-6">
-          <!-- SHOW GRAPH HERE -->
+          <%= column_chart @allUserGithub.group_by_month(:created_at, format: "%b %y").count %>
         </div>
         <div class="col-sm-6">
-          <!-- SHOW GRAPH HERE -->
+          <%= pie_chart @allUserGithub.group(:kind).count %>
         </div>
       </div>
       <h5 class="pull-right">

@@ -9,7 +9,7 @@
       <%= link_to sign_out_provider_path(:provider => "twitter") do%>
         <h3 class="pull-right">Sign Out Twitter</h3>
       <%end%>
-      <h2><%= @userTwitter.count%> Tweets</h2>
+      <h2><%= @userTwitter.total_count%> Tweets</h2>
       <div class="row">
         <div class="col-sm-6">
           <!-- SHOW GRAPH HERE -->
@@ -22,7 +22,7 @@
         <%= link_to twitter_tweets_path do%>
           <i class="fa fa-refresh"></i> Update
         <%end%>|
-        <%= link_to twitter_path(:format => :csv ) do%>
+        <%= link_to twitter_path(:format => :csv) do%>
           Export Data
         <%end%>
       </h5>
@@ -53,6 +53,7 @@
             <%end%>
           </tbody>
         </table>
+      <%= paginate @userTwitter %>
       <%end%>
     <%else%>
       <div id = "signedOutChannel">

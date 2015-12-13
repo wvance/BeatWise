@@ -6,7 +6,7 @@ gem 'delayed_job_active_record'     # MOVES JOBS INTO BACKGROUND TASKS
 # gem "twitter-bootstrap-rails"     # BOOTSTRAP GEM
 gem 'bootstrap', '~> 4.0.0.alpha1'  # BOOTSTRAP ALPHA
 gem "font-awesome-rails"
-
+gem 'kaminari'                      # PAGINATION GEM
 gem 'httparty'
 
 gem 'twitter'                       # TWITTER API

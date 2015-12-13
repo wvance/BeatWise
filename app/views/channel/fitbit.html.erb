@@ -9,7 +9,7 @@
       <%= link_to sign_out_provider_path(:provider => "fitbit_oauth2") do%>
         <h3 class="pull-right">Sign Out Fitbit</h3>
       <%end%>
-      <h2><%= @userFitbit.count%> Fitbit Data</h2>
+      <h2><%= @userFitbit.total_count%> Fitbit Data</h2>
       <div class="row">
         <div class="col-sm-6">
           <!-- SHOW GRAPH HERE -->
@@ -53,6 +53,7 @@
             <%end%>
           </tbody>
         </table>
+        <%= paginate @userFitbit %>
       <%end%>
 
     <%else%>

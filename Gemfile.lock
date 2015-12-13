@@ -132,6 +132,9 @@ GEM
       turbolinks
     json (1.8.3)
     jwt (1.5.2)
+    kaminari (0.16.3)
+      actionpack (>= 3.0.0)
+      activesupport (>= 3.0.0)
     koala (2.2.0)
       addressable
       faraday
@@ -298,6 +301,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   jquery-turbolinks
+  kaminari
   koala
   omniauth
   omniauth-facebook

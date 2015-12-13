@@ -9,7 +9,7 @@
       <%= link_to sign_out_provider_path(:provider => "instagram") do%>
         <h3 class="pull-right">Sign Out Instagram</h3>
       <%end%>
-      <h2><%= @userInstagram.count%> Pictures</h2>
+      <h2><%= @userInstagram.total_count%> Pictures</h2>
       <div class="row">
         <div class="col-sm-6">
           <!-- SHOW GRAPH HERE -->
@@ -55,6 +55,7 @@
             <%end%>
           </tbody>
         </table>
+        <%= paginate @userInstagram %>
       <%end%>
 
     <%else%>

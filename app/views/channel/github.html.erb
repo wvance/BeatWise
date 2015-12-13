@@ -9,7 +9,7 @@
       <%= link_to sign_out_provider_path(:provider => "github") do%>
         <h3 class="pull-right">Sign Out Foursquare</h3>
       <%end%>
-      <h2><%= @userGithub.count%> Github Data</h2>
+      <h2><%= @userGithub.total_count%> Github Data</h2>
       <div class="row">
         <div class="col-sm-6">
           <!-- SHOW GRAPH HERE -->
@@ -50,6 +50,7 @@
             <%end%>
           </tbody>
         </table>
+        <%= paginate @userGithub %>
       <%end%>
 
     <%else%>

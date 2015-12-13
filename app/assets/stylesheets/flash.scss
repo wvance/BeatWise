@@ -1,0 +1,28 @@
+@import 'variables';
+
+.flash-message {
+  position: fixed;
+  right:25px;
+  top: 50px;
+
+  color: black;
+  z-index: 999;
+  font-weight: bold;
+  width:95%;
+  max-width: 300px;
+
+  &.error {
+    border: solid 1px $darkRed;
+    background-color: $red;
+  }
+  &.notice {
+    border: solid 1px $darkYellow;
+    background-color: $yellow;
+  }
+  p {
+    text-align:center;
+    font-size: 110%;
+    margin: 15px 0;
+    color:$white;
+  }
+}

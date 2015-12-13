@@ -12,6 +12,11 @@ Rails.application.routes.draw do
 
   get '/channels',                  to: 'channel#index',                        as: :channels
   get '/channels/twitter',          to: 'channel#twitter',                      as: :twitter
+  get '/channels/fitbit',           to: 'channel#fitbit',                       as: :fitbit
+  get '/channels/foursquare',       to: 'channel#foursquare',                   as: :foursquare
+  get '/channels/instagram',        to: 'channel#instagram',                    as: :instagram
+  get '/channels/github',           to: 'channel#github',                       as: :github
+  get '/channels/facebook',         to: 'channel#facebook',                     as: :facebook
 
   get '/all_foursquare',            to: 'content#get_foursquare_all',           as: :all_foursquare
   get '/get_github_repos',          to: 'content#get_github_repos',             as: :get_github_repos

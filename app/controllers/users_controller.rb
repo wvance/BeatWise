@@ -46,7 +46,7 @@ class UsersController < ApplicationController
     @identity.destroy
 
     respond_to do |format|
-      format.html { redirect_to root_url, notice: 'You were successfully signed out!'}
+      format.html { redirect_to root_url, notice: 'You were successfully signed out of ' + params[:provider]}
       format.json { head :no_content }
     end
   end

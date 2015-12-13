@@ -15,7 +15,7 @@ class WelcomeController < ApplicationController
       @userTweets = current_user.contents.order('created_at DESC').where(:provider => "twitter")
       @userCheckins = current_user.contents.order('created_at DESC').where(:provider=>"foursquare")
       @userActivities = current_user.contents.order('created_at DESC').where(:provider=>"fitbit")
-      @userGithub = current_user.contents.order('created_at DESC').where(:provider=>"github")
+      @userGithub = current_user.contents.order('created_at DESC').where(:provider=>"fitbit_oauth2")
       @userPosts = current_user.contents.order('created_at DESC').where(:provider => "facebook")
 
     end

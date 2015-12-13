@@ -1,15 +1,15 @@
-<div id ="twitterChannel" class="row">
+<div id ="facebookChannel" class="row">
   <div class="row">
     <div class="col-xs-12">
-      <h1><i class="fa fa-twitter"></i> Twitter</h1>
+      <h1><i class="fa fa-facebook"></i> Facebook</h1>
     </div>
   </div>
   <div class="row">
-    <% if @twitter.present? %>
-      <%= link_to sign_out_provider_path(:provider => "twitter") do%>
-        <h3 class="pull-right">Sign Out Twitter</h3>
+    <% if @facebook.present? %>
+      <%= link_to sign_out_provider_path(:provider => "facebook") do%>
+        <h3 class="pull-right">Sign Out Facebook</h3>
       <%end%>
-      <h2><%= @userTwitter.count%> Tweets</h2>
+      <h2><%= @userFacebook.count%> Posts</h2>
       <div class="row">
         <div class="col-sm-6">
           <!-- SHOW GRAPH HERE -->
@@ -18,41 +18,44 @@
           <!-- SHOW GRAPH HERE -->
         </div>
       </div>
-      <%= link_to twitter_tweets_path do%>
+      <%= link_to all_facebook_path do%>
         <h3 class="pull-right"><i class="fa fa-refresh"></i> Update</h3>
       <%end%>
-      <% if @userTwitter.present? %>
+      <% if @userFacebook.present? %>
         <h3>Raw Data</h3>
         <table class="table table-hover">
           <thead>
             <tr>
+              <th>Kind</th>
               <th>Body</th>
-              <th>Latitude</th>
-              <th>Longitude</th>
+              <th>Lat Lng</th>
               <th>Created</th>
             </tr>
           </thead>
           <tbody>
-            <% @userTwitter.each do |tweet| %>
+            <% @userFacebook.each do |post| %>
               <tr>
                 <td>
-                  <%= link_to tweet.external_link do %>
-                  <%= tweet.body %>
+                  <%= post.kind%>
+                </td>
+                <td>
+                  <%= link_to post.external_link do %>
+                    <%= post.body %>
                   <%end%>
                 </td>
 
-                <td><%= tweet.latitude %></td>
-                <td><%= tweet.longitude %></td>
-                <td><%= tweet.created_at.strftime("%F") %></td>
+                <td><%= post.latitude %> <%= post.longitude %></td>
+                <td><%= post.created_at.strftime("%F") %></td>
               </tr>
             <%end%>
           </tbody>
         </table>
       <%end%>
+
     <%else%>
       <div id = "signedOutChannel">
         <div class="channelHeader center">
-          <%= link_to user_omniauth_authorize_path(:twitter) do%>
+          <%= link_to user_omniauth_authorize_path(:facebook) do%>
             <h1> Sign On </h1>
           <%end%>
         <hr>
@@ -61,14 +64,15 @@
           <h4>This channel requests</h4>
           <ul>
             <li>Profile information</li>
-            <li>Tweet history</li>
+            <li>Post history</li>
+            <li>Family History</li>
           </ul>
         </div>
         <div class="channelAbility col-xs-6">
           <h4>With this channel you can</h4>
           <ul>
-            <li>Track your tweeting history</li>
-            <li>Export tweets to csv</li>
+            <li>Track your post history</li>
+            <li>Export posts to csv</li>
           </ul>
         </div>
       </div>

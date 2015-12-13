@@ -12,3 +12,15 @@
     color:$yellow;
   }
 }
+
+#signedOutChannel{
+  position:static;
+  width:100%;
+  max-width: 650px;
+  margin-left: auto;
+  margin-right: auto;
+  #channelHeader{
+  }
+  .channelRequests{
+  }
+}

@@ -8,44 +8,44 @@
 
       <!-- FACEBOOK -->
       <% unless @facebook.present? %>
-        <%= link_to user_omniauth_authorize_path(:facebook) do%>
+        <%= link_to facebook_path do%>
           <i class="fa fa-facebook"></i>
         <%end%>
       <%else%>
-        <%= link_to sign_out_provider_path(:provider => "facebook") do%>
+        <%= link_to facebook_path do%>
           <i class="fa fa-facebook yellow"></i>
         <%end%>
       <%end%>
 
       <!-- TWITTER -->
       <% unless @twitter.present? %>
-        <%= link_to user_omniauth_authorize_path(:twitter) do%>
+        <%= link_to twitter_path do%>
           <i class="fa fa-twitter"></i>
         <%end%>
       <%else%>
-        <%= link_to sign_out_provider_path(:provider => "twitter") do%>
+        <%= link_to twitter_path do%>
           <i class="fa fa-twitter yellow"></i>
         <%end%>
       <%end%>
 
       <!-- FOURSQUARE -->
       <% unless @foursquare.present? %>
-        <%= link_to user_omniauth_authorize_path(:foursquare) do%>
+        <%= link_to foursquare_path do%>
           <i class="fa fa-foursquare"></i>
         <%end%>
       <%else%>
-        <%= link_to sign_out_provider_path(:provider => "foursquare") do%>
+        <%= link_to foursquare_path do%>
           <i class="fa fa-foursquare yellow"></i>
         <%end%>
       <%end%>
 
       <!-- INSTAGRAM -->
       <% unless @instagram.present? %>
-        <%= link_to user_omniauth_authorize_path(:instagram) do%>
+        <%= link_to instagram_path do%>
           <i class="fa fa-instagram"></i>
         <%end%>
       <%else%>
-        <%= link_to sign_out_provider_path(:provider => "instagram") do%>
+        <%= link_to instagram_path do%>
           <i class="fa fa-instagram yellow"></i>
         <%end%>
       <%end%>
@@ -55,12 +55,14 @@
       <h3>Health</h3>
 
       <!-- FITBIT -->
+
+      <!-- INSTAGRAM -->
       <% unless @fitbit.present? %>
-        <%= link_to user_omniauth_authorize_path(:fitbit_oauth2) do%>
+        <%= link_to fitbit_path do%>
           <i class="fa fa-heartbeat"></i>
         <%end%>
       <%else%>
-        <%= link_to sign_out_provider_path(:provider => "fitbit_oauth2") do%>
+        <%= link_to fitbit_path do%>
           <i class="fa fa-heartbeat yellow"></i>
         <%end%>
       <%end%>
@@ -76,13 +78,13 @@
     </div>
     <div id="productivityChannels" class="row">
       <h3>Productivity</h3>
-      <!-- FITBIT -->
+      <!-- GITHUB -->
       <% unless @github.present? %>
-        <%= link_to user_omniauth_authorize_path(:github) do%>
+        <%= link_to github_path do%>
           <i class="fa fa-github"></i>
         <%end%>
       <%else%>
-        <%= link_to sign_out_provider_path(:provider => "github") do%>
+        <%= link_to github_path do%>
           <i class="fa fa-github yellow"></i>
         <%end%>
       <%end%>

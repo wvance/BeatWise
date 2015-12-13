@@ -1,15 +1,15 @@
-<div id ="twitterChannel" class="row">
+<div id ="fitbitChannel" class="row">
   <div class="row">
     <div class="col-xs-12">
-      <h1><i class="fa fa-twitter"></i> Twitter</h1>
+      <h1><i class="fa fa-heartrate"></i> Fitbit</h1>
     </div>
   </div>
   <div class="row">
-    <% if @twitter.present? %>
-      <%= link_to sign_out_provider_path(:provider => "twitter") do%>
-        <h3 class="pull-right">Sign Out Twitter</h3>
+    <% if @fitbit.present? %>
+      <%= link_to sign_out_provider_path(:provider => "fitbit_oauth2") do%>
+        <h3 class="pull-right">Sign Out Fitbit</h3>
       <%end%>
-      <h2><%= @userTwitter.count%> Tweets</h2>
+      <h2><%= @userFitbit.count%> Fitbit Data</h2>
       <div class="row">
         <div class="col-sm-6">
           <!-- SHOW GRAPH HERE -->
@@ -18,41 +18,42 @@
           <!-- SHOW GRAPH HERE -->
         </div>
       </div>
-      <%= link_to twitter_tweets_path do%>
-        <h3 class="pull-right"><i class="fa fa-refresh"></i> Update</h3>
+      <%= link_to fitbit_heart_path do%>
+        <h3 class="pull-right"><i class="fa fa-refresh"></i> Update Heartrate</h3>
       <%end%>
-      <% if @userTwitter.present? %>
+      <!-- <%= link_to fitbit_heart_path do%>
+        <h3 class="pull-right"><i class="fa fa-refresh"></i> Update Heart</h3>
+      <%end%> -->
+      <% if @userFitbit.present? %>
         <h3>Raw Data</h3>
         <table class="table table-hover">
           <thead>
             <tr>
+              <th>Kind</th>
               <th>Body</th>
-              <th>Latitude</th>
-              <th>Longitude</th>
               <th>Created</th>
             </tr>
           </thead>
           <tbody>
-            <% @userTwitter.each do |tweet| %>
+            <% @userFitbit.each do |fitbit| %>
               <tr>
+                <td><%= fitbit.kind%></td>
                 <td>
-                  <%= link_to tweet.external_link do %>
-                  <%= tweet.body %>
+                  <%= link_to fitbit.external_link do %>
+                  <%= fitbit.body %>
                   <%end%>
                 </td>
-
-                <td><%= tweet.latitude %></td>
-                <td><%= tweet.longitude %></td>
-                <td><%= tweet.created_at.strftime("%F") %></td>
+                <td><%= fitbit.created_at.strftime("%F") %></td>
               </tr>
             <%end%>
           </tbody>
         </table>
       <%end%>
+
     <%else%>
       <div id = "signedOutChannel">
         <div class="channelHeader center">
-          <%= link_to user_omniauth_authorize_path(:twitter) do%>
+          <%= link_to user_omniauth_authorize_path(:fitbit_oauth2) do%>
             <h1> Sign On </h1>
           <%end%>
         <hr>
@@ -61,14 +62,14 @@
           <h4>This channel requests</h4>
           <ul>
             <li>Profile information</li>
-            <li>Tweet history</li>
+            <li>Fitbit history</li>
           </ul>
         </div>
         <div class="channelAbility col-xs-6">
           <h4>With this channel you can</h4>
           <ul>
-            <li>Track your tweeting history</li>
-            <li>Export tweets to csv</li>
+            <li>Track your Fitbit history</li>
+            <li>Export Fitbit data to csv</li>
           </ul>
         </div>
       </div>

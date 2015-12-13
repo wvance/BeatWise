@@ -45,7 +45,7 @@ class ContentController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { redirect_to root_url, notice:"Updated Twitter Tweets" }
+      format.html { redirect_to request.referrer, notice:"Updated Twitter Tweets" }
       format.json { head :no_content }
     end
   end
@@ -68,7 +68,7 @@ class ContentController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { redirect_to root_url, notice:"Updated All Github" }
+      format.html { redirect_to request.referrer, notice:"Updated All Github" }
       format.json { head :no_content }
     end
   end
@@ -117,7 +117,7 @@ class ContentController < ApplicationController
 
 
     respond_to do |format|
-      format.html { redirect_to root_url, notice:"Updated All Facebook" }
+      format.html { redirect_to request.referrer, notice:"Updated All Facebook" }
       format.json { head :no_content }
     end
   end
@@ -156,7 +156,7 @@ class ContentController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { redirect_to root_url, notice:"Updated Facebook Events" }
+      format.html { redirect_to request.referrer, notice:"Updated Facebook Events" }
       format.json { head :no_content}
     end
   end
@@ -169,7 +169,7 @@ class ContentController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { redirect_to root_url, notice:"Updated Facebook Photos" }
+      format.html { redirect_to request.referrer, notice:"Updated Facebook Photos" }
       format.json { head :no_content}
     end
   end
@@ -182,7 +182,7 @@ class ContentController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { redirect_to root_url, notice:"Updated Facebook Family"}
+      format.html { redirect_to request.referrer, notice:"Updated Facebook Family"}
       format.json { head :no_content}
     end
   end
@@ -210,7 +210,7 @@ class ContentController < ApplicationController
     # end
 
     respond_to do |format|
-      format.html { redirect_to root_url, notice:"Updated All Foursquare" }
+      format.html { redirect_to request.referrer, notice:"Updated All Foursquare" }
       format.json { head :no_content }
     end
   end
@@ -224,7 +224,7 @@ class ContentController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { redirect_to root_url, notice:"Updated Foursquare Checkins"}
+      format.html { redirect_to request.referrer, notice:"Updated Foursquare Checkins"}
       format.json { head :no_content}
     end
   end
@@ -237,7 +237,7 @@ class ContentController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { redirect_to root_url, notice:"Updated Foursquare Friends" }
+      format.html { redirect_to request.referrer, notice:"Updated Foursquare Friends" }
       format.json { head :no_content}
     end
   end
@@ -264,7 +264,7 @@ class ContentController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { redirect_to root_url, notice:"Updated Fitbit Recent Activity"}
+      format.html { redirect_to request.referrer, notice:"Updated Fitbit Recent Activity"}
       format.json { head :no_content}
     end
   end
@@ -278,7 +278,7 @@ class ContentController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { redirect_to root_url, notice:"Updated Fitbit Favorite Activities" }
+      format.html { redirect_to request.referrer, notice:"Updated Fitbit Favorite Activities" }
       format.json { head :no_content}
     end
   end
@@ -303,7 +303,7 @@ class ContentController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { redirect_to root_url, notice:"Updated Fitbit Heart Rates" }
+      format.html { redirect_to request.referrer, notice:"Updated Fitbit Heart Rates" }
       format.json { head :no_content}
     end
   end
@@ -322,7 +322,7 @@ class ContentController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { redirect_to root_url, notice:"Updated Fitbit Heart Rates" }
+      format.html { redirect_to request.referrer, notice:"Updated Fitbit Heart Rates" }
       format.json { head :no_content}
     end
   end

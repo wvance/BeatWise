@@ -18,9 +18,14 @@
           <!-- SHOW GRAPH HERE -->
         </div>
       </div>
-      <%= link_to twitter_tweets_path do%>
-        <h3 class="pull-right"><i class="fa fa-refresh"></i> Update</h3>
-      <%end%>
+      <h5 class="pull-right">
+        <%= link_to twitter_tweets_path do%>
+          <i class="fa fa-refresh"></i> Update
+        <%end%>|
+        <%= link_to twitter_path(:format => :csv ) do%>
+          Export Data
+        <%end%>
+      </h5>
       <% if @userTwitter.present? %>
         <h3>Raw Data</h3>
         <table class="table table-hover">

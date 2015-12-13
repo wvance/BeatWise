@@ -16,12 +16,20 @@ class ChannelController < ApplicationController
     if @twitter.present?
       @userTwitter = current_user.contents.order('created_at DESC').where(:provider => "twitter")
     end
+    respond_to do |format|
+      format.html
+      format.csv { send_data @userTwitter.to_csv, filename: "Twitter_Timeline-#{Date.today}.csv" }
+    end
   end
 
   def fitbit
     @fitbit = @identities.where(:provider => "fitbit_oauth2")
     if @fitbit.present?
       @userFitbit = current_user.contents.order('created_at DESC').where(:provider => "fitbit")
+    end
+    respond_to do |format|
+      format.html
+      format.csv { send_data @userFitbit.to_csv, filename: "Fitbit_Timeline-#{Date.today}.csv" }
     end
   end
 
@@ -30,12 +38,20 @@ class ChannelController < ApplicationController
     if @github.present?
       @userGithub = current_user.contents.order('created_at DESC').where(:provider => "github")
     end
+    respond_to do |format|
+      format.html
+      format.csv { send_data @userGithub.to_csv, filename: "Github_Timeline-#{Date.today}.csv" }
+    end
   end
 
   def instagram
     @instagram = @identities.where(:provider => "instagram")
     if @instagram.present?
       @userInstagram = current_user.contents.order('created_at DESC').where(:provider => "instagram")
+    end
+    respond_to do |format|
+      format.html
+      format.csv { send_data @userInstagram.to_csv, filename: "Instagram_Timeline-#{Date.today}.csv" }
     end
   end
 
@@ -44,12 +60,20 @@ class ChannelController < ApplicationController
     if @foursquare.present?
       @userFoursquare = current_user.contents.order('created_at DESC').where(:provider => "foursquare")
     end
+    respond_to do |format|
+      format.html
+      format.csv { send_data @userFoursquare.to_csv, filename: "Foursquare_Timeline-#{Date.today}.csv" }
+    end
   end
 
   def facebook
     @facebook = @identities.where(:provider => "facebook")
     if @facebook.present?
       @userFacebook = current_user.contents.order('created_at DESC').where(:provider => "facebook")
+    end
+    respond_to do |format|
+      format.html
+      format.csv { send_data @userFacebook.to_csv, filename: "Facebook_Timeline-#{Date.today}.csv" }
     end
   end
 

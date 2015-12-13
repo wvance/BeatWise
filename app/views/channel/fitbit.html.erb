@@ -18,9 +18,14 @@
           <!-- SHOW GRAPH HERE -->
         </div>
       </div>
-      <%= link_to fitbit_heart_path do%>
-        <h3 class="pull-right"><i class="fa fa-refresh"></i> Update Heartrate</h3>
-      <%end%>
+      <h5 class="pull-right">
+        <%= link_to fitbit_heart_path do%>
+          <i class="fa fa-refresh"></i> Update
+        <%end%>|
+        <%= link_to fitbit_path(:format => :csv ) do%>
+          Export Data
+        <%end%>
+      </h5>
       <!-- <%= link_to fitbit_heart_path do%>
         <h3 class="pull-right"><i class="fa fa-refresh"></i> Update Heart</h3>
       <%end%> -->

@@ -1,10 +1,10 @@
+//= require jsapi
+//= require chartkick
 //= require jquery
 //= require jquery.turbolinks
 //= require jquery_ujs
 //= require tether
 //= require flash
-//= require jsapi
-//= require chartkick
 //= require bootstrap-sprockets
 //= require turbolinks
 //= require_tree .

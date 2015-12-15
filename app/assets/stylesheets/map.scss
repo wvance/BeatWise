@@ -1,0 +1,19 @@
+.leaflet-popup-content-wrapper {
+  font-size:16px;
+  line-height:24px;
+}
+.leaflet-popup-content-wrapper a {
+  color:black;
+}
+.leaflet-popup-content-wrapper a:hover{
+  color:#FFCC00;
+}
+.leaflet-popup-tip-container {
+  width:30px;
+  height:15px;
+}
+.leaflet-popup-tip {
+  border-left:15px solid transparent;
+  border-right:15px solid transparent;
+  border-top:15px solid white;
+}

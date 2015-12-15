@@ -1,4 +1,7 @@
-ready = ->
+$(".welcome.index").ready ->
+  # ====================================
+  # ========= ANNIMATION ===============
+  # ====================================
   #set animation timing
   animationDelay = 2500
   barAnimationDelay = 3800
@@ -169,14 +172,86 @@ ready = ->
     return
 
   initHeadline()
-  return
 
-$(document).ready ready
-$(document).on 'page:load', ready
+  # ====================================
+  # ========= MAPBOX ===================
+  # ====================================
+  L.mapbox.accessToken = '<%= Figaro.env.mapbox_token %>';
+  map = L.mapbox.map('map', 'wesvance.n3ejgh0a', {
+    # zoomControl: false
+  })
+
+  # map.touchZoom.disable();
+  map.doubleClickZoom.disable();
+  map.scrollWheelZoom.disable();
+  map.attributionControl = false;
+
+  # $.ajax
+  #   dataType: 'text'
+  #   url: '/welcome/index.json'
+  #   success: (data) ->
+  #     geojson = $.parseJSON(data)
+  #     map.featureLayer.setGeoJSON(geojson)
+
+  $link = $('#map').data('url')
+  featureLayer = L.mapbox.featureLayer().loadURL($link).addTo(map);
+  # console.log(L.mapbox.featureLayer().loadURL($link))
+  # featureLayer = L.mapbox.featureLayer().loadURL($link).on 'ready', (e) ->
+
+  # clusterGroup = new (L.MarkerClusterGroup)(
+  #   # iconCreateFunction: (cluster) ->
+  #   #   L.mapbox.marker.icon
+  #   #     'marker-symbol': cluster.getChildCount()
+  #   #     'marker-color': '#FFCC00'
+  #   # spiderfyOnMaxZoom: true
+  #   showCoverageOnHover: true
+  #   polygonOptions:
+  #     fillColor: '#FFCC00'
+  #     color: '#FFCC00'
+  #     weight:2
+  #     opacity:1
+  #     fillOpacity: 0.5)
+  # e.target.eachLayer (layer) ->
+  #   clusterGroup.addLayer layer
+  #   return
+  # map.addLayer clusterGroup
+  # return
+
+  featureLayer.on 'ready', (e) ->
+    map.fitBounds(featureLayer.getBounds(), {padding: [50,50]});
+
+  # add custom popups to each marker
+  featureLayer.on 'layeradd', (e) ->
+    marker = e.layer
+    properties = marker.feature.properties
+
+
+  #   # create custom popup
+    popupContent =  '<div class="popup">' +
+                    '<a href="' + properties.external_link + '">' +
+                        '<h6>' + properties.title + '</h6>' +
+                        '<p>'  + properties.body.substring(0,125) + "..." + '</p>' +
+                        '</a>' +
+                      '</div>'
+
+    # http://leafletjs.com/reference.html#popup
+    marker.bindPopup popupContent,
+      closeButton: false
+      minWidth: 200
+      keepInView: true
+
+  featureLayer.on 'click', (e) ->
+    map.panTo(e.layer.getLatLng());
+    e.layer.openPopup();
+
+
+  featureLayer.on 'mouseover', (e) ->
+    e.layer.openPopup();
+
+  return
 
 $('document').ready ->
   $('#myTab a').click (e) ->
   e.preventDefault()
   $(this).tab 'show'
   return
-

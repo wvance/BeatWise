@@ -1,5 +1,11 @@
 <!DOCTYPE html>
 <html>
+  <script src='https://api.tiles.mapbox.com/mapbox.js/v2.2.1/mapbox.js'></script>
+  <link href='https://api.tiles.mapbox.com/mapbox.js/v2.2.1/mapbox.css' rel='stylesheet' />
+  <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js'></script>
+  <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css' rel='stylesheet' />
+  <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css' rel='stylesheet' />
+
   <head>
     <title>BlackBox</title>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
@@ -7,7 +13,7 @@
     <%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
     <%= csrf_meta_tags %>
   </head>
-  <body>
+  <body class="<%= controller_name %> <%= action_name %>">
     <%= render partial: "layouts/navbar" %>
     <%= render partial: "layouts/flash" %>
 

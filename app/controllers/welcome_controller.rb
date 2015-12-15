@@ -3,26 +3,102 @@ class WelcomeController < ApplicationController
     @all_users = User.all
     @all_providers = Identity.all
     if user_signed_in?
-      @twitter = current_user.identities.where(:provider => "twitter")
-      @foursquare = current_user.identities.where(:provider => "foursquare")
-      @github = current_user.identities.where(:provider => "github")
-      @fitbit = current_user.identities.where(:provider => "fitbit_oauth2")
-      @facebook = current_user.identities.where(:provider =>'facebook')
-      @instagram = current_user.identities.where(:provider => 'instagram')
+      @userContent = current_user.contents.all
 
-      @timeline = current_user.contents.order('created_at DESC').all
+      @timeline = @userContent.order('created_at DESC').page(params[:page]).per(20)
+      @userTweets = @userContent.order('created_at DESC').where(:provider => "twitter")
+      @userCheckins = @userContent.order('created_at DESC').where(:provider=>"foursquare")
+      @userActivities = @userContent.order('created_at DESC').where(:provider=>"fitbit")
+      @userGithub = @userContent.order('created_at DESC').where(:provider=>"fitbit_oauth2")
+      @userPosts = @userContent.order('created_at DESC').where(:provider => "facebook")
 
-      @userTweets = current_user.contents.order('created_at DESC').where(:provider => "twitter")
-      @userCheckins = current_user.contents.order('created_at DESC').where(:provider=>"foursquare")
-      @userActivities = current_user.contents.order('created_at DESC').where(:provider=>"fitbit")
-      @userGithub = current_user.contents.order('created_at DESC').where(:provider=>"fitbit_oauth2")
-      @userPosts = current_user.contents.order('created_at DESC').where(:provider => "facebook")
+      # FOR THE MAP :D
+      # GET ALL CONTENT OBJECTS FOR THE MAP DISPLAY
+      @mapContent = @userContent
+      # THIS IS FOR THE DISPLAY MAP
+      @geojson = Array.new
+      # raise @mapContent.to_yaml
+      # PUT CONTENTS ON MAP
+      if @mapContent.present?
+        @mapContent.each do |content|
 
+          puts "CONTENT KIND HERE :"
+          puts content.kind
+          if (content.provider == "twitter")
+            marker_color = '#4099FF'
+          elsif (content.provider == "foursquare")
+            marker_color = '#FFCC00'
+          elsif (content.provider == "facebook")
+            marker_color = '#FFFFFF'
+          elsif (content.provider == "fitbit")
+            marker_color = '#f15038'
+          elsif (content.provider == "github")
+            marker_color = '#F1AC38'
+          else
+            marker_color = "#387C81"
+          end
+
+          unless (content.longitude.nil? || content.latitude.nil?) || (content.longitude == '0' || content.latitude == '0')
+            @geojson << {
+              type: 'Feature',
+              geometry: {
+                type: 'Point',
+                coordinates: [
+                  content.longitude,
+                  content.latitude
+                ]
+              },
+              properties: {
+                title:
+                  if (content.title.present?)
+                    content.title.capitalize
+                  elsif (content.provider.present? && content.kind.present? && !content.body.present? )
+                    content.provider.capitalize + " " + content.kind.capitalize
+                  elsif (content.provider.present?)
+                    content.provider.capitalize
+                  else
+                    " "
+                  end,
+                body:
+                  if (content.body.present?)
+                    content.body.capitalize
+                  elsif (content.kind.present?)
+                    content.kind.capitalize
+                  else
+                    " "
+                  end,
+                external_link:
+                  if (content.external_link.present?)
+                    content.external_link
+                  else
+                    "#"
+                  end,
+                address:
+                  if (content.city.present? && content.state.present?)
+                    content.city + ", " + content.state
+                  elsif content.location.present?
+                    content.location
+                  end,
+                :'marker-color' => marker_color,
+                :'marker-size' => 'small'
+              }
+            }
+          end
+        end
+      end
+      puts "START MAP OBJECT: "
+      puts @geojson
+      puts "END MAP OBJECT: "
     end
-
     respond_to do |format|
       format.html
+      format.json { render json: @geojson }  # respond with the created JSON object
       format.csv { send_data @timeline.to_csv, filename: "Content_Timeline-#{Date.today}.csv" }
     end
   end
+  private
+    def set_user
+      # GET USER ID FROM SUBDOMAIN
+      @user = current_user
+    end
 end

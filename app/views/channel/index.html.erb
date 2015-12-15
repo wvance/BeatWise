@@ -1,95 +1,96 @@
-<div id="channelsList" class="row">
-  <div class="col-xs-6 col-xs-offset-3">
-    <h1>Channels</h1>
-    <h6><%= @identities.count %> Connected</h6>
-    <hr>
-    <div id="socialChannels" class="row">
-      <h3>Social</h3>
+<div class="container">
+  <div id="channelsList" class="row">
+    <div class="col-xs-10 col-xs-offset-1">
+      <h1>Channels</h1>
+      <h6><%= @identities.count %> Connected</h6>
+      <hr>
+      <div id="socialChannels" class="row">
+        <h3>Social</h3>
 
-      <!-- FACEBOOK -->
-      <% unless @facebook.present? %>
-        <%= link_to facebook_path do%>
-          <i class="fa fa-facebook"></i>
+        <!-- FACEBOOK -->
+        <% unless @facebook.present? %>
+          <%= link_to facebook_path do%>
+            <i class="fa fa-facebook"></i>
+          <%end%>
+        <%else%>
+          <%= link_to facebook_path do%>
+            <i class="fa fa-facebook yellow"></i>
+          <%end%>
         <%end%>
-      <%else%>
-        <%= link_to facebook_path do%>
-          <i class="fa fa-facebook yellow"></i>
-        <%end%>
-      <%end%>
 
-      <!-- TWITTER -->
-      <% unless @twitter.present? %>
-        <%= link_to twitter_path do%>
-          <i class="fa fa-twitter"></i>
+        <!-- TWITTER -->
+        <% unless @twitter.present? %>
+          <%= link_to twitter_path do%>
+            <i class="fa fa-twitter"></i>
+          <%end%>
+        <%else%>
+          <%= link_to twitter_path do%>
+            <i class="fa fa-twitter yellow"></i>
+          <%end%>
         <%end%>
-      <%else%>
-        <%= link_to twitter_path do%>
-          <i class="fa fa-twitter yellow"></i>
-        <%end%>
-      <%end%>
 
-      <!-- FOURSQUARE -->
-      <% unless @foursquare.present? %>
-        <%= link_to foursquare_path do%>
-          <i class="fa fa-foursquare"></i>
+        <!-- FOURSQUARE -->
+        <% unless @foursquare.present? %>
+          <%= link_to foursquare_path do%>
+            <i class="fa fa-foursquare"></i>
+          <%end%>
+        <%else%>
+          <%= link_to foursquare_path do%>
+            <i class="fa fa-foursquare yellow"></i>
+          <%end%>
         <%end%>
-      <%else%>
-        <%= link_to foursquare_path do%>
-          <i class="fa fa-foursquare yellow"></i>
-        <%end%>
-      <%end%>
 
-      <!-- INSTAGRAM -->
-      <% unless @instagram.present? %>
-        <%= link_to instagram_path do%>
-          <i class="fa fa-instagram"></i>
+        <!-- INSTAGRAM -->
+        <% unless @instagram.present? %>
+          <%= link_to instagram_path do%>
+            <i class="fa fa-instagram"></i>
+          <%end%>
+        <%else%>
+          <%= link_to instagram_path do%>
+            <i class="fa fa-instagram yellow"></i>
+          <%end%>
         <%end%>
-      <%else%>
-        <%= link_to instagram_path do%>
-          <i class="fa fa-instagram yellow"></i>
-        <%end%>
-      <%end%>
-    </div>
+      </div>
 
-    <div id="healthChannels" class="row">
-      <h3>Health</h3>
+      <div id="healthChannels" class="row">
+        <h3>Health</h3>
 
-      <!-- FITBIT -->
+        <!-- FITBIT -->
 
-      <!-- INSTAGRAM -->
-      <% unless @fitbit.present? %>
-        <%= link_to fitbit_path do%>
-          <i class="fa fa-heartbeat"></i>
+        <!-- INSTAGRAM -->
+        <% unless @fitbit.present? %>
+          <%= link_to fitbit_path do%>
+            <i class="fa fa-heartbeat"></i>
+          <%end%>
+        <%else%>
+          <%= link_to fitbit_path do%>
+            <i class="fa fa-heartbeat yellow"></i>
+          <%end%>
         <%end%>
-      <%else%>
-        <%= link_to fitbit_path do%>
-          <i class="fa fa-heartbeat yellow"></i>
-        <%end%>
-      <%end%>
-    </div>
+      </div>
 
-    <div id="homeChannels" class="row">
-      <h3>Home</h3>
-      <i class="fa fa-car"></i>
-    </div>
-    <div id="musicChannels" class="row">
-      <h3>Music</h3>
-      <i class="fa fa-spotify"></i>
-    </div>
-    <div id="productivityChannels" class="row">
-      <h3>Productivity</h3>
-      <!-- GITHUB -->
-      <% unless @github.present? %>
-        <%= link_to github_path do%>
-          <i class="fa fa-github"></i>
+      <div id="homeChannels" class="row">
+        <h3>Home</h3>
+        <i class="fa fa-car"></i>
+      </div>
+      <div id="musicChannels" class="row">
+        <h3>Music</h3>
+        <i class="fa fa-spotify"></i>
+      </div>
+      <div id="productivityChannels" class="row">
+        <h3>Productivity</h3>
+        <!-- GITHUB -->
+        <% unless @github.present? %>
+          <%= link_to github_path do%>
+            <i class="fa fa-github"></i>
+          <%end%>
+        <%else%>
+          <%= link_to github_path do%>
+            <i class="fa fa-github yellow"></i>
+          <%end%>
         <%end%>
-      <%else%>
-        <%= link_to github_path do%>
-          <i class="fa fa-github yellow"></i>
-        <%end%>
-      <%end%>
-      <i class="fa fa-dropbox"></i>
+        <i class="fa fa-dropbox"></i>
+      </div>
     </div>
   </div>
 </div>
-

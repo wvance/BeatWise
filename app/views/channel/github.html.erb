@@ -1,81 +1,83 @@
-<div id ="githubChannel" class="row">
-  <div class="row">
-    <div class="col-xs-12">
-      <h1><i class="fa fa-github"></i> Github</h1>
+<div class="container">
+  <div id ="githubChannel" class="row">
+    <div class="row">
+      <div class="col-xs-12">
+        <h1><i class="fa fa-github"></i> Github</h1>
+      </div>
     </div>
-  </div>
-  <div class="row">
-    <% if @github.present? %>
-      <%= link_to sign_out_provider_path(:provider => "github") do%>
-        <h3 class="pull-right">Sign Out Foursquare</h3>
-      <%end%>
-      <h2><%= @userGithub.total_count%> Github Data</h2>
-      <div class="row">
-        <div class="col-sm-6">
-          <%= column_chart @allUserGithub.group_by_month(:created_at, format: "%b %y").count %>
-        </div>
-        <div class="col-sm-6">
-          <%= pie_chart @allUserGithub.group(:kind).count %>
-        </div>
-      </div>
-      <h5 class="pull-right">
-        <%= link_to get_github_repos_path do%>
-          <i class="fa fa-refresh"></i> Update
-        <%end%>|
-        <%= link_to github_path(:format => :csv ) do%>
-          Export Data
+    <div class="row">
+      <% if @github.present? %>
+        <%= link_to sign_out_provider_path(:provider => "github") do%>
+          <h3 class="pull-right">Sign Out Foursquare</h3>
         <%end%>
-      </h5>
-      <% if @userGithub.present? %>
-        <h3>Raw Data</h3>
-        <table class="table table-hover">
-          <thead>
-            <tr>
-              <th>Kind</th>
-              <th>Body</th>
-              <th>Created</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @userGithub.each do |git| %>
-              <tr>
-                <td><%= git.kind%></td>
-                <td>
-                  <%= link_to git.external_link do %>
-                  <%= git.body %>
-                  <%end%>
-                </td>
-                <td><%= git.created_at.strftime("%F") %></td>
-              </tr>
-            <%end%>
-          </tbody>
-        </table>
-        <%= paginate @userGithub %>
-      <%end%>
-
-    <%else%>
-      <div id = "signedOutChannel">
-        <div class="channelHeader center">
-          <%= link_to user_omniauth_authorize_path(:github) do%>
-            <h1> Sign On </h1>
+        <h2><%= @userGithub.total_count%> Github Data</h2>
+        <div class="row">
+          <div class="col-sm-6">
+            <%= column_chart @allUserGithub.group_by_month(:created_at, format: "%b %y").count %>
+          </div>
+          <div class="col-sm-6">
+            <%= pie_chart @allUserGithub.group(:kind).count %>
+          </div>
+        </div>
+        <h5 class="pull-right">
+          <%= link_to get_github_repos_path do%>
+            <i class="fa fa-refresh"></i> Update
+          <%end%>|
+          <%= link_to github_path(:format => :csv ) do%>
+            Export Data
           <%end%>
-        <hr>
+        </h5>
+        <% if @userGithub.present? %>
+          <h3>Raw Data</h3>
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Kind</th>
+                <th>Body</th>
+                <th>Created</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @userGithub.each do |git| %>
+                <tr>
+                  <td><%= git.kind%></td>
+                  <td>
+                    <%= link_to git.external_link do %>
+                    <%= git.body %>
+                    <%end%>
+                  </td>
+                  <td><%= git.created_at.strftime("%F") %></td>
+                </tr>
+              <%end%>
+            </tbody>
+          </table>
+          <%= paginate @userGithub %>
+        <%end%>
+
+      <%else%>
+        <div id = "signedOutChannel">
+          <div class="channelHeader center">
+            <%= link_to user_omniauth_authorize_path(:github) do%>
+              <h1> Sign On </h1>
+            <%end%>
+          <hr>
+          </div>
+          <div class="channelRequests col-xs-6">
+            <h4>This channel requests</h4>
+            <ul>
+              <li>Profile information</li>
+              <li>Github history</li>
+            </ul>
+          </div>
+          <div class="channelAbility col-xs-6">
+            <h4>With this channel you can</h4>
+            <ul>
+              <li>Track your github history</li>
+              <li>Export github data to csv</li>
+            </ul>
+          </div>
         </div>
-        <div class="channelRequests col-xs-6">
-          <h4>This channel requests</h4>
-          <ul>
-            <li>Profile information</li>
-            <li>Github history</li>
-          </ul>
-        </div>
-        <div class="channelAbility col-xs-6">
-          <h4>With this channel you can</h4>
-          <ul>
-            <li>Track your github history</li>
-            <li>Export github data to csv</li>
-          </ul>
-        </div>
-      </div>
-    <%end%>
+      <%end%>
+    </div>
   </div>
 </div>

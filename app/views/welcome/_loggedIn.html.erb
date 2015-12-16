@@ -25,16 +25,20 @@
             <td>Log</td>
           </tr>
           <% @timeline.each do |post| %>
-            <tr>
+            <tr onclick="window.document.location='<%= content_path(post.id) %>';">
               <td>
                 <%= link_to post.external_link do %>
                   <%= post.id %>
                 <%end%>
               </td>
-              <td><%= post.provider.capitalize%></td>
-              <td><%= post.kind.capitalize%></td>
-              <td><%= post.title%></td>
-              <td><%= post.body%></td>
+              <td>
+                <%= link_to content_path(post.id) do %>
+                  <%= post.provider.capitalize%>
+                <%end%>
+              </td>
+              <td><%= link_to content_path(post.id) do %><%= post.kind.capitalize%><%end%></td>
+              <td><%= link_to content_path(post.id) do %><%= post.title%><%end%></td>
+              <td><%= link_to content_path(post.id) do %><%= post.body%><%end%></td>
               <td><%= post.created_at.strftime("%b %e %Y %k:%M")%></td>
               <td><%= truncate(post.log, length:100)%></td>
             </tr>

@@ -1,7 +1,12 @@
-<div class="container-fluid">
-  <div id="contentMap" class="contentsMapSection", data-url="/content/<%= @content.id %>.json"></div>
-</div>
-
+<% if @geojson.present? %>
+  <div class="container-fluid">
+    <div id="contentMap" class="contentsMapSection", data-url="/content/<%= @content.id %>.json"></div>
+  </div>
+<%else%>
+  <!-- REQUST USER TO ADD LOCATION? WITH RUBY FUNCTION -->
+<%end%>
+<div class="container">
 <h1><%= @content.user_id %></h1>
 <h1><%= @content.id %></h1>
 <h1><%= @content.provider %></h1>
+</div>

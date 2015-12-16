@@ -1,7 +1,7 @@
 $(".welcome.index").ready ->
-  # ====================================
-  # ========= ANNIMATION ===============
-  # ====================================
+# ====================================
+# ========= ANNIMATION ===============
+# ====================================
   #set animation timing
   animationDelay = 2500
   barAnimationDelay = 3800
@@ -173,9 +173,9 @@ $(".welcome.index").ready ->
 
   initHeadline()
 
-  # ====================================
-  # ========= MAPBOX ===================
-  # ====================================
+# ====================================
+# ========= MAPBOX ===================
+# ====================================
   L.mapbox.accessToken = '<%= Figaro.env.mapbox_token %>';
   map = L.mapbox.map('map', 'wesvance.n3ejgh0a', {
     # zoomControl: false
@@ -225,7 +225,7 @@ $(".welcome.index").ready ->
     marker = e.layer
     properties = marker.feature.properties
 
-  #   # create custom popup
+    # create custom popup
     popupContent =  '<div class="popup">' +
                     '<a href="' + properties.external_link + '">' +
                         '<h6>' + properties.title + '</h6>' +
@@ -247,9 +247,9 @@ $(".welcome.index").ready ->
   featureLayer.on 'mouseover', (e) ->
     e.layer.openPopup();
 
-  return
-
-$('document').ready ->
+# ====================================
+# ========= LOGIN TABS ===============
+# ====================================
   $('#myTab a').click (e) ->
   e.preventDefault()
   $(this).tab 'show'

@@ -11,18 +11,6 @@ $(".content.show").ready ->
   map.scrollWheelZoom.disable();
   map.attributionControl = false;
 
-  # get JSON object
-  # on success, parse it and
-  # hand it over to MapBox for mapping
-  # OLD WAY OF DOING IT?
-
-  # $.ajax
-  #   dataType: 'text'
-  #   url: '/welcome/index.json'
-  #   success: (data) ->
-  #     geojson = $.parseJSON(data)
-  #     map.featureLayer.setGeoJSON(geojson)
-
   $link = $('#contentMap').data('url')
   console.log($link)
   featureLayer = L.mapbox.featureLayer().loadURL($link).addTo(map);

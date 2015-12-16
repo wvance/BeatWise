@@ -7,4 +7,5 @@
 //= require flash
 //= require bootstrap-sprockets
 //= require turbolinks
+//= require jquery-readyselector
 //= require_tree .

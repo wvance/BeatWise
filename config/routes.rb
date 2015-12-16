@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
-
+  resources :content
   devise_for :users, :controllers => { omniauth_callbacks: 'omniauth_callbacks' }
   match '/users/:id/finish_signup' => 'users#finish_signup', via: [:get, :patch], :as => :finish_signup
 
@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   get '/channels/github',           to: 'channel#github',                       as: :github
   get '/channels/facebook',         to: 'channel#facebook',                     as: :facebook
 
+  # get '/content/index',             to: 'content#index',                        as: :content_index
   get '/all_facebook',              to: 'content#get_facebook_all',             as: :all_facebook
   get '/recent_fitbit_activities',  to: 'content#get_fitbit_recent_activitity', as: :recent_fitbit_activities
   get '/all_foursquare',            to: 'content#get_foursquare_all',           as: :all_foursquare

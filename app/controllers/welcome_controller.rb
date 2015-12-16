@@ -68,11 +68,7 @@ class WelcomeController < ApplicationController
                     " "
                   end,
                 external_link:
-                  if (content.external_link.present?)
-                    content.external_link
-                  else
-                    "#"
-                  end,
+                    "http://blackboxapp.io/content/"+ content.id.to_s,
                 address:
                   if (content.city.present? && content.state.present?)
                     content.city + ", " + content.state

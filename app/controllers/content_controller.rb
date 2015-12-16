@@ -1,4 +1,9 @@
 class ContentController < ApplicationController
+  before_action :set_content, only: [:show, :edit, :update, :destroy]
+  before_action :set_author, only: [:show]
+  # before_action :verify_is_admin, only: [:index]
+  before_action :verify_is_owner, only: [:edit, :update, :destory]
+
   # THESE ARE USED TO SET UP THE CLIENTS, ONLY IF A PROVIDER IS PRESENT!
   before_action :set_facebook_client
   before_action :set_fitbit_client
@@ -8,6 +13,90 @@ class ContentController < ApplicationController
   # before_action :set_instagram_client
 
   # before_action :new_content #, only: []
+
+def index
+  @userContent = current_user.contents.all
+end
+
+def show
+
+  # THIS IS FOR THE DISPLAY MAP
+  @geojson = Array.new
+
+  # PUT CONTENTS ON MAP
+  puts @content.kind
+  if (@content.provider == "twitter")
+    marker_color = '#4099FF'
+  elsif (@content.provider == "foursquare")
+    marker_color = '#FFCC00'
+  elsif (@content.provider == "facebook")
+    marker_color = '#FFFFFF'
+  elsif (@content.provider == "fitbit")
+    marker_color = '#f15038'
+  elsif (@content.provider == "github")
+    marker_color = '#F1AC38'
+  else
+    marker_color = "#387C81"
+  end
+
+  unless (@content.longitude.nil? || @content.latitude.nil?) || (@content.longitude == '0' || @content.latitude == '0')
+    @geojson << {
+      type: 'Feature',
+      geometry: {
+        type: 'Point',
+        coordinates: [
+          @content.longitude,
+          @content.latitude
+        ]
+      },
+      properties: {
+        title:
+          if (@content.title.present?)
+            @content.title.capitalize
+          elsif (@content.provider.present? && @content.kind.present? && !@content.body.present? )
+            @content.provider.capitalize + " " + @content.kind.capitalize
+          elsif (@content.provider.present?)
+            @content.provider.capitalize
+          else
+            " "
+          end,
+        body:
+          if (@content.body.present?)
+            @content.body.capitalize
+          elsif (@content.kind.present?)
+            @content.kind.capitalize
+          else
+            " "
+          end,
+        external_link:
+          if (@content.external_link.present?)
+            @content.external_link
+          else
+            "http://blackboxapp.io/content/"+ @content.id
+          end,
+        address:
+          if (@content.city.present? && @content.state.present?)
+            @content.city + ", " + @content.state
+          elsif @content.location.present?
+            @content.location
+          end,
+        :'marker-color' => marker_color,
+        :'marker-size' => 'small'
+      }
+    }
+  end
+  puts "START MAP OBJECT: "
+  puts @geojson
+  puts "END MAP OBJECT: "
+
+  respond_to do |format|
+    format.html
+    format.json { render json: @geojson }  # respond with the created JSON object
+    # format.js
+  end
+end
+
+# GET CONTENT: ACTIONS BELOW
 # ========================================================
 # ============= INSTAGRAM ================================
 # ========================================================
@@ -327,4 +416,30 @@ class ContentController < ApplicationController
       format.json { head :no_content}
     end
   end
+
+  private
+    # def verify_is_admin
+    #   (current_user.nil?) ? redirect_to(root_path) : (redirect_to(root_path) unless current_user.admin?)
+    # end
+    def verify_is_owner
+      if (current_user == User.where(:id => @content.user_id).first)
+        return
+      else
+        redirect_to(root_path)
+      end
+    end
+
+    # Use callbacks to share common setup or constraints between actions.
+    def set_content
+      @content = Content.find(params[:id])
+    end
+
+    def set_author
+      @contentAuthor = User.where(:id => @content.user_id).first
+    end
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def content_params
+      params.require(:content).permit(:title, :author, :body, :image, :external_id, :external_link, :kind, :rating, :location, :address, :city, :state, :country, :postal, :ip, :latitude, :longitude, :is_active, :has_comments, :created, :updated)
+    end
+
 end

@@ -1,0 +1,29 @@
+<h1>Test :D </h1>
+<div class="table-responsive">
+  <table class="table table-sm table-striped">
+    <tr>
+      <td>ID</td>
+      <td>Provider</td>
+      <td>Kind</td>
+      <td>Title</td>
+      <td>Body</td>
+      <td>Date/Time</td>
+      <td>Log</td>
+    </tr>
+    <% @userContent.each do |post| %>
+      <tr>
+        <td>
+          <%= link_to post.external_link do %>
+            <%= post.id %>
+          <%end%>
+        </td>
+        <td><%= post.provider.capitalize%></td>
+        <td><%= post.kind.capitalize%></td>
+        <td><%= post.title%></td>
+        <td><%= post.body%></td>
+        <td><%= post.created_at.strftime("%b %e %Y %k:%M")%></td>
+        <td><%= truncate(post.log, length:100)%></td>
+      </tr>
+    <%end%>
+  </table>
+</div>

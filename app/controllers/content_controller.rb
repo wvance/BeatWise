@@ -195,6 +195,7 @@ end
     user_photos = @@facebook_client.get_connections("me", "photos", {limit: 100})
     user_photos.each do |photo|
       @content = Content.new
+      @content.image = @@facebook_client.get_picture(photo['id'], type: :normal)
       @content.post_facebook_user_photo(photo, current_user.id)
     end
 
@@ -254,6 +255,7 @@ end
     user_photos = @@facebook_client.get_connections("me", "photos", {limit: 100})
     user_photos.each do |photo|
       @content = Content.new
+      @content.image = @@facebook_client.get_picture(photo['id'], type: :normal)
       @content.post_facebook_user_photo(photo, current_user.id)
     end
 

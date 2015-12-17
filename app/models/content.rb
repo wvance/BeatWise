@@ -114,7 +114,6 @@ class Content < ActiveRecord::Base
     self.active = true
 
     self.log = photo.to_hash
-
     if (self.valid?)
       self.save!
     else

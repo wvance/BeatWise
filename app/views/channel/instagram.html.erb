@@ -29,7 +29,7 @@
         </h5>
         <% if @userInstagram.present? %>
           <h3>Raw Data</h3>
-          <table class="table table-hover">
+          <table class="table table-responsive table-hover">
             <thead>
               <tr>
                 <th>Kind</th>
@@ -41,7 +41,7 @@
             </thead>
             <tbody>
               <% @userInstagram.each do |instagram| %>
-                <tr>
+                <tr onclick="window.document.location='<%= content_path(instagram.id) %>';">
                   <td><%= instagram.kind%></td>
                   <td>
                     <%= link_to instagram.external_link do %>

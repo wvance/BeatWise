@@ -5,51 +5,17 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-6">
-        <%= geo_chart @userContent.group(:country).count %>
+        <%= geo_chart @alluserContent.group(:country).count %>
       </div>
       <div class="col-sm-6">
-        <%= pie_chart @userContent.group(:provider).count %>
+        <%= pie_chart @alluserContent.group(:provider).count %>
       </div>
       <hr>
       <%= link_to "Export Timeline", root_path(:format => :csv ), :class=>"btn btn-secondary pull-right" %>
       <h1> Timeline</h1>
-      <div class="table-responsive">
-        <table class="table table-sm table-striped">
-          <tr>
-            <td>ID</td>
-            <td>Provider</td>
-            <td>Kind</td>
-            <td>Title</td>
-            <td>Body</td>
-            <td>Date/Time</td>
-            <td>Log</td>
-          </tr>
-          <% @timeline.each do |post| %>
-            <tr onclick="window.document.location='<%= content_path(post.id) %>';">
-              <td>
-                <%= link_to post.external_link do %>
-                  <%= post.id %>
-                <%end%>
-              </td>
-              <td>
-                <%= link_to content_path(post.id) do %>
-                  <%= post.provider.capitalize%>
-                <%end%>
-              </td>
-              <td><%= link_to content_path(post.id) do %><%= post.kind.capitalize%><%end%></td>
-              <td><%= link_to content_path(post.id) do %><%= post.title%><%end%></td>
-              <td><%= link_to content_path(post.id) do %><%= post.body%><%end%></td>
-              <td><%= post.created_at.strftime("%b %e %Y %k:%M")%></td>
-              <td><%= truncate(post.log, length:100)%></td>
-            </tr>
-          <%end%>
-        </table>
-      </div>
-      <div class="row">
-        <div class="col-xs-12 center">
-          <%= paginate @timeline %>
-        </div>
-      </div>
+      <% if @userContent.present?%>
+        <%= render :partial => 'layouts/table', :locals => {:collection => @userContent}%>
+      <%end%>
     </div>
   </div>
 <%end%>

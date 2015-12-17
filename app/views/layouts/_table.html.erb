@@ -1,0 +1,31 @@
+<div class="col-xs-12">
+  <table class="table table-responsive table-hover">
+    <thead>
+      <tr>
+        <th>Provider</th>
+        <th>Kind</th>
+        <th>Title</th>
+        <th>Body</th>
+        <th>Created</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @userContent.each do |content| %>
+        <tr onclick="window.document.location='<%= content_path(content.id) %>';">
+          <td><%= content.provider.capitalize %></td>
+          <td><%= content.kind.capitalize %></td>
+          <td><%= content.title %></td>
+          <td>
+            <%= link_to content.external_link do %>
+              <%= content.body %>
+            <%end%>
+          </td>
+          <td><%= content.created_at.strftime("%b %e, %Y at %k:%M") %></td>
+        </tr>
+      <%end%>
+    </tbody>
+  </table>
+</div>
+<div class="col-xs-12 center">
+  <%= paginate @userContent %>
+</div>

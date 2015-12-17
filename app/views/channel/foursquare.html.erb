@@ -28,39 +28,9 @@
             Export Data
           <%end%>
         </h5>
-        <% if @userFoursquare.present? %>
-          <h3>Raw Data: <%= @userFoursquare.total_count%> Checkins</h3>
-          <table class="table table-hover">
-            <thead>
-              <tr>
-                <th>Kind</th>
-                <th>Title</th>
-                <th>Body</th>
-                <th>Latitude</th>
-                <th>Longitude</th>
-                <th>Created</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% @userFoursquare.each do |foursquare| %>
-                <tr>
-                  <td><%= foursquare.kind%></td>
-                  <td>
-                    <%= link_to foursquare.external_link do %>
-                      <%= foursquare.title%>
-                    <%end%>
-                  </td>
-                  <td><%= foursquare.body %></td>
-
-                  <td><%= foursquare.latitude %></td>
-                  <td><%= foursquare.longitude %></td>
-                  <td><%= foursquare.created_at.strftime("%F") %></td>
-                </tr>
-              <%end%>
-            </tbody>
-          </table>
+        <% if @userContent.present? %>
+          <%= render :partial => 'layouts/table', :locals => {:collection => @userContent}%>
         <%end%>
-        <%= paginate @userFoursquare %>
       <%else%>
         <div id = "signedOutChannel">
           <div class="channelHeader center">

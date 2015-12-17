@@ -6,7 +6,20 @@
   <!-- REQUST USER TO ADD LOCATION? WITH RUBY FUNCTION -->
 <%end%>
 <div class="container">
-  <h1><%= @content.user_id %></h1>
-  <h1><%= @content.id %></h1>
-  <h1><%= @content.provider %></h1>
+  <div class="col-sm-8">
+    <h1><%= @content.title %></h1>
+    <h4><%= @content.body %></h4>
+    <h6>
+      <%= @content.provider.capitalize %> <%= @content.kind.capitalize %>
+      on <%= @content.created_at.strftime("%b %e, %Y at %k:%M") %>
+    </h6>
+  </div>
+  <div class="col-sm-4">
+    <% if @content.image.present? %>
+      <%= image_tag @content.image, :id=>"contentShowImage"%>
+    <%end%>
+  </div>
+</div>
+<div class="container-fluid">
+  <!-- RELATED CONTENT -->
 </div>

@@ -15,12 +15,12 @@ class ChannelController < ApplicationController
     @twitter = @identities.where(:provider => "twitter")
     if @twitter.present?
       @allUserTwitter = current_user.contents.where(:provider => "twitter")
-      @userTwitter = @allUserTwitter.order('created_at DESC').where(:provider => "twitter").page(params[:page]).per(10)
+      @userContent = @allUserTwitter.order('created_at DESC').where(:provider => "twitter").page(params[:page]).per(10)
     end
     respond_to do |format|
       format.html
-      format.csv { send_data @userTwitter.to_csv, filename: "Twitter_Timeline-#{Date.today}.csv" }
-      format.json { render :json => @userTwitter }
+      format.csv { send_data @userContent.to_csv, filename: "Twitter_Timeline-#{Date.today}.csv" }
+      format.json { render :json => @userContent }
     end
   end
 
@@ -28,7 +28,7 @@ class ChannelController < ApplicationController
     @fitbit = @identities.where(:provider => "fitbit_oauth2")
     if @fitbit.present?
       @allUserFitbit = current_user.contents.where(:provider => "fitbit")
-      @userFitbit = @allUserFitbit.order('created_at DESC').page(params[:page]).per(10)
+      @userContent = @allUserFitbit.order('created_at DESC').page(params[:page]).per(10)
 
       sleepHash = {"" => 0}
 
@@ -44,7 +44,7 @@ class ChannelController < ApplicationController
     end
     respond_to do |format|
       format.html
-      format.csv { send_data @userFitbit.to_csv, filename: "Fitbit_Timeline-#{Date.today}.csv" }
+      format.csv { send_data @userContent.to_csv, filename: "Fitbit_Timeline-#{Date.today}.csv" }
     end
   end
 
@@ -52,7 +52,7 @@ class ChannelController < ApplicationController
     @github = @identities.where(:provider => "github")
     if @github.present?
       @allUserGithub = current_user.contents.where(:provider => "github")
-      @userGithub = @allUserGithub.order('created_at DESC').page(params[:page]).per(10)
+      @userContent = @allUserGithub.order('created_at DESC').page(params[:page]).per(10)
     end
     respond_to do |format|
       format.html
@@ -75,7 +75,7 @@ class ChannelController < ApplicationController
     @foursquare = @identities.where(:provider => "foursquare")
     if @foursquare.present?
       @allUserFoursquare = current_user.contents.where(:provider => "foursquare")
-      @userFoursquare = @allUserFoursquare.order('created_at DESC').page(params[:page]).per(10)
+      @userContent = @allUserFoursquare.order('created_at DESC').page(params[:page]).per(10)
     end
     respond_to do |format|
       format.html
@@ -87,7 +87,7 @@ class ChannelController < ApplicationController
     @facebook = @identities.where(:provider => "facebook")
     if @facebook.present?
       @allUserFacebook = current_user.contents.where(:provider => "facebook")
-      @userFacebook = @allUserFacebook.order('created_at DESC').page(params[:page]).per(10)
+      @userContent = @allUserFacebook.order('created_at DESC').page(params[:page]).per(10)
     end
     respond_to do |format|
       format.html

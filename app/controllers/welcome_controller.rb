@@ -2,19 +2,20 @@ class WelcomeController < ApplicationController
   def index
     @all_users = User.all
     @all_providers = Identity.all
-    if user_signed_in?
-      @userContent = current_user.contents.all
 
-      @timeline = @userContent.order('created_at DESC').page(params[:page]).per(20)
-      @userTweets = @userContent.order('created_at DESC').where(:provider => "twitter")
-      @userCheckins = @userContent.order('created_at DESC').where(:provider=>"foursquare")
-      @userActivities = @userContent.order('created_at DESC').where(:provider=>"fitbit")
-      @userGithub = @userContent.order('created_at DESC').where(:provider=>"fitbit_oauth2")
-      @userPosts = @userContent.order('created_at DESC').where(:provider => "facebook")
+    if user_signed_in?
+      @alluserContent = current_user.contents.all
+
+      @userContent = @alluserContent.order('created_at DESC').page(params[:page]).per(20)
+      @userTweets = @alluserContent.order('created_at DESC').where(:provider => "twitter")
+      @userCheckins = @alluserContent.order('created_at DESC').where(:provider=>"foursquare")
+      @userActivities = @alluserContent.order('created_at DESC').where(:provider=>"fitbit")
+      @userGithub = @alluserContent.order('created_at DESC').where(:provider=>"fitbit_oauth2")
+      @userPosts = @alluserContent.order('created_at DESC').where(:provider => "facebook")
 
       # FOR THE MAP :D
       # GET ALL CONTENT OBJECTS FOR THE MAP DISPLAY
-      @mapContent = @userContent
+      @mapContent = @alluserContent
       # THIS IS FOR THE DISPLAY MAP
       @geojson = Array.new
       # raise @mapContent.to_yaml
@@ -89,12 +90,9 @@ class WelcomeController < ApplicationController
     respond_to do |format|
       format.html
       format.json { render json: @geojson }  # respond with the created JSON object
-      format.csv { send_data @timeline.to_csv, filename: "Content_Timeline-#{Date.today}.csv" }
+      format.csv { send_data @alluserContent.to_csv, filename: "Content_Timeline-#{Date.today}.csv" }
     end
   end
   private
-    def set_user
-      # GET USER ID FROM SUBDOMAIN
-      @user = current_user
-    end
+
 end

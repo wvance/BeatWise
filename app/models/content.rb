@@ -175,7 +175,7 @@ class Content < ActiveRecord::Base
 
     self.log = checkin.to_hash
     if checkin.photos.items.first.present?
-      self.image = checkin.photos.items.first
+      self.image = checkin.photos.items.first['prefix'] + "800x800" + checkin.photos.items.first['suffix']
     end
 
     if (self.valid?)
@@ -333,7 +333,7 @@ class Content < ActiveRecord::Base
     self.active = true
     self.external_link = "#"
     self.provider = "fitbit"
-    self.kind = "sleep_log"
+    self.kind = "sleep"
 
     self.created_at = day['startTime']
     self.log = day.to_hash
@@ -351,7 +351,7 @@ class Content < ActiveRecord::Base
     self.active = true
     self.external_link = "#"
     self.provider = "fitbit"
-    self.kind = "sleep_time"
+    self.kind = "asleep"
 
     self.created_at = day['dateTime']
     self.log = day.to_hash

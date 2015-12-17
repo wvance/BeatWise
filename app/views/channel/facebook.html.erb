@@ -10,7 +10,7 @@
         <%= link_to sign_out_provider_path(:provider => "facebook") do%>
           <h3 class="pull-right">Sign Out Facebook</h3>
         <%end%>
-        <h2><%= @userFacebook.total_count%> Posts</h2>
+        <h2><%= @userContent.total_count%> Posts</h2>
         <div class="row">
           <div class="col-sm-6">
             <%= column_chart @allUserFacebook.group_by_month(:created_at, format: "%b %y").count %>
@@ -27,36 +27,8 @@
             Export Data
           <%end%>
         </h5>
-        <% if @userFacebook.present? %>
-          <h3>Raw Data</h3>
-          <table class="table table-hover">
-            <thead>
-              <tr>
-                <th>Kind</th>
-                <th>Body</th>
-                <th>Lat Lng</th>
-                <th>Created</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% @userFacebook.each do |post| %>
-                <tr>
-                  <td>
-                    <%= post.kind%>
-                  </td>
-                  <td>
-                    <%= link_to post.external_link do %>
-                      <%= post.body %>
-                    <%end%>
-                  </td>
-
-                  <td><%= post.latitude %> <%= post.longitude %></td>
-                  <td><%= post.created_at.strftime("%F") %></td>
-                </tr>
-              <%end%>
-            </tbody>
-          </table>
-          <%= paginate @userFacebook %>
+        <% if @userContent.present? %>
+          <%= render :partial => 'layouts/table', :locals => {:collection => @userContent}%>
         <%end%>
 
       <%else%>

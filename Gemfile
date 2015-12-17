@@ -11,6 +11,7 @@ gem "chartkick"                     # SIMPLE CHARTING
 gem 'groupdate'                     # NEEDED FOR GROUPING BY DATES
 gem 'geocoder'                      # CONVERT LONG LAT TO LOCATION
 gem 'httparty'
+gem 'sidekiq'
 
 gem 'twitter'                       # TWITTER API
 # gem 'fitgem'                        # FITBIT API https://github.com/whazzmaster/fitgem

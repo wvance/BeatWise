@@ -8,7 +8,7 @@
     <div class="row">
       <% if @github.present? %>
         <%= link_to sign_out_provider_path(:provider => "github") do%>
-          <h3 class="pull-right">Sign Out Foursquare</h3>
+          <h3 class="pull-right">Sign Out Github</h3>
         <%end%>
         <h2><%= @userContent.total_count%> Github Data</h2>
         <div class="row">

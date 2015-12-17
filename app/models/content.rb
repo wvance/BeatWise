@@ -380,10 +380,13 @@ class Content < ActiveRecord::Base
   end
 
   # GEO INFO
-  geocoded_by :ip, :latitude => :latitude, :longitude => :longitude
+  # if (self.ip.present?)
+  #   geocoded_by :ip, :latitude => :latitude, :longitude => :longitude
+  # end
 
   geocoded_by :location ,
     :latitude => :Latitude, :longitude => :Longitude
+
 
   reverse_geocoded_by :latitude, :longitude do |obj,results|
     if geo = results.first
@@ -406,9 +409,9 @@ class Content < ActiveRecord::Base
   end
 
   unless :latitude.present? && :longitude.present?
-    after_validation :geocode
+    after_validation :geocode, if: ->(obj){ obj.location.present? }
   end
 
-  after_validation :reverse_geocode
+  after_validation :reverse_geocode, if: ->(obj){ obj.longitude.present? and obj.latitude.present? }
 
 end

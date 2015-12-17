@@ -23,7 +23,7 @@ Rails.application.routes.draw do
   get '/twitter_tweets',            to: 'content#get_twitter_tweets',           as: :twitter_tweets
   get '/fitbit_heart',              to: 'content#get_fitbit_daily_heart_rate',  as: :fitbit_heart
   get '/instagram_photos',          to: 'content#get_instagram_photos',         as: :instagram_photos
-  get '/fitbit_sleep',              to: 'content#get_fitbit_daily_min_sleep',   as: :fitbit_sleep
+  get '/fitbit_all_data',           to: 'content#fitbit_all_data',              as: :fitbit_all_data
 
   get 'welcome/index'
   # You can have the root of your site routed with "root"

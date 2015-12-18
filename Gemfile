@@ -14,7 +14,11 @@ gem 'httparty'
 gem 'sidekiq'
 gem 'sinatra', :require => nil
 gem 'puma'
+gem 'searchkick'
 
+# ========================
+# ==== API WRAPPERS ======
+# ========================
 gem 'twitter'                       # TWITTER API
 # gem 'fitgem'                        # FITBIT API https://github.com/whazzmaster/fitgem
 gem 'fitbit-api-client', require: 'fitbit'
@@ -24,6 +28,9 @@ gem 'github_api'                    # GITHUB API
 gem 'koala'                         # FACEBOOK API
                                     # http://www.gotealeaf.com/blog/facebook-graph-api-using-omniauth-facebook-and-koala
 
+# ========================
+# === OAUTH PROVIDERS ====
+# ========================
 # OMNIAUTH LOGIN: USED TO GET PERMISSION TO USER ACCOUNTS
 # https://github.com/intridea/omniauth/wiki/List-of-Strategies
 gem 'omniauth'                      # OMNIAUTH WITH DEVISE

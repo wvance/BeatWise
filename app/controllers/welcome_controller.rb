@@ -6,12 +6,9 @@ class WelcomeController < ApplicationController
     if user_signed_in?
       @alluserContent = current_user.contents.all
 
-      @userContent = @alluserContent.order('created_at DESC').page(params[:page]).per(20)
-      @userTweets = @alluserContent.order('created_at DESC').where(:provider => "twitter")
-      @userCheckins = @alluserContent.order('created_at DESC').where(:provider=>"foursquare")
-      @userActivities = @alluserContent.order('created_at DESC').where(:provider=>"fitbit")
-      @userGithub = @alluserContent.order('created_at DESC').where(:provider=>"fitbit_oauth2")
-      @userPosts = @alluserContent.order('created_at DESC').where(:provider => "facebook")
+      search_query = params[:q].presence || "*"
+
+      @userContent = @alluserContent.search search_query, page: params[:page], per_page: 15
 
       # FOR THE MAP :D
       # GET ALL CONTENT OBJECTS FOR THE MAP DISPLAY

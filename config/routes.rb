@@ -25,7 +25,8 @@ Rails.application.routes.draw do
   get '/instagram_photos',          to: 'content#get_instagram_photos',         as: :instagram_photos
   get '/fitbit_all_data',           to: 'content#fitbit_all_data',              as: :fitbit_all_data
 
-  get 'welcome/index'
+  get 'welcome/index',              to: 'welcome#index',                        as: :welcome
+
   # You can have the root of your site routed with "root"
   root 'welcome#index'
 

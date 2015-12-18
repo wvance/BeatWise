@@ -1,4 +1,4 @@
-<% if @userContent.present? %>
+<% if @alluserContent.present? %>
   <div class="container-fluid">
     <div id="map" class="mapSection", data-url="/welcome/index.json"></div>
   </div>
@@ -9,6 +9,12 @@
       </div>
       <div class="col-sm-6">
         <%= pie_chart @alluserContent.group(:provider).count %>
+      </div>
+      <hr>
+      <div class="col-xs-12 center">
+        <%= form_tag welcome_path, method: :get do %>
+          <%= text_field_tag :q, nil, placeholder: "Search" %>
+        <%end%>
       </div>
       <hr>
       <%= link_to "Export Timeline", root_path(:format => :csv ), :class=>"btn btn-secondary pull-right" %>

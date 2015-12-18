@@ -12,6 +12,7 @@ gem 'groupdate'                     # NEEDED FOR GROUPING BY DATES
 gem 'geocoder'                      # CONVERT LONG LAT TO LOCATION
 gem 'httparty'
 gem 'sidekiq'
+gem 'puma'
 
 gem 'twitter'                       # TWITTER API
 # gem 'fitgem'                        # FITBIT API https://github.com/whazzmaster/fitgem

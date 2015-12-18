@@ -1,5 +1,62 @@
 @import 'variables';
 
+.searchContainer{
+  margin: 50px auto;
+  width: 100%;
+  height: 50px;
+
+  .search{
+    vertical-align: middle;
+    white-space: nowrap;
+    position: relative;
+  }
+  .search input#welcomeSearch{
+    width:90%;
+    height: 70px;
+    background: $grey;
+    border: none;
+    font-size: 18pt;
+    color: $white;
+    padding-left: 65px;
+
+    // ROUNEDED CORNERS
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+
+    -webkit-transition: background .55s ease;
+    -moz-transition: background .55s ease;
+    -ms-transition: background .55s ease;
+    -o-transition: background .55s ease;
+    transition: background .55s ease;
+  }
+  .search input#welcomeSearch::-webkit-input-placeholder {
+     color: $white;
+  }
+  .search input#welcomeSearch:-moz-placeholder { /* Firefox 18- */
+     color: $white;
+  }
+  .search input#welcomeSearch::-moz-placeholder {  /* Firefox 19+ */
+     color: $white;
+  }
+  .search input#welcomeSearch:-ms-input-placeholder {
+     color: $white;
+  }
+  .search .icon{
+    position: absolute;
+    font-size: 18pt;
+    top: 0%;
+    margin-left: 20px;
+    margin-top: 17px;
+    z-index: 1;
+    color: $white;
+  }
+  .search input#welcomeSearch:hover, .search input#welcomeSearch:focus, .search input#welcomeSearch:active{
+    outline:none;
+    background: $lightGrey;
+  }
+}
+
 #landingPageWrapper{
   .homeLogin{
     outline-width: 0;

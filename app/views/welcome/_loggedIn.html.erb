@@ -4,23 +4,22 @@
   </div>
   <div class="container">
     <div class="row">
-      <div class="col-sm-6">
-        <%= geo_chart @alluserContent.group(:country).count %>
+      <div class="col-sm-12 searchContainer center">
+        <div class="search">
+          <%= form_tag welcome_path, method: :get do %>
+            <span class="icon"><i class="fa fa-search"></i></span>
+            <%= text_field_tag :q, nil, placeholder: "Search...", :id=>"welcomeSearch" %>
+          <%end%>
+        </div>
       </div>
-      <div class="col-sm-6">
-        <%= pie_chart @alluserContent.group(:provider).count %>
-      </div>
-      <hr>
-      <div class="col-xs-12 center">
-        <%= form_tag welcome_path, method: :get do %>
-          <%= text_field_tag :q, nil, placeholder: "Search" %>
-        <%end%>
-      </div>
-      <hr>
-      <%= link_to "Export Timeline", root_path(:format => :csv ), :class=>"btn btn-secondary pull-right" %>
-      <h1> Timeline</h1>
+    </div>
+    <div class="row">
       <% if @userContent.present?%>
+        <%= link_to "Export Timeline", root_path(:format => :csv ), :class=>"btn btn-secondary pull-right" %>
+        <h1><%= @userContent.total_count %> Memories Found</h1>
         <%= render :partial => 'layouts/table', :locals => {:collection => @userContent}%>
+      <% else %>
+        <h1 class="center"> Sorry No Results Found...</h1>
       <%end%>
     </div>
   </div>

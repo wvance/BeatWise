@@ -1,11 +1,12 @@
 class WelcomeController < ApplicationController
   def index
-    @all_users = User.all
-    @all_providers = Identity.all
-
     if user_signed_in?
       @alluserContent = current_user.contents.all
 
+      unless @alluserContent.present?
+        redirect_to channels_path, notice:"Please Sign on and pull some data!"
+        return
+      end
       search_query = params[:q].presence || "*"
 
       @userContent = @alluserContent.search search_query, page: params[:page], per_page: 15

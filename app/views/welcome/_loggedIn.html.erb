@@ -16,7 +16,7 @@
     <div class="row">
       <% if @userContent.present?%>
         <%= link_to "Export Timeline", root_path(:format => :csv ), :class=>"btn btn-secondary pull-right" %>
-        <h1><%= @userContent.total_count %> Memories Found</h1>
+        <h1><%= @userContent.total_count %> Moments Found</h1>
         <%= render :partial => 'layouts/table', :locals => {:collection => @userContent}%>
       <% else %>
         <h1 class="center"> Sorry No Results Found...</h1>
@@ -29,7 +29,7 @@
       <div class="center">
         <h1>
           <%= link_to channels_path do%>
-            Please log into a channel!
+            Please Log Into a Channel and Pull Some Data! :D
           <%end%>
         </h1>
       </div>

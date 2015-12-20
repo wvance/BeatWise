@@ -32,6 +32,7 @@ class FacebookDataJob < ActiveJob::Base
         @content.post_facebook_user_photo(photo, user.id)
       end
     end
+    Notification.create(recipient: user, action: "Updated all Facebook Content")
   end
 end
 

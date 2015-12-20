@@ -12,5 +12,6 @@ class FoursquareDataJob < ActiveJob::Base
         @content.post_foursquare_checkin(checkin, user.id)
       end
     end
+    Notification.create(recipient: user, action: "Updated all Foursquare Content")
   end
 end

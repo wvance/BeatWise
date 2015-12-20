@@ -5,9 +5,9 @@ class ContentController < ApplicationController
   before_action :verify_is_owner, only: [:edit, :update, :destory]
 
   # THESE ARE USED TO SET UP THE CLIENTS, ONLY IF A PROVIDER IS PRESENT!
-  before_action :set_facebook_client
-  before_action :set_fitbit_client
-  before_action :set_foursquare_client
+  # before_action :set_facebook_client
+  # before_action :set_fitbit_client
+  # before_action :set_foursquare_client
   # before_action :set_github_client
   # before_action :set_instagram_client
 

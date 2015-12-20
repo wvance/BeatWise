@@ -1,25 +1,30 @@
-<nav id="mainNav">
-  <div id="navLogo">
-    <%= link_to root_path() do %>
-      <span class="white">Black</span><span class="yellow">Box</span>
+<nav id="mainNav" class="navbar navbar-full navbar-dark bg-inverse">
+  <%= link_to root_path(), :class=> "navbar-brand" ,:id=>"navLogo" do %>
+    <span class="white">Black</span><span class="yellow">Box</span>
+  <%end%>
+  <ul class="nav navbar-nav" id="navLinks">
+    <% if user_signed_in? %>
+      <li class="nav-item btn-group" data-behavior="notifications">
+        <a class="dropdown-toggle nav-link" type="button" data-behavior="notifications-link"id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="">
+          <%=fa_icon "bell" %> <span data-behavior="unread-count"></span>
+        </a>
+
+        <div class="dropdown-menu" arialabelledby="dropdownMenu1"  data-behavior="notification-items">
+          <!-- GETS PULLED FROM NOTIFICATIONS.JS.COFFEE VIA AJAX TO UNREAD NOTIFICATIONS -->
+        </div>
+      </li>
+      <li class="nav-item active">
+        <%= link_to "Channels", channels_path(), :class=>"nav-link"%>
+      </li>
+      <li class="nav-item">
+        <%= link_to "Sign out", destroy_user_session_path, :method => :delete, :class=>"nav-link"%>
+      </li>
+    <%else%>
+      <li>
+        <%= link_to "#", data: {toggle: "modal", target: "#userSignIn"}, :class=>"nav-link" do%>
+          Sign In
+        <%end%>
+      </li>
     <%end%>
-  </div>
-  <div id="navLinks">
-    <ul>
-      <% if user_signed_in? %>
-        <li>
-          <%= link_to "Channels", channels_path()%>
-        </li>
-        <li>
-          <%= link_to "Sign out", destroy_user_session_path, :method => :delete%>
-        </li>
-      <%else%>
-        <li>
-          <%= link_to "#", data: {toggle: "modal", target: "#userSignIn"}, :class=>"homeLogin" do%>
-            Sign In
-          <%end%>
-        </li>
-      <%end%>
-    </ul>
-  </div>
+  </ul>
 </nav>

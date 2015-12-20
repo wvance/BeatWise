@@ -13,5 +13,6 @@ class GithubDataJob < ActiveJob::Base
         @content.post_github_repo(repo, user.id)
       end
     end
+    Notification.create(recipient: user, action: "Updated all Github Content")
   end
 end

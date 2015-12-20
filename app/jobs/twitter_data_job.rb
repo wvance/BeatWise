@@ -19,9 +19,6 @@ class TwitterDataJob < ActiveJob::Base
       @content.post_tweet(tweet, user.id)
     end
 
-    respond_to do |format|
-      format.html { redirect_to request.referrer, notice:"Updated Twitter Tweets" }
-      format.json { head :no_content }
-    end
+    Notification.create(recipient: user, action: "Updated all Twitter Content")
   end
 end

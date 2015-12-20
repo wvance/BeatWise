@@ -47,5 +47,6 @@ class FitbitDataJob < ActiveJob::Base
         @content.post_fitbit_daily_heart_rate(day, user.id)
       end
     end
+    Notification.create(recipient: user, action: "Updated all Fitbit Content")
   end
 end

@@ -23,12 +23,12 @@
     position:relative;
     width:50%;
     left:30px;
-    top:5px;
+    margin-top: -5px;
     font-size: 30px;
   }
   #navLinks{
     position:absolute;
-    top:15px;
+    top:10px;
     right:70px;
     color:$white;
     font-size: 20px;
@@ -59,6 +59,25 @@
       -ms-transition: all 500ms ease;
       -o-transition: all 500ms ease;
       transition: all 500ms ease;
+    }
+    .dropdown-menu{
+      a{
+        color:$black;
+        text-decoration: none !important;
+        -webkit-transition: all 500ms ease-out;
+        -moz-transition: all 500ms ease-out;
+        -ms-transition: all 500ms ease-out;
+        -o-transition: all 500ms ease-out;
+        transition: all 500ms ease-out;
+      }
+      a:hover{
+        color:$yellow;
+        -webkit-transition: all 500ms ease;
+        -moz-transition: all 500ms ease;
+        -ms-transition: all 500ms ease;
+        -o-transition: all 500ms ease;
+        transition: all 500ms ease;
+      }
     }
   }
 }

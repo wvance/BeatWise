@@ -24,15 +24,31 @@ class Content < ActiveRecord::Base
 # ========================================================
 # ============= FACEBOOK =================================
 # ========================================================
-  def post_facebook_post(post, user)
-    self.user_id = user
+  def post_facebook_post(post, user_id)
+
+    Notification.create(recipient: user, action: post)
+    self.user_id = user_id
     self.external_id = post['id']
+
     self.body = post['message']
     self.provider = "facebook"
-    self.kind = "post"
-    self.external_link = "http://facebook.com/" + self.external_id
+    self.kind = post['type']
+    self.external_link = post['link'] || "http://facebook.com/" + self.external_id
 
+    self.image = ['picture'] || ""
+
+    if post['place'].present?
+      post['place']['name'].present? ? self.location = post['place']['name'] : ""
+      post['place']['location']['city'].present? ? self.city = post['place']['location']['city'] : ""
+      post['place']['location']['state'].present? ? self.state = post['place']['location']['state'] : ""
+      post['place']['location']['country'].present? ? self.country = post['place']['location']['country'] : ""
+
+      post['place']['location']['longitude'].present? ? self.longitude = post['place']['location']['longitude'] : ""
+      post['place']['location']['latitude'].present? ? self.latitude = post['place']['location']['latitude'] : ""
+    end
     self.created_at = post['created_time'] || DateTime.now
+    self.updated_at = post['updated_time'] || DateTime.now
+
     self.active = true
 
     self.log = post.to_hash
@@ -40,7 +56,7 @@ class Content < ActiveRecord::Base
     if (self.valid?)
       self.save!
     else
-      # raise self.errors.inspect
+      # Notification.create(recipient: user, action: self.errors)
     end
   end
   def post_facebook_user_like(like, user)
@@ -110,7 +126,18 @@ class Content < ActiveRecord::Base
     self.provider = "facebook"
     self.kind = "photo"
 
-    self.external_link = "http://facebook.com/" + self.external_id
+    self.external_link = photo['link']
+    self.image = photo['picture']
+
+    if photo['place'].present?
+      photo['place']['name'].present? ? self.location = photo['place']['name'] : ""
+      photo['place']['location']['city'].present? ? self.city = photo['place']['location']['city'] : ""
+      photo['place']['location']['state'].present? ? self.state = photo['place']['location']['state'] : ""
+      photo['place']['location']['country'].present? ? self.country = photo['place']['location']['country'] : ""
+
+      photo['place']['location']['longitude'].present? ? self.longitude = photo['place']['location']['longitude'] : ""
+      photo['place']['location']['latitude'].present? ? self.latitude = photo['place']['location']['latitude'] : ""
+    end
 
     self.created_at = photo['created_time'] || DateTime.now
     self.active = true

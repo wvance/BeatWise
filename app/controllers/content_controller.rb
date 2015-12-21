@@ -160,26 +160,24 @@ end
   def get_facebook_all
     # FacebookDataJob.perform_later current_user.id
 
-     Koala.config.api_version = "v2.0"
+      Koala.config.api_version = "v2.0"
       @@facebook_client = Koala::Facebook::API.new(current_user.identities.where(:provider => "facebook").first.token)
 
-      user_timeline = @@facebook_client.get_connections("me", "feed", {limit: 100}, )
 
-      # raise user_timeline.inspect
-      user_timeline.each do |post|
+      user_photos = @@facebook_client.get_connection('me', 'photos',
+        {limit: 100,
+          fields: ['message', 'id', 'from', 'type', 'status_type', 'shares',
+            'picture', 'link', 'created_time', 'place', 'likes', 'comments'
+        ]})
+      user_photos.each do |photo|
         @content = Content.new
-          post_location = @@facebook_client.get_object(10153975702868312, :fields => "place.summary(true)")
-        raise post_location.inspect
-
-        raise post_location.inspect
-        if post_location['place'].present?
-          @content.location = post_location['place']['name']
-          @content.address = post_location['place']['location']['city'] + post_location['place']['location']['state'] + post_location['place']['location']['country']
-          @content.longitude = post_location['place']['location']['longitude']
-          @content.latitude = post_location['place']['location']['latitude']
-        end
-        @content.post_facebook_post(post, current_user.id)
+        @content.post_facebook_user_photo(photo, current_user.id)
       end
+
+      # user_timeline.each do |post|
+      #   @content = Content.new
+      #   @content.post_facebook_post(post, current_user.id)
+      # end
 
     respond_to do |format|
       format.html { redirect_to request.referrer, notice:"Updating All Facebook" }

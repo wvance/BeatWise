@@ -2,6 +2,7 @@
   <table class="table table-hover">
     <thead>
       <tr>
+        <th>User ID</th>
         <th>Provider</th>
         <th>Kind</th>
         <th>Title</th>
@@ -12,6 +13,7 @@
     <tbody>
       <% @userContent.each do |content| %>
         <tr onclick="window.document.location='<%= content_path(content.id) %>';">
+          <td><%= content.user_id %></td>
           <td><%= content.provider.capitalize %></td>
           <td><%= content.kind.capitalize %></td>
           <td><%= content.title %></td>

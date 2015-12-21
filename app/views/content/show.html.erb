@@ -9,6 +9,7 @@
   <div class="col-sm-8">
     <h1><%= @content.title %></h1>
     <h4><%= @content.body %></h4>
+    <h6><%= @content.location %>: <%= @content.longitude %>, <%= @content.latitude %></h6>
     <h6>
       <%= @content.provider.capitalize %> <%= @content.kind.capitalize %>
       on <%= @content.created_at.strftime("%b %e, %Y at %k:%M") %>

@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   get '/channels/instagram',        to: 'channel#instagram',                    as: :instagram
   get '/channels/github',           to: 'channel#github',                       as: :github
   get '/channels/facebook',         to: 'channel#facebook',                     as: :facebook
+  get '/channels/reddit',           to: 'channel#reddit',                       as: :reddit
 
   # get '/content/index',             to: 'content#index',                        as: :content_index
   get '/all_facebook',              to: 'content#get_facebook_all',             as: :all_facebook
@@ -29,6 +30,7 @@ Rails.application.routes.draw do
   get '/fitbit_heart',              to: 'content#get_fitbit_daily_heart_rate',  as: :fitbit_heart
   get '/instagram_photos',          to: 'content#get_instagram_photos',         as: :instagram_photos
   get '/fitbit_all_data',           to: 'content#fitbit_all_data',              as: :fitbit_all_data
+  get '/reddit_all_data',           to: 'content#reddit_all_data',              as: :reddit_all_data
 
   get 'welcome/index',              to: 'welcome#index',                        as: :welcome
 

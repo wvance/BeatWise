@@ -1,7 +1,7 @@
 class NotificationsController < ApplicationController
   # https://gorails.com/episodes/in-app-navbar-notifications?autoplay=1
-
   before_action :authenticate_user!
+
   def index
     @notifications = Notification.where(recipient:current_user).unread
   end

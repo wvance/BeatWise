@@ -18,6 +18,10 @@ Devise.setup do |config|
     scope: 'activity heartrate location nutrition profile sleep settings social weight'
   config.omniauth :instagram, ENV["instagram_id"], ENV["instagram_secret"],
     scope: 'basic comments follower_list likes public_content relationships'
+
+  config.omniauth :reddit, ENV['reddit_key'], ENV['reddit_secret'],
+    scope: 'identity,history,read,mysubreddits'
+
   # config.OmniAuth :linkedin, ENV["linkedin_key"], ENV["linkedin_secret"],
   # config.omniauth :linkedin, ENV["linkedin_key"], ENV["linkedin_secret"],
   #   :scope => 'r_fullprofile r_emailaddress r_network',

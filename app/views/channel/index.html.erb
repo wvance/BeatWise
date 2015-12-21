@@ -19,6 +19,17 @@
           <%end%>
         <%end%>
 
+        <!-- REDDIT -->
+        <% unless @reddit.present? %>
+          <%= link_to reddit_path do%>
+            <i class="fa fa-reddit"></i>
+          <%end%>
+        <%else%>
+          <%= link_to reddit_path do%>
+            <i class="fa fa-reddit yellow"></i>
+          <%end%>
+        <%end%>
+
         <!-- TWITTER -->
         <% unless @twitter.present? %>
           <%= link_to twitter_path do%>

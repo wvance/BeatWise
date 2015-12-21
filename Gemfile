@@ -27,6 +27,8 @@ gem 'foursquare2'                   # FOURSQUARE API
 gem 'github_api'                    # GITHUB API
 gem 'koala'                         # FACEBOOK API
                                     # http://www.gotealeaf.com/blog/facebook-graph-api-using-omniauth-facebook-and-koala
+gem "redd", "~> 0.7.0"
+
 
 # ========================
 # === OAUTH PROVIDERS ====
@@ -42,6 +44,8 @@ gem 'omniauth-fitbit-oauth2'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-foursquare'
 gem 'omniauth-instagram'
+gem 'omniauth-reddit', :git => 'git://github.com/wvance/omniauth-reddit.git'
+
 # gem 'omniauth-linkedin'
 # gem "linkedin-oauth2"
 # gem 'omniauth-linkedin-oauth2'

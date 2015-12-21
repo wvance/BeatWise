@@ -69,7 +69,7 @@ class Content < ActiveRecord::Base
 
     self.body = event['description']
     self.title = event['name']
-    self.external_link = "http://facebook.com/"+self.external_id
+    self.external_link = "http://facebook.com/" + self.external_id
     # raise event.inspect
     if event['place'].present?
       self.location = event['place']['name'] || ""

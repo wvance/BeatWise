@@ -21,24 +21,22 @@ class WelcomeController < ApplicationController
       # PUT CONTENTS ON MAP
       if @mapContent.present?
         @mapContent.each do |content|
-
-          puts "CONTENT KIND HERE :"
-          puts content.kind
-          if (content.provider == "twitter")
-            marker_color = '#4099FF'
-          elsif (content.provider == "foursquare")
-            marker_color = '#FFCC00'
-          elsif (content.provider == "facebook")
-            marker_color = '#FFFFFF'
-          elsif (content.provider == "fitbit")
-            marker_color = '#f15038'
-          elsif (content.provider == "github")
-            marker_color = '#F1AC38'
-          else
-            marker_color = "#387C81"
-          end
-
           unless (content.longitude.nil? || content.latitude.nil?) || (content.longitude == '0' || content.latitude == '0')
+
+            if (content.provider == "twitter")
+              marker_color = '#4099FF'
+            elsif (content.provider == "foursquare")
+              marker_color = '#FFCC00'
+            elsif (content.provider == "facebook")
+              marker_color = '#FFFFFF'
+            elsif (content.provider == "fitbit")
+              marker_color = '#f15038'
+            elsif (content.provider == "github")
+              marker_color = '#F1AC38'
+            else
+              marker_color = "#387C81"
+            end
+
             @geojson << {
               type: 'Feature',
               geometry: {
@@ -82,9 +80,6 @@ class WelcomeController < ApplicationController
           end
         end
       end
-      puts "START MAP OBJECT: "
-      puts @geojson
-      puts "END MAP OBJECT: "
     end
     respond_to do |format|
       format.html

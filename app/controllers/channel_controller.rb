@@ -1,4 +1,5 @@
 class ChannelController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_identities
   def index
     if user_signed_in?
@@ -8,6 +9,19 @@ class ChannelController < ApplicationController
       @fitbit = @identities.where(:provider => "fitbit_oauth2")
       @facebook = @identities.where(:provider =>'facebook')
       @instagram = @identities.where(:provider => 'instagram')
+      @reddit = @identities.where(:provider => 'reddit')
+    end
+  end
+
+  def reddit
+    @reddit = @identities.where(:provider => "reddit")
+    if @reddit.present?
+      @allUserReddit = current_user.contents.where(:provider => "reddit")
+      @userContent = current_user.contents.order('created_at DESC').where(:provider => "reddit").page(params[:page]).per(10)
+    end
+    respond_to do |format|
+      format.html
+      format.csv { send_data @userReddit.to_csv, filename: "Reddit_Timeline-#{Date.today}.csv" }
     end
   end
 

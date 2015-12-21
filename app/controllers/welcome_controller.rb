@@ -7,9 +7,10 @@ class WelcomeController < ApplicationController
         redirect_to channels_path, notice:"Please Sign on and pull some data!"
         return
       end
-      search_query = params[:q].presence || "*"
 
-      @userContent = @alluserContent.search search_query, page: params[:page], per_page: 15
+      search_query = params[:q].presence || "*"
+      # NEED TO DO SEARCH FROM BASE CLASS: DO NOT BUILD OFF alluserContent, REQUIRES 'WHERE' CLAUSE.
+      @userContent = Content.search search_query, where:{user_id: current_user.id}, page: params[:page], per_page: 15
 
       # FOR THE MAP :D
       # GET ALL CONTENT OBJECTS FOR THE MAP DISPLAY

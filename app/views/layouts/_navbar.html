@@ -13,14 +13,14 @@
           <!-- GETS PULLED FROM NOTIFICATIONS.JS.COFFEE VIA AJAX TO UNREAD NOTIFICATIONS -->
         </div>
       </li>
-      <li class="nav-item active">
+      <li class="nav-item">
         <%= link_to "Channels", channels_path(), :class=>"nav-link"%>
       </li>
       <li class="nav-item">
         <%= link_to "Sign out", destroy_user_session_path, :method => :delete, :class=>"nav-link"%>
       </li>
     <%else%>
-      <li>
+      <li class="nav-item">
         <%= link_to "#", data: {toggle: "modal", target: "#userSignIn"}, :class=>"nav-link" do%>
           Sign In
         <%end%>

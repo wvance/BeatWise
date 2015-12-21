@@ -29,12 +29,14 @@ class FacebookDataJob < ActiveJob::Base
       #   @content = Content.new
       #   @content.post_facebook_user_event(event, user.id)
       # end
-
-      user_photos = @@facebook_client.get_connections("me", "photos", {limit: 100})
+      user_photos = @@facebook_client.get_connection('me', 'photos',
+        {limit: 100,
+          fields: ['message', 'id', 'from', 'type', 'status_type', 'shares',
+            'picture', 'link', 'created_time', 'place', 'likes', 'comments'
+        ]})
       user_photos.each do |photo|
         @content = Content.new
-        @content.image = @@facebook_client.get_picture(photo['id'], type: :normal)
-        @content.post_facebook_user_photo(photo, user.id)
+        @content.post_facebook_user_photo(photo, current_user.id)
       end
     end
     Notification.create(recipient: user, action: "Updated all Facebook Content ")

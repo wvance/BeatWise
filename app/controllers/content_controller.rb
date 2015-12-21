@@ -158,21 +158,21 @@ end
   end
 
   def get_facebook_all
-    # FacebookDataJob.perform_later current_user.id
+    FacebookDataJob.perform_later current_user.id
 
-      Koala.config.api_version = "v2.0"
-      @@facebook_client = Koala::Facebook::API.new(current_user.identities.where(:provider => "facebook").first.token)
+      # Koala.config.api_version = "v2.0"
+      # @@facebook_client = Koala::Facebook::API.new(current_user.identities.where(:provider => "facebook").first.token)
 
 
-      user_photos = @@facebook_client.get_connection('me', 'photos',
-        {limit: 100,
-          fields: ['message', 'id', 'from', 'type', 'status_type', 'shares',
-            'picture', 'link', 'created_time', 'place', 'likes', 'comments'
-        ]})
-      user_photos.each do |photo|
-        @content = Content.new
-        @content.post_facebook_user_photo(photo, current_user.id)
-      end
+      # user_photos = @@facebook_client.get_connection('me', 'photos',
+      #   {limit: 100,
+      #     fields: ['message', 'id', 'from', 'type', 'status_type', 'shares',
+      #       'picture', 'link', 'created_time', 'place', 'likes', 'comments'
+      #   ]})
+      # user_photos.each do |photo|
+      #   @content = Content.new
+      #   @content.post_facebook_user_photo(photo, current_user.id)
+      # end
 
       # user_timeline.each do |post|
       #   @content = Content.new

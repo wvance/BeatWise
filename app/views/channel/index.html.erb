@@ -85,10 +85,20 @@
         <h3>Home</h3>
         <i class="fa fa-car"></i>
       </div>
+
       <div id="musicChannels" class="row">
         <h3>Music</h3>
-        <i class="fa fa-spotify"></i>
+        <% unless @spotify.present? %>
+          <%= link_to spotify_path do%>
+            <i class="fa fa-spotify"></i>
+          <%end%>
+        <%else%>
+          <%= link_to spotify_path do%>
+            <i class="fa fa-spotify yellow"></i>
+          <%end%>
+        <%end%>
       </div>
+
       <div id="productivityChannels" class="row">
         <h3>Productivity</h3>
         <!-- GITHUB -->

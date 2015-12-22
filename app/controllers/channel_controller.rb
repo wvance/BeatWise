@@ -2,14 +2,25 @@ class ChannelController < ApplicationController
   before_action :authenticate_user!
   before_action :set_identities
   def index
-    if user_signed_in?
-      @twitter = @identities.where(:provider => "twitter")
-      @foursquare = @identities.where(:provider => "foursquare")
-      @github = @identities.where(:provider => "github")
-      @fitbit = @identities.where(:provider => "fitbit_oauth2")
-      @facebook = @identities.where(:provider =>'facebook')
-      @instagram = @identities.where(:provider => 'instagram')
-      @reddit = @identities.where(:provider => 'reddit')
+    @twitter = @identities.where(:provider => "twitter")
+    @foursquare = @identities.where(:provider => "foursquare")
+    @github = @identities.where(:provider => "github")
+    @fitbit = @identities.where(:provider => "fitbit_oauth2")
+    @facebook = @identities.where(:provider =>'facebook')
+    @instagram = @identities.where(:provider => 'instagram')
+    @reddit = @identities.where(:provider => 'reddit')
+    @spotify = @identities.where(:provider => 'spotify')
+  end
+
+  def spotify
+    @spotify = @identities.where(:provider => "spotify")
+    if @spotify.present?
+      @allUserSpotify = current_user.contents.where(:provider => "spotify")
+      @userContent = current_user.contents.order('created_at DESC').where(:provider => "spotify").page(params[:page]).per(10)
+    end
+    respond_to do |format|
+      format.html
+      format.csv { send_data @allUserSpotify.to_csv, filename: "Reddit_Timeline-#{Date.today}.csv" }
     end
   end
 
@@ -21,7 +32,7 @@ class ChannelController < ApplicationController
     end
     respond_to do |format|
       format.html
-      format.csv { send_data @userReddit.to_csv, filename: "Reddit_Timeline-#{Date.today}.csv" }
+      format.csv { send_data @allUserReddit.to_csv, filename: "Reddit_Timeline-#{Date.today}.csv" }
     end
   end
 
@@ -33,7 +44,7 @@ class ChannelController < ApplicationController
     end
     respond_to do |format|
       format.html
-      format.csv { send_data @userContent.to_csv, filename: "Twitter_Timeline-#{Date.today}.csv" }
+      format.csv { send_data @allUserTwitter.to_csv, filename: "Twitter_Timeline-#{Date.today}.csv" }
       format.json { render :json => @userContent }
     end
   end
@@ -105,7 +116,7 @@ class ChannelController < ApplicationController
     end
     respond_to do |format|
       format.html
-      format.csv { send_data @userFacebook.to_csv, filename: "Facebook_Timeline-#{Date.today}.csv" }
+      format.csv { send_data @allUserFacebook.to_csv, filename: "Facebook_Timeline-#{Date.today}.csv" }
     end
   end
 

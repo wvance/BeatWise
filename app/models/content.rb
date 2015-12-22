@@ -1,11 +1,8 @@
 class Content < ActiveRecord::Base
+  # ENABLES ELASTICSEARCH FOR THIS CLASS
   searchkick
-
   belongs_to :user
   validates :external_id, uniqueness: true , :allow_blank => true, :allow_nil => true
-  # has_one :twitter_tweet, through: :contents
-  # has_one :facebook_post
-  # after_commit :post_tweet
 
   def self.to_csv
     # CREATES AN ARRAY OF STRINGS "ID", "TITLE"..
@@ -25,17 +22,15 @@ class Content < ActiveRecord::Base
 # ============= FACEBOOK =================================
 # ========================================================
   def post_facebook_post(post, user_id)
-
-    Notification.create(recipient: user, action: post)
     self.user_id = user_id
     self.external_id = post['id']
 
     self.body = post['message']
     self.provider = "facebook"
     self.kind = post['type']
-    self.external_link = post['link'] || "http://facebook.com/" + self.external_id
+    self.external_link = post['link'] || "http://facebook.com/" + self.external_id || ""
 
-    self.image = ['picture'] || ""
+    self.image = post['picture'] || ""
 
     if post['place'].present?
       post['place']['name'].present? ? self.location = post['place']['name'] : ""
@@ -87,6 +82,7 @@ class Content < ActiveRecord::Base
     self.title = event['name']
     self.external_link = "http://facebook.com/" + self.external_id
     # raise event.inspect
+
     if event['place'].present?
       self.location = event['place']['name'] || ""
 
@@ -126,8 +122,8 @@ class Content < ActiveRecord::Base
     self.provider = "facebook"
     self.kind = "photo"
 
-    self.external_link = photo['link']
-    self.image = photo['picture']
+    self.external_link = photo['link'] || ""
+    self.image = photo['picture'] || ""
 
     if photo['place'].present?
       photo['place']['name'].present? ? self.location = photo['place']['name'] : ""
@@ -408,14 +404,19 @@ class Content < ActiveRecord::Base
     end
   end
 
+
   # GEO INFO
   # if (self.ip.present?)
   #   geocoded_by :ip, :latitude => :latitude, :longitude => :longitude
   # end
 
+# ========================================================
+# ============= GEOCODER =================================
+# ========================================================
+# GETS CONTENT LOCATION AND LONG LAT
+
   geocoded_by :location ,
     :latitude => :Latitude, :longitude => :Longitude
-
 
   reverse_geocoded_by :latitude, :longitude do |obj,results|
     if geo = results.first

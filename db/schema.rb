@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(version: 20151219020541) do
     t.string   "secret"
     t.string   "username"
     t.string   "email"
+    t.string   "identity_log"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
   end

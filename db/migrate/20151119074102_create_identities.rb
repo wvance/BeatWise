@@ -11,7 +11,7 @@ class CreateIdentities < ActiveRecord::Migration
 
       t.string :username
       t.string :email
-
+      t.string :identity_log
 
       t.timestamps null: false
     end

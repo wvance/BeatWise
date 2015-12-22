@@ -1,0 +1,59 @@
+<div class="container">
+  <div id ="spotifyChannel" class="row">
+    <div class="row">
+      <div class="col-xs-12">
+        <h1><i class="fa fa-spotify"></i> Spotify</h1>
+      </div>
+    </div>
+    <div class="row">
+      <% if @spotify.present? %>
+        <%= link_to sign_out_provider_path(:provider => "spotify") do%>
+          <h3 class="pull-right">Sign Out Spotify</h3>
+        <%end%>
+        <h2><%= @userContent.total_count%> Posts</h2>
+        <div class="row">
+          <div class="col-sm-6">
+            <%= line_chart @allUserSpotify.group_by_month(:created_at, format: "%b %e %Y").count %>
+          </div>
+          <div class="col-sm-6">
+          </div>
+        </div>
+        <h5 class="pull-right">
+          <%= link_to spotify_all_data_path() do%>
+            <i class="fa fa-refresh"></i> Update
+          <%end%>|
+          <%= link_to reddit_path(:format => :csv) do%>
+            Export Data
+          <%end%>
+        </h5>
+        <% if @userContent.present? %>
+          <!-- PLACE PARTIAL HERE -->
+          <%= render :partial => 'layouts/table', :locals => {:collection => @userContent}%>
+        <%end%>
+      <%else%>
+        <div id = "signedOutChannel">
+          <div class="channelHeader center">
+            <%= link_to user_omniauth_authorize_path(:spotify) do%>
+              <h1> Sign On </h1>
+            <%end%>
+          <hr>
+          </div>
+          <div class="channelRequests col-xs-6">
+            <h4>This channel requests</h4>
+            <ul>
+              <li>Profile information</li>
+              <li>Spotify playlists</li>
+            </ul>
+          </div>
+          <div class="channelAbility col-xs-6">
+            <h4>With this channel you can</h4>
+            <ul>
+              <li>Track your spotify history</li>
+              <li>Export spotify song info to csv</li>
+            </ul>
+          </div>
+        </div>
+      <%end%>
+    </div>
+  </div>
+</div>

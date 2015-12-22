@@ -26,12 +26,31 @@ $(".content.show").ready ->
     properties = marker.feature.properties
 
     # create custom popup
-    popupContent =  '<div class="popup">' +
-                    '<a href="' + properties.external_link + '">' +
-                        '<h6>' + properties.title + '</h6>' +
-                        '<p>'  + properties.body.substring(0,125) + "..." + '</p>' +
-                        '</a>' +
-                      '</div>'
+    popupContentImage =  '<div class="popup row">' +
+                          '<div class="col-xs-7">' +
+                            '<a href="' + properties.external_link + '">' +
+                              '<h6>' + properties.title + '</h6>' +
+                              '<p>'  + properties.body.substring(0,125) + "..." + '</p>' +
+                            '</a>' +
+                          '</div>' +
+                          '<div class="col-xs-5 popupImage">' +
+                            '<img src="' + properties.image + '" class="img-fluid center-block">' +
+                            '</img>' +
+                          '</div>' +
+                        '</div>'
+    popupContentText = '<div class="popup row">' +
+                          '<div class="col-xs-12">' +
+                            '<a href="' + properties.external_link + '">' +
+                              '<h6>' + properties.title + '</h6>' +
+                              '<p>'  + properties.body.substring(0,125) + "..." + '</p>' +
+                            '</a>' +
+                          '</div>' +
+                        '</div>'
+
+    if properties.image != " "
+      popupContent = popupContentImage
+    else
+      popupContent = popupContentText
 
     # http://leafletjs.com/reference.html#popup
     marker.bindPopup popupContent,

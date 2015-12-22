@@ -60,13 +60,21 @@ class WelcomeController < ApplicationController
                 body:
                   if (content.body.present?)
                     content.body.capitalize
+
                   elsif (content.kind.present?)
-                    content.kind.capitalize
+                    content.kind.capitalize + " on " + content.created_at.strftime("%b %e, %Y")
                   else
                     " "
                   end,
                 external_link:
-                    "http://blackboxapp.io/content/"+ content.id.to_s,
+                    content_path(content.id),
+                    # "http://blackboxapp.io/content/"+ content.id.to_s,
+                image:
+                  if (content.image.present?)
+                    content.image
+                  else
+                    " "
+                  end,
                 address:
                   if (content.city.present? && content.state.present?)
                     content.city + ", " + content.state

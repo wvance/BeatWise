@@ -5,13 +5,7 @@ class ContentController < ApplicationController
   # before_action :verify_is_admin, only: [:index]
   before_action :verify_is_owner, only: [:show, :index]
 
-  before_action :set_reddit_client
-
-def set_reddit_client
-  # if (user_signed_in? && current_user.identities.where(:provider => "github").present? )
-  #   @@github_client = Github.new :oauth_token => current_user.identities.where(:provider => "github").first.token
-  # end
-end
+  before_action :set_spotify_client
 
 def index
   @userContent = current_user.contents.all
@@ -73,6 +67,12 @@ def show
           else
             "http://blackboxapp.io/content/"+ @content.id
           end,
+        image:
+          if (@content.image.present?)
+            @content.image
+          else
+            " "
+          end,
         address:
           if (@content.city.present? && @content.state.present?)
             @content.city + ", " + @content.state
@@ -111,6 +111,38 @@ end
   end
 
 # ========================================================
+# ============= SPOTIFY ==================================
+# ========================================================
+  def set_spotify_client
+    if (user_signed_in? && current_user.identities.where(:provider => "spotify").present? )
+      @@spotify_client = RSpotify::User.new(
+        JSON.parse(current_user.identities.where(:provider => "spotify").first.identity_log)
+      )
+      # raise @@spotify_client.inspect
+    end
+  end
+
+  def spotify_all_data
+    raise @@spotify_client.saved_tracks.inspect
+
+    respond_to do |format|
+      format.html { redirect_to request.referrer, notice:"Updating All Spotify" }
+      format.json { head :no_content }
+    end
+  end
+
+# ========================================================
+# ============= REDDIT ===================================
+# ========================================================
+  def set_reddit_client
+    # if (user_signed_in? && current_user.identities.where(:provider => "github").present? )
+    #   @@github_client = Github.new :oauth_token => current_user.identities.where(:provider => "github").first.token
+    # end
+  end
+  def reddit_all_data
+
+  end
+# ========================================================
 # ============= TWITTER ==================================
 # ========================================================
   def get_twitter_tweets
@@ -119,13 +151,6 @@ end
       format.html { redirect_to request.referrer, notice:"Updating All Twitter" }
       format.json { head :no_content }
     end
-  end
-
-# ========================================================
-# ============= REDDIT ===================================
-# ========================================================
-  def reddit_all_data
-
   end
 
 # ========================================================
@@ -158,26 +183,8 @@ end
   end
 
   def get_facebook_all
-    FacebookDataJob.perform_later current_user.id
-
-      # Koala.config.api_version = "v2.0"
-      # @@facebook_client = Koala::Facebook::API.new(current_user.identities.where(:provider => "facebook").first.token)
-
-
-      # user_photos = @@facebook_client.get_connection('me', 'photos',
-      #   {limit: 100,
-      #     fields: ['message', 'id', 'from', 'type', 'status_type', 'shares',
-      #       'picture', 'link', 'created_time', 'place', 'likes', 'comments'
-      #   ]})
-      # user_photos.each do |photo|
-      #   @content = Content.new
-      #   @content.post_facebook_user_photo(photo, current_user.id)
-      # end
-
-      # user_timeline.each do |post|
-      #   @content = Content.new
-      #   @content.post_facebook_post(post, current_user.id)
-      # end
+    # user_id, post_count, photo_count
+    FacebookDataJob.perform_later(current_user.id, 500, 500)
 
     respond_to do |format|
       format.html { redirect_to request.referrer, notice:"Updating All Facebook" }

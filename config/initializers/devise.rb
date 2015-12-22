@@ -1,6 +1,8 @@
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
+
+  require 'rspotify/oauth'
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
   # confirmation, reset password and unlock tokens in the database.
@@ -22,6 +24,8 @@ Devise.setup do |config|
   config.omniauth :reddit, ENV['reddit_key'], ENV['reddit_secret'],
     scope: 'identity,history,read,mysubreddits'
 
+  config.omniauth :spotify, ENV['spotify_client_id'], ENV['spotify_secret'],
+    scope: 'playlist-read-private user-follow-read playlist-read-collaborative user-library-read user-read-private user-read-email'
   # config.OmniAuth :linkedin, ENV["linkedin_key"], ENV["linkedin_secret"],
   # config.omniauth :linkedin, ENV["linkedin_key"], ENV["linkedin_secret"],
   #   :scope => 'r_fullprofile r_emailaddress r_network',

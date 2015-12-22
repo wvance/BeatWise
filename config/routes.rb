@@ -7,6 +7,10 @@ Rails.application.routes.draw do
       post :mark_as_read
     end
   end
+
+  resources :channel do
+
+  end
   devise_for :users, :controllers => { omniauth_callbacks: 'omniauth_callbacks' }
   match '/users/:id/finish_signup' => 'users#finish_signup', via: [:get, :patch], :as => :finish_signup
 
@@ -20,6 +24,7 @@ Rails.application.routes.draw do
   get '/channels/github',           to: 'channel#github',                       as: :github
   get '/channels/facebook',         to: 'channel#facebook',                     as: :facebook
   get '/channels/reddit',           to: 'channel#reddit',                       as: :reddit
+  get '/channles/spotify',          to: 'channel#spotify',                      as: :spotify
 
   # get '/content/index',             to: 'content#index',                        as: :content_index
   get '/all_facebook',              to: 'content#get_facebook_all',             as: :all_facebook
@@ -31,6 +36,7 @@ Rails.application.routes.draw do
   get '/instagram_photos',          to: 'content#get_instagram_photos',         as: :instagram_photos
   get '/fitbit_all_data',           to: 'content#fitbit_all_data',              as: :fitbit_all_data
   get '/reddit_all_data',           to: 'content#reddit_all_data',              as: :reddit_all_data
+  get '/spottify_all_data',         to: 'content#spotify_all_data',             as: :spotify_all_data
 
   get 'welcome/index',              to: 'welcome#index',                        as: :welcome
 

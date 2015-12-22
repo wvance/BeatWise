@@ -18,6 +18,7 @@
   <div class="col-sm-4">
     <% if @content.image.present? %>
       <%= image_tag @content.image, :id=>"contentShowImage"%>
+      <%= @content.image %>
     <%end%>
   </div>
 </div>

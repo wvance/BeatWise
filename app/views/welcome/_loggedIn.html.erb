@@ -1,9 +1,9 @@
 <% if @alluserContent.present? %>
-  <div class="container-fluid">
+  <!-- <div class="container-fluid">
     <div id="map" class="mapSection", data-url="/welcome/index.json"></div>
-  </div>
+  </div> -->
   <div class="container">
-    <div class="row">
+    <!-- <div class="row">
       <div class="col-sm-12 searchContainer center">
         <div class="search">
           <%= form_tag welcome_path, method: :get do %>
@@ -12,7 +12,7 @@
           <%end%>
         </div>
       </div>
-    </div>
+    </div> -->
     <div class="row">
       <% if @userContent.present?%>
         <%= link_to "Export Timeline", root_path(:format => :csv ), :class=>"btn btn-secondary pull-right" %>

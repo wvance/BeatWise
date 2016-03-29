@@ -8,9 +8,11 @@ class WelcomeController < ApplicationController
         return
       end
 
-      search_query = params[:q].presence || "*"
+      # search_query = params[:q].presence || "*"
       # NEED TO DO SEARCH FROM BASE CLASS: DO NOT BUILD OFF alluserContent, REQUIRES 'WHERE' CLAUSE.
-      @userContent = Content.search search_query, where:{user_id: current_user.id}, page: params[:page], per_page: 15
+      # .order(:name).page params[:page]
+      @userContent = Content.where(user_id: current_user.id).page.per(10)
+      # @userContent = Content.search search_query, where:{user_id: current_user.id}, page: params[:page], per_page: 15
 
       # FOR THE MAP :D
       # GET ALL CONTENT OBJECTS FOR THE MAP DISPLAY

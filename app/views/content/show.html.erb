@@ -6,20 +6,55 @@
   <!-- REQUST USER TO ADD LOCATION? WITH RUBY FUNCTION -->
 <%end%>
 <div class="container">
-  <div class="col-sm-8">
-    <h1><%= @content.title %></h1>
-    <h4><%= @content.body %></h4>
-    <h6><%= @content.location %>: <%= @content.longitude %>, <%= @content.latitude %></h6>
-    <h6>
-      <%= @content.provider.capitalize %> <%= @content.kind.capitalize %>
-      on <%= @content.created_at.strftime("%b %e, %Y at %k:%M") %>
-    </h6>
-  </div>
-  <div class="col-sm-4">
-    <% if @content.image.present? %>
-      <%= image_tag @content.image, :id=>"contentShowImage"%>
-      <%= @content.image %>
-    <%end%>
+  <div class="row" id="contentBody">
+    <div class="col-sm-8">
+      <% if @content.title.present? %>
+        <h1><%= @content.title %></h1>
+      <%end%>
+
+      <% if @content.body.present? %>
+        <h4><%= @content.body %></h4>
+      <%end%>
+
+      <% unless @content.body.present? || @content.title.present? %>
+        <h4><%= @content.provider.capitalize %> <%= @content.kind.capitalize %></h4>
+      <%end%>
+
+      <hr>
+
+      <h6>
+        <% if @content.location.present? || @content.address.present? %>
+          <i class="fa fa-map"></i> <%= @content.location %> <%= @content.address %><br>
+        <%elsif @content.longitude.present? && @content.latitude.present? %>
+          <i class="fa fa-map-marker"></i> <%= @content.longitude %> <%= @content.latitude %>
+        <%end%>
+      </h6>
+      <h6>
+        <i class="fa fa-clock-o"></i> <%= @content.created_at.strftime("%b %e, %Y at %k:%M") %>
+      </h6>
+      <h6>
+        <%= @content.provider.capitalize %> <%= @content.kind.capitalize %>
+      </h6>
+
+    </div>
+    <div class="col-sm-4">
+      <% if @content.image.present? %>
+        <%= image_tag @content.image, :id=>"contentShowImage", :class=>"img-fluid"%>
+        <hr>
+      <%end%>
+
+      <% if @content.media_link.present? %>
+        <%= link_to @content.media_link, :class=> "btn btn-secondary", :target => "_blank" do%>
+          <%=@content.kind.capitalize %> Link
+        <%end%>
+      <%end%>
+
+      <%if @content.external_link.present? %>
+        <%= link_to @content.external_link, :class=> "btn btn-secondary", :target => "_blank" do%>
+          <%=@content.provider.capitalize %> Link
+        <%end%>
+      <%end%>
+    </div>
   </div>
 </div>
 <div class="container-fluid">

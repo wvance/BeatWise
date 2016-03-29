@@ -19,6 +19,7 @@ class CreateContents < ActiveRecord::Migration
 
       t.string :external_id
       t.string :external_link
+      t.string :media_link
 
       t.string :image
       t.string :kind

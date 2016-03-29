@@ -14,22 +14,16 @@ gem 'httparty'
 gem 'sidekiq'
 gem 'sinatra', :require => nil
 gem 'puma'
-gem 'searchkick'
+# gem 'searchkick'
 
 # ========================
 # ==== API WRAPPERS ======
 # ========================
 gem 'twitter'                       # TWITTER API
 # gem 'fitgem'                        # FITBIT API https://github.com/whazzmaster/fitgem
-gem 'fitbit-api-client', require: 'fitbit'
-gem 'instagram'
-gem 'foursquare2'                   # FOURSQUARE API
-gem 'github_api'                    # GITHUB API
-gem 'koala'                         # FACEBOOK API
-                                    # http://www.gotealeaf.com/blog/facebook-graph-api-using-omniauth-facebook-and-koala
-gem "redd", "~> 0.7.0"
-gem 'rspotify'
-
+# gem 'fitgem'
+gem 'fitbit-api-client', require: 'fitbit' # http://www.rubydoc.info/gems/fitbit-api-client/0.0.14/Fitbit%2FClient%3Aactivity_intraday_time_series
+  # https://github.com/kaorumori/fitbit-api-ruby-client
 # ========================
 # === OAUTH PROVIDERS ====
 # ========================
@@ -37,19 +31,8 @@ gem 'rspotify'
 # https://github.com/intridea/omniauth/wiki/List-of-Strategies
 gem 'omniauth'                      # OMNIAUTH WITH DEVISE
 gem 'omniauth-twitter'
-gem 'omniauth-facebook'
-gem 'omniauth-github'
 # gem 'omniauth-fitbit'
 gem 'omniauth-fitbit-oauth2'
-gem 'omniauth-google-oauth2'
-gem 'omniauth-foursquare'
-gem 'omniauth-instagram'
-gem 'omniauth-spotify'
-gem 'omniauth-reddit', :git => 'git://github.com/wvance/omniauth-reddit.git'
-
-# gem 'omniauth-linkedin'
-# gem "linkedin-oauth2"
-# gem 'omniauth-linkedin-oauth2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.0'

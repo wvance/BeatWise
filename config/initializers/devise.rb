@@ -2,30 +2,15 @@
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
 
-  require 'rspotify/oauth'
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
   # confirmation, reset password and unlock tokens in the database.
   config.secret_key = ENV["devise_secret_key"]
 
-  config.omniauth :facebook, ENV["facebook_key"], ENV["facebook_secret"],
-    scope: 'email,user_posts,user_friends,user_events,user_likes,user_events,user_photos,user_relationships',
-    info_fields: 'email, name'
-    # https://developers.facebook.com/docs/facebook-login/permissions/v2.5
   config.omniauth :twitter, ENV["twitter_key"], ENV["twitter_secret"]
-  config.omniauth :foursquare, ENV["foursquare_key"], ENV["foursquare_secret"]
-  config.omniauth :github, ENV["github_key"], ENV["github_secret"]
-  # config.omniauth :fitbit, ENV["fitbit_key"], ENV["fitbit_secret"]
   config.omniauth :fitbit_oauth2, ENV["fitbit_client_id"], ENV["fitbit_secret"],
     scope: 'activity heartrate location nutrition profile sleep settings social weight'
-  config.omniauth :instagram, ENV["instagram_id"], ENV["instagram_secret"],
-    scope: 'basic comments follower_list likes public_content relationships'
 
-  config.omniauth :reddit, ENV['reddit_key'], ENV['reddit_secret'],
-    scope: 'identity,history,read,mysubreddits'
-
-  config.omniauth :spotify, ENV['spotify_client_id'], ENV['spotify_secret'],
-    scope: 'playlist-read-private user-follow-read playlist-read-collaborative user-library-read user-read-private user-read-email'
   # config.OmniAuth :linkedin, ENV["linkedin_key"], ENV["linkedin_secret"],
   # config.omniauth :linkedin, ENV["linkedin_key"], ENV["linkedin_secret"],
   #   :scope => 'r_fullprofile r_emailaddress r_network',

@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 20151219020541) do
     t.string   "longitude"
     t.string   "external_id"
     t.string   "external_link"
+    t.string   "media_link"
     t.string   "image"
     t.string   "kind"
     t.string   "provider"

@@ -1,6 +1,6 @@
 <nav id="mainNav" class="navbar navbar-full navbar-dark bg-inverse">
   <%= link_to root_path(), :class=> "navbar-brand" ,:id=>"navLogo" do %>
-    <span class="white">Black</span><span class="yellow">Box</span>
+    <span class="white">Beat</span><span class="yellow">Wise</span>
   <%end%>
   <ul class="nav navbar-nav" id="navLinks">
     <% if user_signed_in? %>
@@ -14,7 +14,7 @@
         </div>
       </li>
       <li class="nav-item">
-        <%= link_to "Channels", channels_path(), :class=>"nav-link"%>
+        <%= link_to "Input", channels_path(), :class=>"nav-link"%>
       </li>
       <li class="nav-item">
         <%= link_to "Sign out", destroy_user_session_path, :method => :delete, :class=>"nav-link"%>

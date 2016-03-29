@@ -1,11 +1,11 @@
+require 'csv'
 class ContentController < ApplicationController
   before_action :authenticate_user!
   before_action :set_content, only: [:show, :edit, :update, :destroy]
   before_action :set_author, only: [:show]
   # before_action :verify_is_admin, only: [:index]
   before_action :verify_is_owner, only: [:show, :index]
-
-  before_action :set_spotify_client
+  before_action :set_fitbit_client
 
 def index
   @userContent = current_user.contents.all
@@ -65,7 +65,7 @@ def show
           if (@content.external_link.present?)
             @content.external_link
           else
-            "http://blackboxapp.io/content/"+ @content.id
+            "http://blackboxapp.io/content/"+ @content.id.to_s
           end,
         image:
           if (@content.image.present?)
@@ -97,52 +97,6 @@ end
 
 # GET CONTENT: ACTIONS BELOW
 # ========================================================
-# ============= INSTAGRAM ================================
-# ========================================================
-  def set_instagram_client
-    if (user_signed_in? && current_user.identities.where(:provider => "instagram").present? )
-      # @@instagram_client = Instagram.client(:access_token => current_user.identities.where(:provider => "instagram").first.token)
-    end
-  end
-
-  def get_instagram_photos
-    user_photos = @@instagram_client
-    raise user_photos.inspect
-  end
-
-# ========================================================
-# ============= SPOTIFY ==================================
-# ========================================================
-  def set_spotify_client
-    if (user_signed_in? && current_user.identities.where(:provider => "spotify").present? )
-      @@spotify_client = RSpotify::User.new(
-        JSON.parse(current_user.identities.where(:provider => "spotify").first.identity_log)
-      )
-      # raise @@spotify_client.inspect
-    end
-  end
-
-  def spotify_all_data
-    raise @@spotify_client.saved_tracks.inspect
-
-    respond_to do |format|
-      format.html { redirect_to request.referrer, notice:"Updating All Spotify" }
-      format.json { head :no_content }
-    end
-  end
-
-# ========================================================
-# ============= REDDIT ===================================
-# ========================================================
-  def set_reddit_client
-    # if (user_signed_in? && current_user.identities.where(:provider => "github").present? )
-    #   @@github_client = Github.new :oauth_token => current_user.identities.where(:provider => "github").first.token
-    # end
-  end
-  def reddit_all_data
-
-  end
-# ========================================================
 # ============= TWITTER ==================================
 # ========================================================
   def get_twitter_tweets
@@ -154,106 +108,79 @@ end
   end
 
 # ========================================================
-# ============= GITHUB ===================================
-# ========================================================
-  # def set_github_client
-  #   if (user_signed_in? && current_user.identities.where(:provider => "github").present? )
-  #     @@github_client = Github.new :oauth_token => current_user.identities.where(:provider => "github").first.token
-  #   end
-  # end
-
-  def get_github_repos
-    GithubDataJob.perform_later current_user.id
-
-    respond_to do |format|
-      format.html { redirect_to request.referrer, notice:"Updating All Github" }
-      format.json { head :no_content }
-    end
-  end
-
-# ========================================================
-# ============= FACEBOOK =================================
-# ========================================================
-  def set_facebook_client
-    if (user_signed_in? && current_user.identities.where(:provider => "facebook").present? )
-      Koala.config.api_version = "v2.0"
-      @@facebook_client = Koala::Facebook::API.new(current_user.identities.where(:provider => "facebook").first.token)
-
-    end
-  end
-
-  def get_facebook_all
-    # user_id, post_count, photo_count
-    FacebookDataJob.perform_later(current_user.id, 500, 500)
-
-    respond_to do |format|
-      format.html { redirect_to request.referrer, notice:"Updating All Facebook" }
-      format.json { head :no_content }
-    end
-  end
-
-  def get_facebook_family
-    user_family = @@facebook_client.get_connections("me", "family")
-    user_family.each do |member|
-      @content = Content.new
-      @content.post_facebook_user_family(member, current_user.id)
-    end
-
-    respond_to do |format|
-      format.html { redirect_to request.referrer, notice:"Updated Facebook Family"}
-      format.json { head :no_content}
-    end
-  end
-
-# ========================================================
-# ============= FOURSQUARE ===============================
-# ========================================================
-  def set_foursquare_client
-    if (user_signed_in? && current_user.identities.where(:provider => "foursquare").present? )
-      @@foursquare_client = Foursquare2::Client.new(:oauth_token => current_user.identities.where(:provider => "foursquare").first.token, :api_version => '20140806')
-    end
-  end
-
-  def get_foursquare_all
-    FoursquareDataJob.perform_later current_user.id
-
-    respond_to do |format|
-      format.html { redirect_to request.referrer, notice:"Updating All Foursquare" }
-      format.json { head :no_content }
-    end
-  end
-
-  def get_foursquare_friends
-    user_friends = @@foursquare_client.user_friends('self').items
-
-    user_friends.each do |friend|
-      @content = Content.new
-      @content.post_foursquare_user_friend(friend, current_user.id)
-    end
-
-    respond_to do |format|
-      format.html { redirect_to request.referrer, notice:"Updated Foursquare Friends" }
-      format.json { head :no_content}
-    end
-  end
-
-# ========================================================
 # ============= FITBIT ===================================
 # ========================================================
   def set_fitbit_client
     if (user_signed_in? && current_user.identities.where(:provider => "fitbit_oauth2").present? )
-      @@fitbit_client = Fitbit::Client.new(
-        ENV["fitbit_client_id"],
-        ENV["fitbit_secret"],
-        current_user.identities.where(:provider => "fitbit_oauth2").first.token
+
+      # @@fitbit_client = OAuth2::Client.new(ENV["fitbit_client_id"], ENV["fitbit_secret"])
+      # opts = {authorize_url:   'https://www.fitbit.com/oauth2/authorize',
+      #     token_url:       'https://api.fitbit.com/oauth2/token',
+      #     token_method:    :post,
+      #     connection_opts: {},
+      #     max_redirects:   5,
+      #     raise_errors:    true}
+      # @access_token = OAuth2::AccessToken.new(@@fitbit_client, current_user.identities.where(:provider => "fitbit_oauth2").first.token, opts)
+
+      # raise @access_token.inspect
+
+      @@fitbit_client =  Fitbit::Client.new(
+        client_id: ENV["fitbit_client_id"],
+        client_secret: ENV["fitbit_secret"],
+        access_token: current_user.identities.where(:provider => "fitbit_oauth2").first.token,
+        refresh_token: current_user.identities.where(:provider => "fitbit_oauth2").first.refresh_token,
+        expires_at: current_user.identities.where(:provider => "fitbit_oauth2").first.expires_at
       )
+      # raise @@fitbit_client.inspect
+      # @@fitbit_client = Fitgem::Client.new(
+      #   consumer_key: ENV["fitbit_client_id"],
+      #   consumer_secret: ENV["fitbit_secret"],
+      #   token: current_user.identities.where(:provider => "fitbit_oauth2").first.token,
+      #   secret: current_user.identities.where(:provider => "fitbit_oauth2").first.secret
+      #   # user_id:
+      # )
     end
   end
   def fitbit_all_data
-    FitbitDataJob.perform_later current_user.id
+    # FitbitDataJob.perform_later current_user.id
 
     respond_to do |format|
       format.html { redirect_to request.referrer, notice:"Updating all Fitbit Data"}
+      format.json { head :no_content}
+    end
+  end
+
+  def get_fitbit_intraday_heartbeat
+    # user_heartbeat = @@fitbit_client
+    days_ago = 0
+    full_heart_date = []
+    # while days_ago < 30 do
+      user_daily_heartrate = @@fitbit_client.heart_rate_intraday_time_series(date: Date.today, detail_level:"1min").inspect
+      full_heart_date.push(user_daily_heartrate)
+      # days_ago += 1
+    # end
+
+    # s=CSV.generate do |csv|
+    #   user_daily_heartrate.each do |x|
+    #     csv << x.values
+    #   end
+    # end
+    # File.write('user_heart_data.csv', s)
+
+    # raise eval(user_daily_heartrate).inspect
+    parsed_heart =  JSON.parse user_daily_heartrate.gsub('=>', ':')
+    parsed_heart_filtered = parsed_heart['activities-heart-intraday']['dataset']
+
+    output = CSV.generate do |csv|
+      parsed_heart_filtered.each do |x|
+        csv << x.values
+      end
+    end
+
+    File.write('user_heart_data.csv', output)
+
+    respond_to do |format|
+      format.html { redirect_to request.referrer, notice:"Updating Fitbit Heartrate Data"}
       format.json { head :no_content}
     end
   end

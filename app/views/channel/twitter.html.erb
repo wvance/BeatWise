@@ -7,18 +7,7 @@
     </div>
     <div class="row">
       <% if @twitter.present? %>
-        <%= link_to sign_out_provider_path(:provider => "twitter") do%>
-          <h3 class="pull-right">Sign Out Twitter</h3>
-        <%end%>
         <h2><%= @userContent.total_count%> Tweets</h2>
-        <div class="row">
-          <div class="col-sm-6">
-            <%= line_chart @allUserTwitter.group_by_month(:created_at, format: "%b %e %Y").count %>
-          </div>
-          <div class="col-sm-6">
-            <%= pie_chart @allUserTwitter.group(:kind).count %>
-          </div>
-        </div>
         <h5 class="pull-right">
           <%= link_to twitter_tweets_path do%>
             <i class="fa fa-refresh"></i> Update
@@ -30,6 +19,9 @@
         <% if @userContent.present? %>
           <!-- PLACE PARTIAL HERE -->
           <%= render :partial => 'layouts/table', :locals => {:collection => @userContent}%>
+          <%= link_to sign_out_provider_path(:provider => "twitter") do%>
+            <h3 class="pull-right">Sign Out Twitter</h3>
+          <%end%>
         <%end%>
       <%else%>
         <div id = "signedOutChannel">

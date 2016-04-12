@@ -17,6 +17,7 @@ class Identity < ActiveRecord::Base
       secret: auth.credentials.secret,
       username: auth.info.nickname || auth.info.full_name || auth.info.name || auth.uid,
       email: email ? email : "#{auth.uid}-#{auth.provider}.com",
-      identity_log: auth.to_json)
+      # identity_log: auth.to_json
+      )
   end
 end

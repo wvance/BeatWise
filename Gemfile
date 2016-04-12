@@ -8,6 +8,7 @@ gem 'bootstrap', '~> 4.0.0.alpha1'  # BOOTSTRAP ALPHA
 gem "font-awesome-rails"
 gem 'kaminari'                      # PAGINATION GEM
 gem "chartkick"                     # SIMPLE CHARTING
+gem "highcharts-rails"
 gem 'groupdate'                     # NEEDED FOR GROUPING BY DATES
 gem 'geocoder'                      # CONVERT LONG LAT TO LOCATION
 gem 'httparty'

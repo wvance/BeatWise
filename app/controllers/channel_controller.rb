@@ -22,8 +22,8 @@ class ChannelController < ApplicationController
   def fitbit
     @fitbit = @identities.where(:provider => "fitbit_oauth2")
     if @fitbit.present?
-      @allUserFitbit = current_user.contents.where(:provider => "fitbit")
-      @userContent = @allUserFitbit.order('created_at DESC').page(params[:page]).per(10)
+      # @allUserFitbit = current_user.contents.where(:provider => "fitbit")
+      @userContent = current_user.contents.where(:provider => "fitbit").order('created_at DESC').page(params[:page]).per(10)
 
 
       # raise @userContent.inspect

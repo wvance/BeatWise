@@ -176,7 +176,10 @@ $(".welcome.index").ready ->
 # ====================================
 # ========= LOGIN TABS ===============
 # ====================================
-  $('#myTab a').click (e) ->
-  e.preventDefault()
-  $(this).tab 'show'
-  return
+  tabs = $('#myTab a');
+  console.log(tabs);
+  if tabs != null
+    $('#myTab a').click (e) ->
+        e.preventDefault()
+        $(this).tab 'show'
+      return

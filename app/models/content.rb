@@ -3,6 +3,7 @@ class Content < ActiveRecord::Base
   # searchkick
   belongs_to :user
   validates :external_id, uniqueness: true , :allow_blank => true, :allow_nil => true
+  validates :provider, uniqueness: { scope: [:body, :created_at] }
 
   def self.to_csv
     # CREATES AN ARRAY OF STRINGS "ID", "TITLE"..
@@ -63,6 +64,29 @@ class Content < ActiveRecord::Base
     else
     end
   end
+
+  def post_fitbit_intraday_heart(heartbeat, days_ago, event_number, user)
+    self.user_id = user
+    self.title = event_number
+    self.body = heartbeat['value']
+
+    date = Date.today - days_ago
+    time = Time.parse(heartbeat['time'])
+
+    dateTime = date.to_datetime + time.seconds_since_midnight.seconds
+    self.created_at = dateTime
+
+    self.provider = "fitbit"
+    self.kind = "heartrate"
+    self.log = heartbeat.to_hash
+    self.active = true
+
+    if(self.valid?)
+      self.save!
+    else
+    end
+  end
+
   def post_fitbit_recent_activity(activity, user)
     self.user_id = user
     self.external_id = activity["activityId"]

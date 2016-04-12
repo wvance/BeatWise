@@ -1,4 +1,3 @@
-require 'csv'
 class ContentController < ApplicationController
   before_action :authenticate_user!
   before_action :set_content, only: [:show, :edit, :update, :destroy]
@@ -150,37 +149,49 @@ end
     end
   end
 
+  # KEY PROJECT
   def get_fitbit_intraday_heartbeat
     # user_heartbeat = @@fitbit_client
     days_ago = 0
     full_heart_date = []
-    # while days_ago < 30 do
-      user_daily_heartrate = @@fitbit_client.heart_rate_intraday_time_series(date: Date.today, detail_level:"1min").inspect
-      full_heart_date.push(user_daily_heartrate)
-      # days_ago += 1
-    # end
+    while days_ago < 3 do
+      user_daily_heartrate = @@fitbit_client.heart_rate_intraday_time_series(date: Date.today - days_ago, detail_level:"1sec").inspect
 
-    # s=CSV.generate do |csv|
-    #   user_daily_heartrate.each do |x|
-    #     csv << x.values
-    #   end
-    # end
-    # File.write('user_heart_data.csv', s)
+      parsed_heart =  JSON.parse user_daily_heartrate.gsub('=>', ':')
+      parsed_heart_filtered = parsed_heart['activities-heart-intraday']['dataset']
 
-    # raise eval(user_daily_heartrate).inspect
-    parsed_heart =  JSON.parse user_daily_heartrate.gsub('=>', ':')
-    parsed_heart_filtered = parsed_heart['activities-heart-intraday']['dataset']
-
-    output = CSV.generate do |csv|
-      parsed_heart_filtered.each do |x|
-        csv << x.values
-      end
+      full_heart_date.push(parsed_heart_filtered)
+      days_ago += 1
     end
 
-    File.write('user_heart_data.csv', output)
+    # index = 0
+    # full_heart_date.each do |day|
+    #   output = CSV.generate do |csv|
+    #     day.each do |x|
+    #       csv << x.values
+    #     end
+    #   end
+    #   file_String = "user_heart_date_" + index.to_s + ".csv"
+    #   File.write(file_String, output)
+    #   index +=1
+    # end
+
+    dayCount = 0
+    full_heart_date.each do |day|
+
+      dayIndex = 1
+      day.each do |event|
+        @content = Content.new
+        # PASS IN EVENT, INDEX2 (REPRESENTS THE DAY OF WHICH HAPPENED DateTime.now - Index2)
+        @content.post_fitbit_intraday_heart(event, dayCount, dayIndex, current_user.id)
+        dayIndex += 1
+      end
+      dayCount += 1
+    end
+
 
     respond_to do |format|
-      format.html { redirect_to request.referrer, notice:"Updating Fitbit Heartrate Data"}
+      format.html { redirect_to request.referrer, notice:"Updated Fitbit Heartrate Data"}
       format.json { head :no_content}
     end
   end

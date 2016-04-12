@@ -42,6 +42,7 @@ class ChannelController < ApplicationController
     respond_to do |format|
       format.html
       format.csv { send_data @allUserFitbit.to_csv, filename: "Fitbit_Timeline-#{Date.today}.csv" }
+      format.json
     end
   end
 

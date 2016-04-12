@@ -7,8 +7,8 @@
     </div>
     <div class="row">
       <% if @fitbit.present? %>
+        <div id="fitbitGraph"></div>
           <%# area_chart @allUserFitbit.group_by_day(:created_at).maximum(:body) %>
-        <hr>
         <%= link_to sign_out_provider_path(:provider => "fitbit_oauth2") do%>
           <h3 class="pull-right">Sign Out Fitbit</h3>
         <%end%>

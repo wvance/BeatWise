@@ -5,9 +5,7 @@
 //= require jquery_ujs
 //= require tether
 //= require flash
-//= require highcharts
-//= require highcharts/highcharts-more
-//= require highcharts/adapters/standalone-framework
+//= require d3
 //= require bootstrap-sprockets
 //= require turbolinks
 //= require jquery-readyselector

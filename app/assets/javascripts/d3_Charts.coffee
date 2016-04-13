@@ -101,8 +101,8 @@ $(".channel.fitbit").ready ->
           .duration(500)
           .style("opacity", .85)
 
-        tooltip.html("<strong>"+ d.body + " BPM </strong>")
-          .style("left", (d3.event.pageX) + "px")
+        tooltip.html("<strong>"+ " <i class='fa fa-clock-o' aria-hidden='true'></i> " + d.hour + ":" + d.minuites + "<br><i class='fa fa-heart' aria-hidden='true'></i> " +d.body + " BPM </strong>")
+          .style("left", (d3.event.pageX + 10) + "px")
           .style("top", (d3.event.pageY - 28) + "px");
       )
       .on('mouseout', (d) ->

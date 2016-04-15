@@ -28,7 +28,7 @@ class ChannelController < ApplicationController
       first_day = 1
       second_day = first_day + 1
       @fitbitContent= current_user.contents.where(:provider => "fitbit").where('created_at < ? AND created_at > ?', first_day.days.ago, second_day.days.ago)
-      .where('created_at >= ?', (Date.today - 3).to_datetime).all
+      # .where('created_at >= ?', (Date.today - 3).to_datetime).all
 
       # raise @userContent.inspect
       # sleepHash = {"" => 0}

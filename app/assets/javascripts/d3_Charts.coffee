@@ -83,6 +83,7 @@ $(".channel.fitbit").ready ->
       'stroke-width': 2
       'fill': 'none')
 
+    # CIRCLES & TOOL TOP FOR MOUSE HOVER
     dots = svg.selectAll('circle')
       .data(heartData)
       .enter()
@@ -95,7 +96,7 @@ $(".channel.fitbit").ready ->
         r: 5,
         "fill": "#FFCC00",
         class: "circle"
-      }).style('opacity', .05)
+      }).style('opacity', .1)
       .on('mouseover', (d) ->
         tooltip.transition()
           .duration(500)

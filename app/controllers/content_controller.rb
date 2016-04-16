@@ -154,7 +154,7 @@ end
     # user_heartbeat = @@fitbit_client
     days_ago = 0
     full_heart_date = []
-    while days_ago < 5 do
+    while days_ago < 90 do
       user_daily_heartrate = @@fitbit_client.heart_rate_intraday_time_series(date: Date.today - days_ago, detail_level:"1min").inspect
 
       parsed_heart =  JSON.parse user_daily_heartrate.gsub('=>', ':')

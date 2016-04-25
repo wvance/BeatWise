@@ -22,30 +22,57 @@ class ChannelController < ApplicationController
   def fitbit
     @fitbit = @identities.where(:provider => "fitbit_oauth2")
     if @fitbit.present?
+      @all_fitbitContent = current_user.contents.where(:provider => "fitbit")
+
       # @allUserFitbit = current_user.contents.where(:provider => "fitbit")
-      @userContent = current_user.contents.where(:provider => "fitbit").order('created_at DESC').page(params[:page]).per(10)
+      @userContent = @all_fitbitContent.page(params[:page]).per(10)
 
-      first_day = 1
-      second_day = first_day + 1
-      @fitbitContent= current_user.contents.where(:provider => "fitbit").where('created_at < ? AND created_at > ?', first_day.days.ago, second_day.days.ago)
-      # .where('created_at >= ?', (Date.today - 3).to_datetime).all
+      # GETS UNIQUE NUMBER OF DAYS IN DATABASE
+      @all_fitbitContentDates = @all_fitbitContent.uniq.pluck('DATE(created_at)').sort.reverse
 
-      # raise @userContent.inspect
-      # sleepHash = {"" => 0}
+      # raise @all_fitbitContentDates.inspect
+      if params[:first_day].present?
+        first_day = params[:first_day].to_i
+        last_day = params[:last_day].to_i
+        # raise last_day.inspect
+      else
+        first_day = 2
+        last_day = first_day + 1
+      end
 
-      # @allUserFitbit.each do |day|
-      #   unless day.body.to_i == 0
-      #     date = day.created_at.strftime("%b %e, %Y")
-      #     sleep = day.body.to_i
-      #     sleepHash[date] = (sleep / 60.0).round(2)
-      #   end
-      # end
-      # @fitbitSleepChart = sleepHash
-
+      @fitbitContent= @all_fitbitContent.where('created_at < ? AND created_at > ?', first_day.days.ago, last_day.days.ago)
     end
     respond_to do |format|
       format.html
       format.csv { send_data @allUserFitbit.to_csv, filename: "Fitbit_Timeline-#{Date.today}.csv" }
+    end
+  end
+
+  def fitbitChart
+    @fitbit = @identities.where(:provider => "fitbit_oauth2")
+    if @fitbit.present?
+      @all_fitbitContent = current_user.contents.where(:provider => "fitbit")
+
+      # @allUserFitbit = current_user.contents.where(:provider => "fitbit")
+      @userContent = @all_fitbitContent.page(params[:page]).per(10)
+
+      # GETS UNIQUE NUMBER OF DAYS IN DATABASE
+      @all_fitbitContentDates = @all_fitbitContent.uniq.pluck('DATE(created_at)').sort
+
+      # raise @all_fitbitContentDates.inspect
+      if params[:first_day].present?
+        first_day = params[:first_day].to_i
+        last_day = params[:last_day].to_i
+        # raise last_day.inspect
+      else
+        first_day = 2
+        last_day = first_day + 1
+      end
+
+      @fitbitContent= @all_fitbitContent.where('created_at < ? AND created_at > ?', first_day.days.ago, last_day.days.ago)
+    end
+
+    respond_to do |format|
       format.json
     end
   end

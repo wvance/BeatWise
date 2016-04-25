@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   get '/channels',                  to: 'channel#index',                        as: :channels
   get '/channels/twitter',          to: 'channel#twitter',                      as: :twitter
   get '/channels/fitbit',           to: 'channel#fitbit',                       as: :fitbit
-
+  get '/channels/fitbitChart',      to: 'channel#fitbitChart',                  as: :fitbitChart
   # get '/content/index',             to: 'content#index',                        as: :content_index
   get '/recent_fitbit_activities',  to: 'content#get_fitbit_recent_activitity', as: :recent_fitbit_activities
   get '/fitbit_heart',              to: 'content#get_fitbit_daily_heart_rate',  as: :fitbit_heart

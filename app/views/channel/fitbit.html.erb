@@ -7,7 +7,15 @@
     </div>
     <div class="row">
       <% if @fitbit.present? %>
-        <div id="fitbitGraph"></div>
+        <% @all_fitbitContentDates.each_with_index do |day, index| %>
+          <% if @fitbitContent.present? %>
+            <h3>Date is: <%= day %></h3>
+            <div id="fitbitGraph<%=index.to_s%>", data-url="<%= index %>", data-day="<%= @all_fitbitContentDates.count %>", class="fitGraph"></div>
+          <%else%>
+            <h1 class="center">No data for this day :(</h1>
+          <%end%>
+        <%end%>
+
           <%# area_chart @allUserFitbit.group_by_day(:created_at).maximum(:body) %>
         <%= link_to sign_out_provider_path(:provider => "fitbit_oauth2") do%>
           <h3 class="pull-right">Sign Out Fitbit</h3>

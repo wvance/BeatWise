@@ -1,17 +1,21 @@
 $(".channel.fitbit").ready ->
   # all_fitbitContentDates
   # LOOPS THOUGH
+  # DISPLAYS NUMBER OF DAYS TOTAL
   index = $('#fitbitGraph0').data('day')
   index_loop = 0
-  while index_loop < index
+
+
+  while index_loop <= index
     do (index_loop) ->
-      jsonString = '?first_day='+String(index_loop)+'&last_day='+String(index_loop+1)
-      $.getJSON '/channels/fitbitChart'+jsonString+'&.json', (heartData) ->
+      jsonString = '?days_ago='+String(index_loop)
+      $.ajaxSetup async: false
+      $.getJSON '/channels/fitbitChart.json'+jsonString, (heartData) ->
 
         console.log("CALL STRING HERE: "+ String(jsonString))
-        console.log("DATA HERE: " + String(heartData))
-        console.log("CHECK HERE FOR INDEX: " + String(index))
+        console.log("CHECK HERE FOR INDEX : " + String(index))
         console.log("CHECK HERE FOR INDEX LOOP: " + String(index_loop))
+        console.log("DATA HERE: " + String(heartData))
 
         maxHeart = Math.max.apply(Math, heartData.map((data) ->
           data.body
@@ -45,7 +49,7 @@ $(".channel.fitbit").ready ->
           # console.log(hour)
 
         # Tool Tip
-        tooltip = d3.select("#fitbitGraph"+String($('#fitbitGraph'+String(index_loop)).data('url'))).append("div")
+        tooltip = d3.select("#fitbitGraph"+String(index_loop)).append("div")
           .attr("class", "tooltip")
           .style("opacity", 0)
 
@@ -75,7 +79,8 @@ $(".channel.fitbit").ready ->
         .interpolate('linear')
 
         # APPEND DATA
-        svg = d3.select('#fitbitGraph'+String($('#fitbitGraph'+String(index_loop)).data('url'))).append('svg').attr(
+        console.log("#fitbitGraph"+String(index_loop))
+        svg = d3.select('#fitbitGraph'+String(index_loop)).append('svg').attr(
           width: w
           height: h
         )

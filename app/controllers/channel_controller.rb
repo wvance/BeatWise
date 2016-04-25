@@ -31,8 +31,8 @@ class ChannelController < ApplicationController
       @all_fitbitContentDates = @all_fitbitContent.uniq.pluck('DATE(created_at)').sort.reverse
 
       # raise @all_fitbitContentDates.inspect
-      if params[:first_day].present?
-        first_day = params[:first_day].to_i
+      if params[:days_ago].present?
+        first_day = params[:days_ago].to_i
         last_day = params[:last_day].to_i
         # raise last_day.inspect
       else
@@ -40,7 +40,9 @@ class ChannelController < ApplicationController
         last_day = first_day + 1
       end
 
-      @fitbitContent= @all_fitbitContent.where('created_at < ? AND created_at > ?', first_day.days.ago, last_day.days.ago)
+      @numberOfDays = (@all_fitbitContentDates[0] - @all_fitbitContentDates[@all_fitbitContentDates.count-1]).to_i
+
+      @fitbitContent= @all_fitbitContent
     end
     respond_to do |format|
       format.html
@@ -60,21 +62,22 @@ class ChannelController < ApplicationController
       @all_fitbitContentDates = @all_fitbitContent.uniq.pluck('DATE(created_at)').sort
 
       # raise @all_fitbitContentDates.inspect
-      if params[:first_day].present?
-        first_day = params[:first_day].to_i
-        last_day = params[:last_day].to_i
+      if params[:days_ago].present?
+        days_ago = params[:days_ago].to_i
         # raise last_day.inspect
       else
-        first_day = 2
-        last_day = first_day + 1
+        days_ago = 0
       end
-
-      @fitbitContent= @all_fitbitContent.where('created_at < ? AND created_at > ?', first_day.days.ago, last_day.days.ago)
+      # raise first_day.days.inspect
+      @selected_date = Date.today - days_ago.days
+      # Comment.where(:created_at => @selected_date.beginning_of_day..@selected_date.end_of_day)
+      # raise @selected_date.inspect
+      @fitbitContent= @all_fitbitContent.where(:created_at => @selected_date.beginning_of_day..@selected_date.end_of_day)
     end
 
-    respond_to do |format|
-      format.json
-    end
+    # respond_to do |format|
+    #   format.json
+    # end
   end
 
   private

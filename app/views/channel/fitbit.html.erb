@@ -7,10 +7,10 @@
     </div>
     <div class="row">
       <% if @fitbit.present? %>
-        <% @all_fitbitContentDates.each_with_index do |day, index| %>
+        <% for index in 0..@numberOfDays do%>
           <% if @fitbitContent.present? %>
-            <h3>Date is: <%= day %></h3>
-            <div id="fitbitGraph<%=index.to_s%>", data-url="<%= index %>", data-day="<%= @all_fitbitContentDates.count %>", class="fitGraph"></div>
+            <h3><%= Date.today - index.days %></h3>
+            <div id="fitbitGraph<%=index.to_s%>", data-url="<%= index %>", data-day="<%= @numberOfDays %>", class="fitGraph"></div>
           <%else%>
             <h1 class="center">No data for this day :(</h1>
           <%end%>

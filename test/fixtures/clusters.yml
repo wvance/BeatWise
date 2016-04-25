@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  date: 2016-04-25
+  minimum: 1
+  maximum: 1
+  average: MyString
+  average_slope: MyString
+
+two:
+  date: 2016-04-25
+  minimum: 1
+  maximum: 1
+  average: MyString
+  average_slope: MyString

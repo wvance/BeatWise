@@ -11,7 +11,6 @@ def index
 end
 
 def show
-
   # THIS IS FOR THE DISPLAY MAP
   @geojson = Array.new
 
@@ -94,6 +93,7 @@ def show
   end
 end
 
+
 # GET CONTENT: ACTIONS BELOW
 # ========================================================
 # ============= TWITTER ==================================
@@ -164,18 +164,6 @@ end
       days_ago += 1
     end
 
-    # index = 0
-    # full_heart_date.each do |day|
-    #   output = CSV.generate do |csv|
-    #     day.each do |x|
-    #       csv << x.values
-    #     end
-    #   end
-    #   file_String = "user_heart_date_" + index.to_s + ".csv"
-    #   File.write(file_String, output)
-    #   index +=1
-    # end
-
     dayCount = 0
     full_heart_date.each do |day|
 
@@ -192,77 +180,6 @@ end
 
     respond_to do |format|
       format.html { redirect_to request.referrer, notice:"Updated Fitbit Heartrate Data"}
-      format.json { head :no_content}
-    end
-  end
-
-  def get_fitbit_recent_activitity
-    user_activity = @@fitbit_client.recent_activities
-    user_activity.each do |activity|
-      @content = Content.new
-      @content.post_fitbit_recent_activity(activity, current_user.id)
-    end
-
-    respond_to do |format|
-      format.html { redirect_to request.referrer, notice:"Updated Fitbit Recent Activity"}
-      format.json { head :no_content}
-    end
-  end
-
-  def get_fitbit_favorite_activities
-    favorite_activities = @@fitbit_client.favorite_activities
-
-    favorite_activities.each do |activity|
-      @content = Content.new
-      @content.post_fitbit_favorite_activity(activity, current_user.id)
-    end
-
-    respond_to do |format|
-      format.html { redirect_to request.referrer, notice:"Updated Fitbit Favorite Activities" }
-      format.json { head :no_content}
-    end
-  end
-
-  def get_fitbit_daily_min_sleep
-    today = DateTime.current.strftime("%F")
-    yesterday = DateTime.yesterday.strftime("%F")
-    lastmonth = 1.month.ago.strftime("%F")
-
-    sleep = @@fitbit_client.sleep_time_series(resource_path: 'sleep/minutesAsleep', date: today, period: '1y')
-    sleep = sleep['sleep-minutesAsleep']
-
-    sleep.each do |day|
-      if (day['value'] != "0")
-        date = day['dateTime']
-        sleep_log = @@fitbit_client.sleep_logs(date: date)
-        sleep_log = sleep_log['sleep'].first
-
-        @content = Content.new
-        @content.post_fitbit_daily_sleep_log(sleep_log, current_user.id)
-      end
-    end
-
-    respond_to do |format|
-      format.html { redirect_to request.referrer, notice:"Updated Fitbit Heart Rates" }
-      format.json { head :no_content}
-    end
-  end
-
-  def get_fitbit_daily_heart_rate
-    today = DateTime.current.strftime("%F")
-    yesterday = DateTime.yesterday.strftime("%F")
-    lastmonth = 1.month.ago.strftime("%F")
-
-    heart_rates = @@fitbit_client.heart_rate_time_series(date: today, period: '1d')
-    heart_rates = heart_rates['activities-heart']
-
-    heart_rates.each do |day|
-      @content = Content.new
-      @content.post_fitbit_daily_heart_rate(day, current_user.id)
-    end
-
-    respond_to do |format|
-      format.html { redirect_to request.referrer, notice:"Updated Fitbit Heart Rates" }
       format.json { head :no_content}
     end
   end

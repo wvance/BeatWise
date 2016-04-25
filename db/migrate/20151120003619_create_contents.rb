@@ -2,6 +2,7 @@ class CreateContents < ActiveRecord::Migration
   def change
     create_table :contents do |t|
       t.references :user, index: true
+      t.references :cluster, index: true
       t.string :title
       t.string :body
       t.string :parent

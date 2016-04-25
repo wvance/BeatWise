@@ -1,0 +1,15 @@
+<div class="row" id="fitbitChannel">
+  <div class="col-xs-10 col-xs-offset-1">
+    <h1> <%= @date %> </h1>
+    <div id="fitbitGraph", data-url="0", data-day="<%= @days_ago %>", class="fitGraph"></div>
+    <h3 class="right">
+      <%= link_to fitbit_path() do%>
+        Back
+      <%end%>
+    </h3>
+    <% if @userContent.present? %>
+      <%= render :partial => 'layouts/table', :locals => {:collection => @userContent}%>
+    <%end%>
+
+  </div>
+</div>

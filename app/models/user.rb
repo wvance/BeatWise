@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   has_many :identities
   has_many :contents
+  has_many :clusters
   has_many :notifications, foreign_key: :recipient_id
 
   TEMP_EMAIL_PREFIX = 'change@me'

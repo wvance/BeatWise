@@ -16,14 +16,11 @@ Rails.application.routes.draw do
 
   match '/sign_out_provider/:provider' => 'users#sign_out_provider', via: [:get], :as => :sign_out_provider
 
+  get '/fitbit/:date',              to: 'channel#showDay',                      as: :showDay
   get '/channels',                  to: 'channel#index',                        as: :channels
   get '/channels/twitter',          to: 'channel#twitter',                      as: :twitter
   get '/channels/fitbit',           to: 'channel#fitbit',                       as: :fitbit
   get '/channels/fitbitChart',      to: 'channel#fitbitChart',                  as: :fitbitChart
-  # get '/content/index',             to: 'content#index',                        as: :content_index
-  get '/recent_fitbit_activities',  to: 'content#get_fitbit_recent_activitity', as: :recent_fitbit_activities
-  get '/fitbit_heart',              to: 'content#get_fitbit_daily_heart_rate',  as: :fitbit_heart
-  get '/fitbit_all_data',           to: 'content#fitbit_all_data',              as: :fitbit_all_data
   get '/twitter_tweets',            to: 'content#get_twitter_tweets',           as: :twitter_tweets
   get '/fitbit_intra_heart',        to: 'content#get_fitbit_intraday_heartbeat', as: :fitbit_intra_heart
 

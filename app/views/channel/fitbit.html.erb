@@ -7,42 +7,51 @@
     </div>
     <div class="row">
       <% if @fitbit.present? %>
-        <% for index in 0..@numberOfDays do%>
-          <% if @fitbitContent.present? %>
-            <h3><%= Date.today - index.days %></h3>
-            <div id="fitbitGraph<%=index.to_s%>", data-url="<%= index %>", data-day="<%= @numberOfDays %>", class="fitGraph"></div>
-          <%else%>
-            <h1 class="center">No data for this day :(</h1>
+        <% if @fitbitContent.present? %>
+          <% for index in 0..@numberOfDays do%>
+            <div class="col-xs-12 col-sm-6 col-lg-4">
+              <% if @fitbitContent.present? %>
+                <%= link_to showDay_path(Date.today - index.days) do %>
+                  <h3>
+                    <%= Date.today - index.days %>
+                  </h3>
+                  <div id="fitbitGraph<%=index.to_s%>", data-url="<%= index %>", data-day="<%= @numberOfDays %>", class="fitGraph fitGraphSmall"></div>
+                <%end%>
+              <%else%>
+                <h1 class="center">No data for this day :(</h1>
+              <%end%>
+            </div>
           <%end%>
         <%end%>
 
-          <%# area_chart @allUserFitbit.group_by_day(:created_at).maximum(:body) %>
-        <%= link_to sign_out_provider_path(:provider => "fitbit_oauth2") do%>
-          <h3 class="pull-right">Sign Out Fitbit</h3>
-        <%end%>
-        <h2><%= @userContent.total_count%> Fitbit Data</h2>
-        <!-- <div class="row">
-          <div class="col-sm-6">
-            <h5 class="center">Hours of Sleep / Night</h5>
-            <%= area_chart @fitbitSleepChart%>
-          </div>
-          <div class="col-sm-6">
-            <%# pie_chart @allUserFitbit.group(:kind).count %>
-          </div>
-        </div> -->
-        <h5 class="pull-right">
-          <%= link_to fitbit_intra_heart_path do%>
-            <i class="fa fa-refresh"></i> Update
-          <%end%>|
-          <%= link_to fitbit_path(:format => :csv ) do%>
-            Export Data
+        <div class="col-xs-12">
+            <%# area_chart @allUserFitbit.group_by_day(:created_at).maximum(:body) %>
+          <%= link_to sign_out_provider_path(:provider => "fitbit_oauth2") do%>
+            <h3 class="pull-right">Sign Out Fitbit</h3>
           <%end%>
-        </h5>
+          <h2><%= @userContent.total_count%> Fitbit Data</h2>
+          <!-- <div class="row">
+            <div class="col-sm-6">
+              <h5 class="center">Hours of Sleep / Night</h5>
+              <%= area_chart @fitbitSleepChart%>
+            </div>
+            <div class="col-sm-6">
+              <%# pie_chart @allUserFitbit.group(:kind).count %>
+            </div>
+          </div> -->
+          <h5 class="pull-right">
+            <%= link_to fitbit_intra_heart_path do%>
+              <i class="fa fa-refresh"></i> Update
+            <%end%>|
+            <%= link_to fitbit_path(:format => :csv ) do%>
+              Export Data
+            <%end%>
+          </h5>
 
-        <% if @userContent.present? %>
-          <%= render :partial => 'layouts/table', :locals => {:collection => @userContent}%>
-        <%end%>
-
+          <% if @userContent.present? %>
+            <%= render :partial => 'layouts/table', :locals => {:collection => @userContent}%>
+          <%end%>
+        </div>
       <%else%>
         <div id = "signedOutChannel">
           <div class="channelHeader center">

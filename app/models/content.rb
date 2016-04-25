@@ -2,6 +2,7 @@ class Content < ActiveRecord::Base
   # ENABLES ELASTICSEARCH FOR THIS CLASS
   # searchkick
   belongs_to :user
+  belongs_to :cluster
   validates :external_id, uniqueness: true , :allow_blank => true, :allow_nil => true
   validates :provider, uniqueness: { scope: [:body, :created_at] }
 
@@ -86,84 +87,6 @@ class Content < ActiveRecord::Base
     else
     end
   end
-
-  def post_fitbit_recent_activity(activity, user)
-    self.user_id = user
-    self.external_id = activity["activityId"]
-    self.title = activity["name"]
-    self.body = activity["description"].to_s + " Calories:" + activity["calories"].to_s + " Duration:" + activity["duration"].to_s + " Distance:" + activity["distance"].to_s
-    self.active = true
-    self.external_link = "#"
-    self.provider = "fitbit"
-    self.kind = "activity"
-    self.created_at = DateTime.now
-    self.log = activity.to_hash
-
-    if (self.valid?)
-      self.save!
-    else
-    end
-  end
-
-  def post_fitbit_daily_sleep_log(day, user)
-    self.user_id = user
-    self.external_id = day['logId']
-    self.body = day['timeInBed']
-    self.active = true
-    self.external_link = "#"
-    self.provider = "fitbit"
-    self.kind = "sleep"
-
-    self.created_at = day['startTime']
-    self.log = day.to_hash
-
-    if (self.valid?)
-      self.save!
-    else
-    end
-  end
-
-  def post_fitbit_daily_sleep(day, user)
-    self.user_id = user
-    self.external_id = "daily_sleep" + day['dateTime']
-    self.body = day['value']
-    self.active = true
-    self.external_link = "#"
-    self.provider = "fitbit"
-    self.kind = "asleep"
-
-    self.created_at = day['dateTime']
-    self.log = day.to_hash
-
-    if (self.valid?)
-      self.save!
-    else
-    end
-  end
-
-  def post_fitbit_daily_heart_rate(day, user)
-    self.user_id = user
-    self.external_id = "daily_heart_overview" + day['dateTime']
-    self.body = day['value']
-    self.active = true
-    self.external_link = "#"
-    self.provider = "fitbit"
-    self.kind = "heartrate"
-
-    self.created_at = day['dateTime']
-    self.log = day.to_hash
-
-    if (self.valid?)
-      self.save!
-    else
-    end
-  end
-
-
-  # GEO INFO
-  # if (self.ip.present?)
-  #   geocoded_by :ip, :latitude => :latitude, :longitude => :longitude
-  # end
 
 # ========================================================
 # ============= GEOCODER =================================

@@ -30,17 +30,9 @@ class ChannelController < ApplicationController
       # GETS UNIQUE NUMBER OF DAYS IN DATABASE
       @all_fitbitContentDates = @all_fitbitContent.uniq.pluck('DATE(created_at)').sort.reverse
 
-      # raise @all_fitbitContentDates.inspect
-      if params[:days_ago].present?
-        first_day = params[:days_ago].to_i
-        last_day = params[:last_day].to_i
-        # raise last_day.inspect
-      else
-        first_day = 2
-        last_day = first_day + 1
+      if @all_fitbitContentDates.present?
+        @numberOfDays = (@all_fitbitContentDates[0] - @all_fitbitContentDates[@all_fitbitContentDates.count-1]).to_i
       end
-
-      @numberOfDays = (@all_fitbitContentDates[0] - @all_fitbitContentDates[@all_fitbitContentDates.count-1]).to_i
 
       @fitbitContent= @all_fitbitContent
     end
@@ -74,10 +66,13 @@ class ChannelController < ApplicationController
       # raise @selected_date.inspect
       @fitbitContent= @all_fitbitContent.where(:created_at => @selected_date.beginning_of_day..@selected_date.end_of_day)
     end
+  end
 
-    # respond_to do |format|
-    #   format.json
-    # end
+  def showDay
+    @date = params[:date].to_date
+    @days_ago = Date.today - @date
+    @content = current_user.contents.where("created_at::date = ?", @date)
+    @userContent = @content.page(params[:page]).per(10)
   end
 
   private

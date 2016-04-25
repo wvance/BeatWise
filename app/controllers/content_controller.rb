@@ -153,8 +153,10 @@ end
   def get_fitbit_intraday_heartbeat
     # user_heartbeat = @@fitbit_client
     days_ago = 0
+    days_to = 5
     full_heart_date = []
-    while days_ago < 5 do
+    # THIS PULLS DATA FROM FITBIT FOR THE NUMBER OF DAYS SET BELOW
+    while days_ago < days_to do
       user_daily_heartrate = @@fitbit_client.heart_rate_intraday_time_series(date: Date.today - days_ago, detail_level:"1min").inspect
 
       parsed_heart =  JSON.parse user_daily_heartrate.gsub('=>', ':')
@@ -165,9 +167,10 @@ end
     end
 
     dayCount = 0
+    # EACH DAY IN full_heart_data
     full_heart_date.each do |day|
-
       dayIndex = 1
+      # EACH EVENT IN full_heart_data DAY
       day.each do |event|
         @content = Content.new
         # PASS IN EVENT, INDEX2 (REPRESENTS THE DAY OF WHICH HAPPENED DateTime.now - Index2)

@@ -8,7 +8,8 @@
     <div class="row">
       <% if @fitbit.present? %>
         <% if @fitbitContent.present? %>
-          <% for index in 0..@numberOfDays do%>
+          <h3><%= @numberOfDays%> Days</h3>
+          <% for index in 0..@days do%>
             <div class="col-xs-12 col-sm-6 col-lg-4">
               <% if @fitbitContent.present? %>
                 <%= link_to showDay_path(Date.today - index.days) do %>
@@ -21,6 +22,9 @@
                 <h1 class="center">No data for this day :(</h1>
               <%end%>
             </div>
+          <%end%>
+          <% if @days < @numberOfDays %>
+            <h4 class="center">... <%=@numberOfDays - @days %> more</h4>
           <%end%>
         <%end%>
 

@@ -33,7 +33,9 @@ class ChannelController < ApplicationController
       if @all_fitbitContentDates.present?
         @numberOfDays = (@all_fitbitContentDates[0] - @all_fitbitContentDates[@all_fitbitContentDates.count-1]).to_i
         if @numberOfDays > 5
-          @numberOfDays = 5
+          @days = 5
+        else
+          @days = @numberOfDays
         end
       end
 

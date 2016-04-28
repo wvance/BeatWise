@@ -44,6 +44,7 @@ GEM
     bcrypt (3.1.11)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
+    blankslate (3.1.3)
     bootstrap (4.0.0.alpha3)
       autoprefixer-rails (>= 6.0.3)
       sass (>= 3.4.19)
@@ -82,6 +83,7 @@ GEM
     execjs (2.6.0)
     faraday (0.9.2)
       multipart-post (>= 1.2, < 3)
+    ffi (1.9.10)
     figaro (1.1.1)
       thor (~> 0.14)
     fitbit-api-client (0.0.15)
@@ -202,6 +204,9 @@ GEM
     redis (3.2.2)
     responders (2.1.2)
       railties (>= 4.2.0, < 5.1)
+    rubypython (0.6.3)
+      blankslate (>= 2.1.2.3)
+      ffi (>= 1.0.7)
     sass (3.4.21)
     sass-rails (5.0.4)
       railties (>= 4.0.0, < 5.0)
@@ -288,6 +293,7 @@ DEPENDENCIES
   rails (= 4.2.0)
   rails-assets-tether (>= 1.1.0)!
   rails_12factor
+  rubypython
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
   sidekiq

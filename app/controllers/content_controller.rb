@@ -155,6 +155,10 @@ end
     days_ago = 0
     days_to = 5
     full_heart_date = []
+
+    # CALL THIS WHERE WE WANT TO UPDATE THE CONTENT
+    # update_fitbit_tags()
+
     # THIS PULLS DATA FROM FITBIT FOR THE NUMBER OF DAYS SET BELOW
     while days_ago < days_to do
       user_daily_heartrate = @@fitbit_client.heart_rate_intraday_time_series(date: Date.today - days_ago, detail_level:"1min").inspect
@@ -185,6 +189,11 @@ end
       format.html { redirect_to request.referrer, notice:"Updated Fitbit Heartrate Data"}
       format.json { head :no_content}
     end
+  end
+
+  def update_fitbit_tags
+    @content = Content.where(:user_id => current_user.id)
+    @content.add_tags
   end
 
   private

@@ -3,8 +3,11 @@ class Content < ActiveRecord::Base
   # searchkick
   belongs_to :user
   belongs_to :cluster
+  has_many :tags
   validates :external_id, uniqueness: true , :allow_blank => true, :allow_nil => true
   validates :provider, uniqueness: { scope: [:body, :created_at] }
+  require "rubypython"
+  require 'json'
 
   def self.to_csv
     # CREATES AN ARRAY OF STRINGS "ID", "TITLE"..
@@ -17,6 +20,27 @@ class Content < ActiveRecord::Base
         # raise content.inspect
         csv << content.attributes.values_at(*attributes)
       end
+    end
+  end
+
+  def self.add_tags
+    # result = `python python.py foo bar`
+    result = %x(python lib/assets/algo.py)
+    # JSON with ID's and Tags: Need to save
+    jsonParsed = JSON.parse(result)
+
+    jsonParsed.each do |point|
+      jsonId = point['id']
+      # jsonTag = point['tag']
+
+      #  Person.update(15, :user_name => 'Samuel', :group => 'expert')
+
+
+      # tag = Tag.find_or_create_by(jsonTag)
+      # content = Content.update(jsonId, :tag_id => JSONtag)
+
+      # UPDATE ID OF CONTENT HERE
+      raise jsonId.inspect
     end
   end
 

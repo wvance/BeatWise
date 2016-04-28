@@ -15,6 +15,7 @@ gem 'sidekiq'
 gem 'sinatra', :require => nil
 gem 'puma'
 gem "d3-rails"
+gem "rubypython"
 # gem 'searchkick'
 
 # ========================

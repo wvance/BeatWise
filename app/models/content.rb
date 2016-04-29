@@ -23,24 +23,27 @@ class Content < ActiveRecord::Base
     end
   end
 
-  def self.add_tags
-    # result = `python python.py foo bar`
-    result = %x(python lib/assets/algo.py)
-    # JSON with ID's and Tags: Need to save
+  def self.add_tags(user_id)
+    # THIS RUNS A PYTHON SCRIPT AND PASSES IN THE USER ID AS AN ARGUMENT
+    result = %x[python lib/assets/algo.py #{ user_id }]
+
+    # PARSE THE OUTPUT FROM THE ABOVE SCRIPT SO IT CAN BE ITERATED THROUGH
     jsonParsed = JSON.parse(result)
+
+    # raise jsonParsed.inspect
 
     jsonParsed.each do |point|
       jsonId = point['id']
-      # jsonTag = point['tag']
+      if point['tag'].present?
+        # tag = Tag.find_or_create_by(jsonTag)
 
-      #  Person.update(15, :user_name => 'Samuel', :group => 'expert')
+        # jsonTag = point['tag']
+        # content = Content.update(jsonId, :tag => JSONtag)
 
-
-      # tag = Tag.find_or_create_by(jsonTag)
-      # content = Content.update(jsonId, :tag_id => JSONtag)
-
+      end
+      content = Content.update(jsonId, :tag => "Awake")
       # UPDATE ID OF CONTENT HERE
-      raise jsonId.inspect
+      # raise jsonId.inspect
     end
   end
 

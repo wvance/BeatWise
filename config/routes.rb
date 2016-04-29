@@ -16,6 +16,7 @@ Rails.application.routes.draw do
 
   match '/sign_out_provider/:provider' => 'users#sign_out_provider', via: [:get], :as => :sign_out_provider
 
+  get '/users/:id/get_all_fitbit',   to: 'users#get_all_fitbit',                  as: :get_user_fitbit
   get '/fitbit/:date',              to: 'channel#showDay',                      as: :showDay
   get '/channels',                  to: 'channel#index',                        as: :channels
   get '/channels/twitter',          to: 'channel#twitter',                      as: :twitter

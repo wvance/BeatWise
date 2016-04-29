@@ -51,6 +51,15 @@ class UsersController < ApplicationController
     end
   end
 
+  def get_all_fitbit
+    @user = User.find(params[:id])
+    @fitbitContent = Content.where(:provider=>"fitbit").where(:user_id => @user.id)
+
+    respond_to do |format|
+      format.json {@fitbitContent}
+    end
+  end
+
   # DELETE /users/:id.:format
   def destroy
     # authorize! :delete, @user

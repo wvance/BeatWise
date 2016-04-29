@@ -32,6 +32,10 @@ class ChannelController < ApplicationController
 
       if @all_fitbitContentDates.present?
         @numberOfDays = (@all_fitbitContentDates[0] - @all_fitbitContentDates[@all_fitbitContentDates.count-1]).to_i
+
+        if @numberOfDays > 12
+          @numberOfDays = 12
+        end
       end
 
       @fitbitContent= @all_fitbitContent
@@ -39,6 +43,7 @@ class ChannelController < ApplicationController
     respond_to do |format|
       format.html
       format.csv { send_data @all_fitbitContent.to_csv, filename: "Fitbit_Timeline-#{Date.today}.csv" }
+      format.json {@all_fitbitContent}
     end
   end
 

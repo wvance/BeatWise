@@ -112,17 +112,6 @@ end
   def set_fitbit_client
     if (user_signed_in? && current_user.identities.where(:provider => "fitbit_oauth2").present? )
 
-      # @@fitbit_client = OAuth2::Client.new(ENV["fitbit_client_id"], ENV["fitbit_secret"])
-      # opts = {authorize_url:   'https://www.fitbit.com/oauth2/authorize',
-      #     token_url:       'https://api.fitbit.com/oauth2/token',
-      #     token_method:    :post,
-      #     connection_opts: {},
-      #     max_redirects:   5,
-      #     raise_errors:    true}
-      # @access_token = OAuth2::AccessToken.new(@@fitbit_client, current_user.identities.where(:provider => "fitbit_oauth2").first.token, opts)
-
-      # raise @access_token.inspect
-
       @@fitbit_client =  Fitbit::Client.new(
         client_id: ENV["fitbit_client_id"],
         client_secret: ENV["fitbit_secret"],
@@ -130,14 +119,6 @@ end
         refresh_token: current_user.identities.where(:provider => "fitbit_oauth2").first.refresh_token,
         expires_at: current_user.identities.where(:provider => "fitbit_oauth2").first.expires_at
       )
-      # raise @@fitbit_client.inspect
-      # @@fitbit_client = Fitgem::Client.new(
-      #   consumer_key: ENV["fitbit_client_id"],
-      #   consumer_secret: ENV["fitbit_secret"],
-      #   token: current_user.identities.where(:provider => "fitbit_oauth2").first.token,
-      #   secret: current_user.identities.where(:provider => "fitbit_oauth2").first.secret
-      #   # user_id:
-      # )
     end
   end
   def fitbit_all_data
@@ -151,13 +132,20 @@ end
 
   # KEY PROJECT
   def get_fitbit_intraday_heartbeat
-    # user_heartbeat = @@fitbit_client
+    lastDate = Content.where(:user_id => current_user.id).order('created_at DESC').first.created_at.day
+    pullDays = Date.today.day - lastDate
+
     days_ago = 0
-    days_to = 5
+    if pullDays.present?
+      days_to = pullDays + 1
+    else
+      days_to = 5
+    end
+
     full_heart_date = []
 
-    # CALL THIS WHERE WE WANT TO UPDATE THE CONTENT
-    # update_fitbit_tags()
+    # WES: CALL THIS WHERE WE WANT TO UPDATE THE CONTENT
+    update_fitbit_tags()
 
     # THIS PULLS DATA FROM FITBIT FOR THE NUMBER OF DAYS SET BELOW
     while days_ago < days_to do
@@ -193,7 +181,7 @@ end
 
   def update_fitbit_tags
     @content = Content.where(:user_id => current_user.id)
-    @content.add_tags
+    @content.add_tags(current_user.id)
   end
 
   private

@@ -56,6 +56,7 @@ class UsersController < ApplicationController
     @fitbitContent = Content.where(:provider=>"fitbit").where(:user_id => @user.id)
 
     respond_to do |format|
+      format.html {redirect_to fitbit_path}
       format.json {@fitbitContent}
     end
   end

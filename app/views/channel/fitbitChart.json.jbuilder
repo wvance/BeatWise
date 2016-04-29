@@ -1,5 +1,6 @@
-json.array! @fitbitContent do |event|
+json.array! @fitbitContent.order('created_at ASC') do |event|
   json.body event.body
+  json.created_at event.created_at
   json.seconds event.created_at.strftime("%S")
   json.minuites event.created_at.strftime("%M")
   json.hour event.created_at.strftime("%H")

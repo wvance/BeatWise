@@ -130,9 +130,20 @@ end
     end
   end
 
+  def get_fitbit_tags
+    # WES: CALL THIS WHERE WE WANT TO UPDATE THE CONTENT
+    update_fitbit_tags()
+    redirect_to fitbit_path, notice: "Added Tags"
+  end
+
   # KEY PROJECT
   def get_fitbit_intraday_heartbeat
-    lastDate = Content.where(:user_id => current_user.id).order('created_at DESC').first.created_at.day
+    if Content.where(:user_id => current_user.id).present?
+      lastDate = Content.where(:user_id => current_user.id).order('created_at DESC').first.created_at.day
+    else
+      lastDate = Date.today.day - 1
+    end
+
     pullDays = Date.today.day - lastDate
 
     days_ago = 0
@@ -143,9 +154,6 @@ end
     end
 
     full_heart_date = []
-
-    # WES: CALL THIS WHERE WE WANT TO UPDATE THE CONTENT
-    update_fitbit_tags()
 
     # THIS PULLS DATA FROM FITBIT FOR THE NUMBER OF DAYS SET BELOW
     while days_ago < days_to do
@@ -180,7 +188,9 @@ end
   end
 
   def update_fitbit_tags
+    # GETS ALL THE CONTENT FROM THE USER
     @content = Content.where(:user_id => current_user.id)
+    # ADD TAGS TO ALL THE CONTENT
     @content.add_tags(current_user.id)
   end
 

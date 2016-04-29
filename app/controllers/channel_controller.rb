@@ -31,7 +31,7 @@ class ChannelController < ApplicationController
       @all_fitbitContentDates = @all_fitbitContent.uniq.pluck('DATE(created_at)').sort.reverse
 
       if @all_fitbitContentDates.present?
-        @numberOfDays = (@all_fitbitContentDates[0] - @all_fitbitContentDates[@all_fitbitContentDates.count-1]).to_i
+        @numberOfDays = (@all_fitbitContentDates[0] - @all_fitbitContentDates[@all_fitbitContentDates.count-1] +1).to_i
 
         if @numberOfDays > 12
           @numberOfDays = 12

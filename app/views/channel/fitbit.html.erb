@@ -8,7 +8,7 @@
     <div class="row">
       <% if @fitbit.present? %>
         <% if @fitbitContent.present? %>
-          <h3><%= @numberOfDays%> Days</h3>
+          <h3><%= @numberOfDays + 1%> Days</h3>
           <% for index in 0..@numberOfDays do%>
             <div class="col-xs-12 col-sm-6 col-lg-4">
               <% if @fitbitContent.present? %>
@@ -42,8 +42,13 @@
           </div> -->
           <h5 class="pull-right">
             <%= link_to fitbit_intra_heart_path do%>
-              <i class="fa fa-refresh"></i> Update
-            <%end%>|
+              <i class="fa fa-refresh"></i> Update Points
+            <%end%>
+            |
+            <%= link_to get_fitbit_tags_path do%>
+              <i class="fa fa-tag" aria-hidden="true"></i> Update Tags
+            <%end%>
+            |
             <%= link_to fitbit_path(:format => :csv ) do%>
               Export Data
             <%end%>

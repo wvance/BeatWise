@@ -1,25 +1,19 @@
 <% if @alluserContent.present? %>
-  <!-- <div class="container-fluid">
-    <div id="map" class="mapSection", data-url="/welcome/index.json"></div>
-  </div> -->
   <div class="container">
-    <!-- <div class="row">
-      <div class="col-sm-12 searchContainer center">
-        <div class="search">
-          <%= form_tag welcome_path, method: :get do %>
-            <span class="icon"><i class="fa fa-search"></i></span>
-            <%= text_field_tag :q, nil, placeholder: "Search...", :id=>"welcomeSearch" %>
-          <%end%>
-        </div>
-      </div>
-    </div> -->
     <div class="row">
       <% if @userContent.present?%>
         <%= link_to "Export Timeline", root_path(:format => :csv ), :class=>"btn btn-secondary pull-right" %>
         <h1><%= @userContent.total_count %> Moments Found</h1>
         <%= render :partial => 'layouts/table', :locals => {:collection => @userContent}%>
       <% else %>
-        <h1 class="center"> Sorry No Results Found...</h1>
+        <br>
+        <div class="center">
+        <h1> Sorry No Results Found...</h1>
+        <h1>
+          <%= link_to fitbit_path do %>
+          <i class="fa fa-heartbeat" aria-hidden="true"></i> Fitbit</h1>
+          <%end%>
+        </div>
       <%end%>
     </div>
   </div>

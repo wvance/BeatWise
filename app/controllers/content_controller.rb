@@ -132,66 +132,70 @@ end
 
   def get_fitbit_tags
     # WES: CALL THIS WHERE WE WANT TO UPDATE THE CONTENT
-    update_fitbit_tags()
-    redirect_to fitbit_path, notice: "Added Tags"
-  end
-
-  # KEY PROJECT
-  def get_fitbit_intraday_heartbeat
-    if Content.where(:user_id => current_user.id).present?
-      lastDate = Content.where(:user_id => current_user.id).order('created_at DESC').first.created_at.day
-    else
-      lastDate = Date.today.day - 1
-    end
-
-    pullDays = Date.today.day - lastDate
-
-    days_ago = 0
-    if pullDays.present?
-      days_to = pullDays + 1
-    else
-      days_to = 5
-    end
-
-    full_heart_date = []
-
-    # THIS PULLS DATA FROM FITBIT FOR THE NUMBER OF DAYS SET BELOW
-    while days_ago < days_to do
-      user_daily_heartrate = @@fitbit_client.heart_rate_intraday_time_series(date: Date.today - days_ago, detail_level:"1min").inspect
-
-      parsed_heart =  JSON.parse user_daily_heartrate.gsub('=>', ':')
-      parsed_heart_filtered = parsed_heart['activities-heart-intraday']['dataset']
-
-      full_heart_date.push(parsed_heart_filtered)
-      days_ago += 1
-    end
-
-    dayCount = 0
-    # EACH DAY IN full_heart_data
-    full_heart_date.each do |day|
-      dayIndex = 1
-      # EACH EVENT IN full_heart_data DAY
-      day.each do |event|
-        @content = Content.new
-        # PASS IN EVENT, INDEX2 (REPRESENTS THE DAY OF WHICH HAPPENED DateTime.now - Index2)
-        @content.post_fitbit_intraday_heart(event, dayCount, dayIndex, current_user.id)
-        dayIndex += 1
-      end
-      dayCount += 1
-    end
-
-
+    # update_fitbit_tags()
+    # redirect_to fitbit_path, notice: "Added Tags"
+    FitbitTagJob.perform_later current_user.id
+    # # GETS ALL THE CONTENT FROM THE USER
+    # @content = Content.where(:user_id => current_user.id)
+    # # ADD TAGS TO ALL THE CONTENT
+    # @content.add_tags(current_user.id)
     respond_to do |format|
-      format.html { redirect_to request.referrer, notice:"Updated Fitbit Heartrate Data"}
+      format.html { redirect_to request.referrer, notice:"Adding Tags to Content"}
       format.json { head :no_content}
     end
   end
 
-  def update_fitbit_tags
-    # GETS ALL THE CONTENT FROM THE USER
-    @content = Content.where(:user_id => current_user.id)
-    # ADD TAGS TO ALL THE CONTENT
-    @content.add_tags(current_user.id)
+  # KEY PROJECT
+  def get_fitbit_intraday_heartbeat
+    FitbitHeartDataJob.perform_later current_user.id
+
+    # if Content.where(:user_id => current_user.id).present?
+    #   lastDate = Content.where(:user_id => current_user.id).order('created_at DESC').first.created_at.day
+    # else
+    #   lastDate = Date.today.day - 1
+    # end
+
+    # pullDays = Date.today.day - lastDate
+
+    # days_ago = 0
+    # if pullDays.present?
+    #   days_to = pullDays + 1
+    # else
+    #   days_to = 5
+    # end
+
+    # full_heart_date = []
+
+    # # THIS PULLS DATA FROM FITBIT FOR THE NUMBER OF DAYS SET BELOW
+    # while days_ago < days_to do
+    #   user_daily_heartrate = @@fitbit_client.heart_rate_intraday_time_series(date: Date.today - days_ago, detail_level:"1min").inspect
+
+    #   parsed_heart =  JSON.parse user_daily_heartrate.gsub('=>', ':')
+    #   parsed_heart_filtered = parsed_heart['activities-heart-intraday']['dataset']
+
+    #   full_heart_date.push(parsed_heart_filtered)
+    #   days_ago += 1
+    # end
+
+    # dayCount = 0
+    # # EACH DAY IN full_heart_data
+    # full_heart_date.each do |day|
+    #   dayIndex = 1
+    #   # EACH EVENT IN full_heart_data DAY
+    #   day.each do |event|
+    #     @content = Content.new
+    #     # PASS IN EVENT, INDEX2 (REPRESENTS THE DAY OF WHICH HAPPENED DateTime.now - Index2)
+    #     @content.post_fitbit_intraday_heart(event, dayCount, dayIndex, current_user.id)
+    #     dayIndex += 1
+    #   end
+    #   dayCount += 1
+    # end
+
+
+    respond_to do |format|
+      format.html { redirect_to request.referrer, notice:"Updating Fitbit Heartrate Data"}
+      format.json { head :no_content}
+    end
   end
 
   private

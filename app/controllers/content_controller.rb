@@ -132,13 +132,12 @@ end
 
   def get_fitbit_tags
     # WES: CALL THIS WHERE WE WANT TO UPDATE THE CONTENT
-    # update_fitbit_tags()
-    # redirect_to fitbit_path, notice: "Added Tags"
-    FitbitTagJob.perform_later current_user.id
+    # FitbitTagJob.perform_later current_user.id
+
     # # GETS ALL THE CONTENT FROM THE USER
-    # @content = Content.where(:user_id => current_user.id)
-    # # ADD TAGS TO ALL THE CONTENT
-    # @content.add_tags(current_user.id)
+    @content = Content.where(:user_id => current_user.id)
+    # ADD TAGS TO ALL THE CONTENT
+    @content.add_tags(current_user.id)
     respond_to do |format|
       format.html { redirect_to request.referrer, notice:"Adding Tags to Content"}
       format.json { head :no_content}

@@ -108,7 +108,7 @@ $('.channel.showDay').ready ->
         else
           tag = "N/A"
 
-        tooltip.html("<strong>"+ " <i class='fa fa-clock-o' aria-hidden='true'></i> " + d.hour + ":" + d.minuites + "<br><i class='fa fa-heart' aria-hidden='true'></i> " +d.body + " BPM<br><i class='fa fa-tag'></i> " + tag + " Tag </strong>")
+        tooltip.html("<strong>"+ " <i class='fa fa-tag'></i> "+ d.id + "<br> <i class='fa fa-clock-o' aria-hidden='true'></i> " + d.hour + ":" + d.minuites + "<br><i class='fa fa-heart' aria-hidden='true'></i> " +d.body + " BPM<br><i class='fa fa-tag'></i> " + tag + " Tag </strong>")
           .style("left", (d3.event.pageX - 100) + "px")
           .style("top", (d3.event.pageY - 100) + "px");
       )

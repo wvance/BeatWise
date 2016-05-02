@@ -25,23 +25,28 @@ class Content < ActiveRecord::Base
 
   def self.add_tags(user_id)
     # THIS RUNS A PYTHON SCRIPT AND PASSES IN THE USER ID AS AN ARGUMENT
-    result = %x[python lib/assets/algo.py #{ user_id }]
+
+    result = %x[python lib/assets/algo.py #{user_id}]
+    # raise result.inspect
+    # file = File.read('lib/assets/results.json')
+    # data_hash = JSON.parse(file)
+    # raise data_hash.inspect
 
     # PARSE THE OUTPUT FROM THE ABOVE SCRIPT SO IT CAN BE ITERATED THROUGH
     jsonParsed = JSON.parse(result)
-
     # raise jsonParsed.inspect
 
     jsonParsed.each do |point|
       jsonId = point['id']
       if point['tag'].present?
+        # raise "Success".inspect
         # tag = Tag.find_or_create_by(jsonTag)
 
-        # jsonTag = point['tag']
-        # content = Content.update(jsonId, :tag => JSONtag)
+        jsonTag = point['tag']
+        content = Content.update(jsonId, :tag => jsonTag)
 
       end
-      content = Content.update(jsonId, :tag => "Awake")
+      # content = Content.update(jsonId, :tag => "Awake")
       # UPDATE ID OF CONTENT HERE
       # raise jsonId.inspect
     end

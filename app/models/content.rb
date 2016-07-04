@@ -26,7 +26,7 @@ class Content < ActiveRecord::Base
   def self.add_tags(user_id)
     # THIS RUNS A PYTHON SCRIPT AND PASSES IN THE USER ID AS AN ARGUMENT
 
-    result = %x[python lib/assets/algo.py #{user_id}]
+    result = %x[python lib/assets/algo_Backup.py #{user_id}]
     # raise result.inspect
     # file = File.read('lib/assets/results.json')
     # data_hash = JSON.parse(file)

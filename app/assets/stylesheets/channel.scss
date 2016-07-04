@@ -14,6 +14,30 @@
 }
 
 #fitbitChannel{
+  .dailyStats{
+    width:100%;
+    margin-top: 70px;
+    padding-left:50px;
+    .statTags{
+      font-size: 20px;
+      .sleepingTag{
+        color: #0000FF;
+      }
+      .physicalTag{
+        color: #00CD00;
+      }
+      .relaxingTag{
+        color: #CD0000;
+      }
+      .classTag{
+        color:#000000;
+      }
+      .drivingTag{
+        color:#800080;
+      }
+    }
+  }
+
   .fitGraphSmall{
     height:150px;
   }

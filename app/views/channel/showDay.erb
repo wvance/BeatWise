@@ -2,6 +2,37 @@
   <div class="col-xs-10 col-xs-offset-1">
     <h1> <%= @date %> </h1>
     <div id="fitbitGraph", data-url="0", data-day="<%= @days_ago %>", class="fitGraph"></div>
+    <h2>Stats</h2>
+    <div class="col-xs-6">
+      <div class="dailyStats">
+        <span class="statTags">
+          <span class="sleepingTag">
+            <i class="fa fa-bed" aria-hidden="true"></i> <%= @hoursAsleep %></span> Hours Asleep
+          <br>
+          <span class="classTag">
+            <i class="fa fa-graduation-cap" aria-hidden="true"></i> <%= @hoursInClass %></span>
+            Hours In Class
+          <br>
+          <span class="relaxingTag">
+            <i class="fa fa-smile-o" aria-hidden="true"></i> <%= @hoursRelaxing %> </span>
+            Hours Relaxing
+          <br>
+          <span class="drivingTag">
+            <i class="fa fa-car" aria-hidden="true"></i> <%= @hoursDriving %></span>
+            Hours Driving
+          <br>
+          <span class="physicalTag">
+            <i class="fa fa-trophy" aria-hidden="true"></i> <%= @hoursPhysical %></span>
+            Hours of Physical Activity
+        </span>
+      </div>
+    </div>
+    <div class="col-xs-6">
+      <div class="statsPie">
+        <%= pie_chart @content.group(:tag).count %>
+      </div>
+    </div>
+    <hr>
     <h3 class="right">
       <%= link_to fitbit_path() do%>
         Back

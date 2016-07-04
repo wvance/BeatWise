@@ -34,6 +34,21 @@ $('.channel.showDay').ready ->
         return first_hour + second_hour
       # console.log(hour)
 
+    pointColor = (tag) ->
+      console.log("TAG" + String(tag))
+      if tag == "sleeping"
+        return "#0000FF"
+      else if tag == "physical"
+        return "#00CD00"
+      else if tag == "relaxing"
+        return "#CD0000"
+      else if tag == "class"
+        return "#000000"
+      else if tag == "driving"
+        return "#800080"
+      else
+        return "#FFCC00"
+
     # Tool Tip
     tooltip = d3.select("#fitbitGraph").append("div")
       .attr("class", "tooltip")
@@ -82,7 +97,7 @@ $('.channel.showDay').ready ->
       d: lineFunc(heartData)
       'stroke': '#FFCC00'
       'stroke-width': 2
-      'fill': 'none')
+      'fill': 'none').style('opacity', .7)
 
     # CIRCLES & TOOL TOP FOR MOUSE HOVER
     dots = svg.selectAll('circle')
@@ -95,9 +110,9 @@ $('.channel.showDay').ready ->
         cy: (d) ->
           yScale(d.body)
         r: 5,
-        "fill": "#FFCC00",
+        "fill": (d) -> pointColor(d.tag),
         class: "circle"
-      }).style('opacity', .1)
+      }).style('opacity', .5)
       .on('mouseover', (d) ->
         tooltip.transition()
           .duration(500)

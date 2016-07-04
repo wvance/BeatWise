@@ -77,6 +77,13 @@ class ChannelController < ApplicationController
     @date = params[:date].to_date
     @days_ago = Date.today - @date
     @content = current_user.contents.where("created_at::date = ?", @date)
+
+    @hoursAsleep = (@content.where(:tag => "sleeping").count.to_f / 60).round(2)
+    @hoursInClass = (@content.where(:tag => "class").count.to_f / 60).round(2)
+    @hoursDriving = (@content.where(:tag => "driving").count.to_f / 60).round(2)
+    @hoursPhysical = (@content.where(:tag => "physical").count.to_f / 60).round(2)
+    @hoursRelaxing = (@content.where(:tag => "relaxing").count.to_f / 60).round(2)
+    # raise @hoursAsleep.to_s.inspect
     @userContent = @content.page(params[:page]).per(10)
   end
 
